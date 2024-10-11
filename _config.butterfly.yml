@@ -289,10 +289,10 @@ aside:
       enable: true
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/voidchunk
   card_announcement:
     enable: true
-    content: Hello, this is zzkkk1h
+    content: Hello, this is voidchunk
   card_recent_post:
     enable: true
     # If set 0 will show all

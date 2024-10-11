@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: zzkkk1h's space
+title: voidchunk's space
 subtitle: ''
 description: 'Welcome to pwn world'
 keywords:
-author: zzkkk1h
+author: voidchunk
 language: en
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://zzkkk1h.github.io
+url: https://voidchunk.github.io
 permalink: :title/
 permalink_defaults:
 pretty_urls:
