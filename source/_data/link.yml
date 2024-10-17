@@ -1,6 +1,13 @@
 - class_name: 友链
   link_list:
+    
     - name: relostaka
       link: https://relostaka.github.io
       avatar: https://relostaka.github.io/img/avatar.png
       descr: 非常好re爷
+
+    - name: wo1fyr
+      link: https://wo1fyr.github.io/
+      avator: https://wo1fyr.github.io/img/butterfly-icon.png
+      descr: 非常好web爷
+
