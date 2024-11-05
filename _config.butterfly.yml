@@ -812,8 +812,8 @@ beautify:
 font:
   global_font_size:
   code_font_size:
-  font_family:
-  code_font_family:
+  font_family: "Microsoft YaHei"
+  code_font_family: consolas, "Microsoft YaHei"
 
 # Font settings for the site title and site subtitle
 blog_title_font:
