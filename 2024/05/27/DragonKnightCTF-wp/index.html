@@ -501,40 +501,27 @@
   
     <article id="comments" lazyload>
       
-    <div id="giscus" class="giscus"></div>
-    <script type="text/javascript">
-      Fluid.utils.loadComments('#giscus', function() {
-        var options = {"repo":"voidchunk/voidchunk.github.io","repo-id":"R_kgDOL3zepA","category":"Announcements","category-id":"DIC_kwDOL3zepM4CftjK","theme-light":"light","theme-dark":"dark","mapping":"pathname","reactions-enabled":0,"emit-metadata":0,"input-position":"top","lang":"zh-CN","loading":"lazy","crossorigin":"anonymous"};
-        var attributes = {};
-        for (let option in options) {
-          if (!option.startsWith('theme-')) {
-            var key = option.startsWith('data-') ? option : 'data-' + option;
-            attributes[key] = options[option];
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"SYjPmGSDkcEB2x6QugwZcAz6-gzGzoHsz","appKey":"BE7WE7EkMqAQRzWUhblFgR7H","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
           }
-        }
-        var light = 'light';
-        var dark = 'dark';
-        window.GiscusThemeLight = light;
-        window.GiscusThemeDark = dark;
-        attributes['data-theme'] = document.documentElement.getAttribute('data-user-color-scheme') === 'dark' ? dark : light;
-        for (let attribute in attributes) {
-          var value = attributes[attribute];
-          if (value === undefined || value === null || value === '') {
-            delete attributes[attribute];
-          }
-        }
-        var s = document.createElement('script');
-        s.setAttribute('src', 'https://giscus.app/client.js');
-        s.setAttribute('crossorigin', 'anonymous');
-        for (let attribute in attributes) {
-          s.setAttribute(attribute, attributes[attribute]);
-        }
-        var ss = document.getElementsByTagName('script');
-        var e = ss.length > 0 ? ss[ss.length - 1] : document.head || document.documentElement;
-        e.parentNode.insertBefore(s, e.nextSibling);
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
       });
-    </script>
-    <noscript>Please enable JavaScript to view the comments</noscript>
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
 
 
     </article>
