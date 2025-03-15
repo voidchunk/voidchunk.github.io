@@ -19,12 +19,12 @@
   <meta name="author" content="voidchunk">
   <meta name="keywords" content="">
   
-    <meta name="description" content="强网杯">
+    <meta name="description" content="强网杯2024pwn复现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="qwb2024">
 <meta property="og:url" content="https://voidchunk.github.io/2024/11/28/qwb2024/index.html">
 <meta property="og:site_name" content="voidchunk&#39;s blog">
-<meta property="og:description" content="强网杯">
+<meta property="og:description" content="强网杯2024pwn复现">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://voidchunk.github.io/img/post/qwb2024/prpr/image.png">
 <meta property="og:image" content="https://voidchunk.github.io/img/post/qwb2024/prpr/image-1.png">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://voidchunk.github.io/img/post/qwb2024/prpr/vm_run.png">
 <meta property="og:image" content="https://voidchunk.github.io/img/post/qwb2024/prpr/vm_function.png">
 <meta property="article:published_time" content="2024-11-27T16:31:59.000Z">
-<meta property="article:modified_time" content="2025-03-15T15:23:24.321Z">
+<meta property="article:modified_time" content="2025-03-15T16:30:30.361Z">
 <meta property="article:author" content="voidchunk">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Pwn">
@@ -334,7 +334,7 @@
               <p id="updated-time" class="note note-info" style="">
                 
                   
-                    本文最后更新于 2025年3月15日 晚上
+                    本文最后更新于 2025年3月16日 凌晨
                   
                 
               </p>
@@ -342,10 +342,9 @@
             
               <div class="markdown-body">
                 
-                <p>强网杯</p>
+                <p>强网杯2024pwn复现</p>
 <span id="more"></span>
 
-<p>强网杯2024 pwn复现</p>
 <h1 id="prpr"><a href="#prpr" class="headerlink" title="prpr"></a>prpr</h1><p>复现基于ubuntu22.04环境，没有测试过远程</p>
 <h2 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h2><h3 id="init-array"><a href="#init-array" class="headerlink" title="init_array"></a>init_array</h3><p>ida打开直接查看main函数<br><img src="/img/post/qwb2024/prpr/image.png" srcset="/img/loading.gif" lazyload></p>
 <p>发现printf函数中含有非标准库的格式化字符串符号<code>%Q%W%B</code><br>猜测它应该使用了<a target="_blank" rel="noopener" href="https://www.gnu.org/software/libc/manual/html_node/Customizing-Printf.html">register_printf_function</a>注册了这些格式化字符串符号<br>不过main函数没有调用register_printf_function,那应该是main函数之前动了手脚</p>
